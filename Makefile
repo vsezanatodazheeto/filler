@@ -3,17 +3,20 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ercdd <ercdd@student.42.fr>                +#+  +:+       +#+         #
+#    By: erodd <ercdd@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/10 19:41:13 by yshawn            #+#    #+#              #
 #    Updated: 2020/01/23 03:43:17 by ercdd            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+# ./resources/filler_vm -f resources/maps/map01 -p1 resources/players/abanlin.filler -p2 ./a.out
+NAME = a.out
 all:
-	@gcc main.c printf/libftprintf.a -I filler.h
+	@gcc main.c filler.c printf/libftprintf.a gnl/get_next_line.c gnl/libft/*.c -I filler.h -o $(NAME)
 clean:
-	@rm -f a.out
+	@rm -f $(NAME)
+	@rm -f filler.trace
 # CC = gcc
 # NAME = libftprintf.a
 # FLAGS = -Wall -Wextra -Werror -O2 -O3 -O1

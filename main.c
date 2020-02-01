@@ -1,70 +1,65 @@
 #include "filler.h"
 
-/*
-int				get_next_line(const int fd, char **line)
-{
-	int				ret;
-	char			*tmp;
-	char			buf[BUFF_SIZE + 1];
-	static char		*temp_str[MAX_FD];
-
-	tmp = "";
-	if (fd == -1 || !line)
-		return (-1);
-	while ((ret = read(fd, buf, BUFF_SIZE)) > 0)
-	{
-		buf[ret] = '\0';
-		if (!temp_str[fd])
-			temp_str[fd] = ft_strdup(buf);
-		else
-			free_n_overlap(&temp_str[fd], &(*buf), &(*tmp), -1);
-	}
-	if (ret < 0 || fd[temp_str] == NULL)
-		return (ret < 0 ? -1 : 0);
-	else
-		return (ft_rewrite(&temp_str[fd], line, &(*buf), &(*tmp)));
-}
-*/
-void    init_struct(t_position *pos)
-{
-    pos->ally = 0;
-    pos->enemy = 0;
-    pos->map = 0;
-}
-void    follow_position(t_position *pos, char *buf)
+void    check_size_map(t_filler *filler, char *line)
 {
     int i;
+    t_map map[1];
 
     i = 0;
-    while (buf[i])
+    while (*line)
     {
-        if (buf[i] == 'O')
-            pos->ally = i;
-        if (buf[i] == 'X')
-            pos->enemy = i;
-        i++;
+        if ((i = to_digit(line)))
+        {
+            line = line + i;
+            map->height = ft_atoi(line);
+        }
+        if ((i = from_digit(line)))
+        {
+            line = line + i;
+            map->width = ft_atoi(line);
+            break;
+        }
+        else
+            exit(1);
     }
-    pos->map = i - 2;
-    ft_printf("our pos: %d\nenemy pos: %d\nsize of map: %d\n", pos->ally, pos->enemy, pos->map);
+    filler->map = map;
     return ;
 }
+
+void read_output(t_filler *filler)
+{
+    char *line;
+    int fd;
+
+    if ((fd = open("example", O_RDONLY)) < 0) // ДЛЯ ПРОВЕРКИ
+    {
+        ft_printf("не смог открыть, еба!\n");
+        exit(1);
+    }
+    while (get_next_line(fd, &line) && *line != 'P')
+        ;
+    /* здесь должна быть проверка на PLATEAU */
+    close(fd); // ДЛЯ ПРОВЕРКИ
+    check_size_map(filler, line);
+    return ;
+}
+
+void init_struct(t_filler *filler)
+{
+    filler->ally = 0;
+    filler->enemy = 0;
+    filler->piece = NULL;
+    filler->map = NULL;
+}
+
 int     main()
 {
-    int op;
-    ssize_t ret;
-    char buf[BUF_SIZE];
+    t_filler filler[1];
+    t_piece piece[1];
 
-    t_position pos[1];
-
-    /* открываем, читаем всякую хуйню */
-    op = open("resources/maps/map01", O_RDONLY);
-    ret = read(op, buf, BUF_SIZE);
-    while (ret < BUF_SIZE)
-        buf[ret++] = '\0';
-    ft_printf("%s", buf);
-
-    /* находим местоположение */
-    init_struct(pos);
-    follow_position(pos, buf);
+    /* зачищаем всякую хуйню */
+    init_struct(filler);
+    /* считываем карту */
+    read_output(filler);
     return (0);
 }
