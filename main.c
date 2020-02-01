@@ -22,6 +22,14 @@ void    check_size_map(t_filler *filler, char *line)
         else
             exit(1);
     }
+    if (!(map->map = (int**)malloc(sizeof(int*) * map->height)))
+        exit(1);
+    i = 0;
+	while (i < map->height)
+	{
+		map->map[i] = (int*)malloc(sizeof(int) * map->width);
+		i++;
+	}
     filler->map = map;
     return ;
 }
