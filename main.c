@@ -1,73 +1,116 @@
 #include "filler.h"
 
-void    check_size_map(t_filler *filler, char *line)
+void		record_map_positions(t_filler *filler, char *line, int i)
 {
-    int i;
-    t_map map[1];
+	int		j;
 
-    i = 0;
-    while (*line)
-    {
-        if ((i = to_digit(line)))
-        {
-            line = line + i;
-            map->height = ft_atoi(line);
-        }
-        if ((i = from_digit(line)))
-        {
-            line = line + i;
-            map->width = ft_atoi(line);
-            break;
-        }
-        else
-            exit(1);
-    }
-    if (!(map->map = (int**)malloc(sizeof(int*) * map->height)))
-        exit(1);
-    i = 0;
-	while (i < map->height)
+	j = 0;
+	while (j < filler->map->width)
 	{
-		map->map[i] = (int*)malloc(sizeof(int) * map->width);
-		i++;
+		if (line[j] == '.')
+			filler->map->map[i][j] = 0;
+		if (line[j] == 'O' || line[j] == 'X')
+		{
+			if ((filler->ally == 'O' && line[j] == 'O') || (filler->ally == 'X' && line[j] == 'X'))
+				filler->map->map[i][j] = 1;
+			else
+				filler->map->map[i][j] = 2;
+		}
+		printf("%d", filler->map->map[i][j]);
+		j++;
 	}
-    filler->map = map;
-    return ;
+	printf(" : %d\n", j);
+	i++;
+	return ;
 }
 
-void read_output(t_filler *filler)
+void		record_map(t_filler *filler, char *line)
 {
-    char *line;
-    int fd;
+	int		i;
 
-    if ((fd = open("example", O_RDONLY)) < 0) // ДЛЯ ПРОВЕРКИ
+	i = 0;
+	line = line + ft_td(line);
+	filler->map->height = ft_atoi(line);
+	line = line + ft_fdtd(line);
+	filler->map->width = ft_atoi(line);
+	if (!(filler->map->map = (int **)malloc(sizeof(int *) * filler->map->height)))
+		exit(1);
+	while (i < filler->map->height)
+	{
+		if (!(filler->map->map[i] = (int *)malloc(sizeof(int) * filler->map->width)))
+			exit(1);
+		i++;
+	}
+	return ;
+}
+
+void		record_player(t_filler *filler, int i)
+{
+	if (i == 0)
+	{
+		filler->ally = 'O';
+		filler->enemy = 'X';
+	}
+	else
+	{
+		filler->ally = 'X';
+		filler->enemy = 'O';
+	}
+}
+
+void		check_starting_data(t_filler *filler, char **line)
+{
+	int		fd;
+	int 	i;
+
+	i = -1;
+	/* ДЛЯ ПРОВЕРКИ */
+    if ((fd = open("example", O_RDONLY)) < 0)
     {
         ft_printf("не смог открыть, еба!\n");
         exit(1);
     }
-    while (get_next_line(fd, &line) && *line != 'P')
-        ;
-    /* здесь должна быть проверка на PLATEAU */
-    close(fd); // ДЛЯ ПРОВЕРКИ
-    check_size_map(filler, line);
-    return ;
+
+	while (get_next_line(fd, &(*line)))
+	{
+		if (**line == '$' && !filler->ally)
+		{
+			if (ft_is_strstr(*line, NAME_ALLY))
+				record_player(filler, 0);
+			else
+				record_player(filler, 1);
+		}
+		if (**line == 'P' && !filler->map->map)
+			if (ft_is_strstr(*line, NAME_FIELD))
+				record_map(filler, *line);
+		if (**line >= '0' && **line <= '9')
+			if (++i < filler->map->height)
+				record_map_positions(filler, *line + SKIP_HEIGHT, i);
+		if (**line == 'P' && ft_is_strstr(*line, NAME_PIECE))
+		{
+			printf("ЗАЕБУМБА\n");
+			break;
+		}
+	}
+	
+
+	/* ДЛЯ ПРОВЕРКИ */
+	close(fd);
+	return ;
 }
 
-void init_struct(t_filler *filler)
+int			main()
 {
-    filler->ally = 0;
-    filler->enemy = 0;
-    filler->piece = NULL;
-    filler->map = NULL;
-}
+	t_filler	filler[1];
+	t_piece		piece[1];
+	t_map		map[1];
+	char 		*line;
 
-int     main()
-{
-    t_filler filler[1];
-    t_piece piece[1];
-
-    /* зачищаем всякую хуйню */
-    init_struct(filler);
-    /* считываем карту */
-    read_output(filler);
-    return (0);
+	/* зачищаем всякую хуйню */
+	line = NULL;
+	init_structs(filler, map, piece);
+	/* считываем карту, записываем данные */
+	check_starting_data(filler, &line);
+	printf("zarbumba: %s\n", line);
+	return (0);
 }

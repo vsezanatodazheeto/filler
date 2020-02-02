@@ -7,10 +7,15 @@
 // #include "gnl/libft/libft.h"
 // int     get_next_line(int fd, char **line);
 
-void    kek(char *line)
+void    cheburek(char **line)
 {
-    line++;
-    printf("%s\n", line);
+    *line = "ahuet, cto proishodit";
+    return ;
+}
+void    kek(char **line)
+{
+    *line = "pizda";
+    cheburek(&(*line));
     return ;
 }
 
@@ -20,8 +25,9 @@ int     main(int ac, char **av)
     int fd;
     FILE *myfile;
 
-    line = "vot eto da";
-    kek(&(*line));
+    line = "hahahha, classic";
+    printf("%s\n", line);
+    kek(&line);
     printf("%s\n", line);
     /* ДЛЯ ПРОВЕРКИ */
     // if (ac != 3)
