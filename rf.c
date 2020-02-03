@@ -12,9 +12,12 @@ void    cheburek(char **line)
     *line = "ahuet, cto proishodit";
     return ;
 }
-void    kek(char **line)
+void    kek(char **line, char **gig)
 {
     *line = "pizda";
+    *gig++;
+    *gig++;
+    *gig++;
     cheburek(&(*line));
     return ;
 }
@@ -22,23 +25,16 @@ void    kek(char **line)
 int     main(int ac, char **av)
 {
     char *line;
+    char *gig;
     int fd;
     FILE *myfile;
 
+    gig = "zaebumba";
     line = "hahahha, classic";
     printf("%s\n", line);
-    kek(&line);
+    printf("%s\n", gig);
+    kek(&line, &gig);
     printf("%s\n", line);
-    /* ДЛЯ ПРОВЕРКИ */
-    // if (ac != 3)
-        // printf("пошел нахуй\n");
-    /*
-    fd = open(av[1], O_RDONLY);
-    myfile = fopen("TRACE.TXT", "a");
-    while (get_next_line(fd, &line))
-        fprintf(myfile, "%s\n", line);
-    fclose(myfile);
-    close(fd);
-    */
+    printf("%s\n", gig);
     return (0);
 }
