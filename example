@@ -4,9 +4,9 @@
 #                                              #
 # -------------------------------------------- #
 launched players/abanlin.filler
-$$$ exec p2 : [players/abanlin.filler]
+$$$ exec p1 : [players/abanlin.filler]
 launched players/superjeannot.filler
-$$$ exec p1 : [players/superjeannot.filler]
+$$$ exec p2 : [players/superjeannot.filler]
 Plateau 10 19:
     0123456789012345678901234567890123456789
 000 O..................
@@ -18,7 +18,7 @@ Plateau 10 19:
 006 ...................
 007 ...................
 008 ...................
-009 ..................X
+009 .............XXXXXX
 Piece 1 6:
 .***..
 <got (O): [3, 0]

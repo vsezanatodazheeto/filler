@@ -27,7 +27,7 @@ typedef struct	s_piece_of_shit
 {
 	int			width;
 	int			height;
-	char		**piece;
+	int			**piece;
 }				t_piece;
 
 typedef struct	s_position
@@ -42,8 +42,6 @@ typedef struct	s_filler
 {
 	char		ally;
 	char		enemy;
-	int			x;
-	int			y;
 	t_piece		*piece;
 	t_map		*map;
 	t_pos		*pos;
@@ -55,6 +53,7 @@ typedef struct	s_filler
 int				ft_tolow(int ch);
 int     		ft_printf(const char *str, ...);
 int     		get_next_line(int fd, char **line);
+char			**ft_strsplit(char const *str, char ch);
 
 /*
 * основные функции filler'a
@@ -62,8 +61,10 @@ int     		get_next_line(int fd, char **line);
 void    		init_structs(t_filler *filler, t_piece *piece, t_map *map, t_pos *pos);
 void    		check_starting_data(t_filler *filler, char **line);
 void			record_player(t_filler *filler, int i);
-void			record_map(t_filler *filler, char *line);
+void			record_map(t_filler *filler, char **line, int fd);
 void			record_map_positions(t_filler *filler, char **line, int i);
+void			record_piece(t_filler *filler, char **line);
+void			record_piece_positions(t_filler *filler, char **line, int i);
 void			fill_manhattan_distance(t_filler *filler);
 
 /*

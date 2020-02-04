@@ -1,31 +1,73 @@
 #include "filler.h"
 
-void		record_piece(t_filler *filler, char **line)
+void		record_piece_positions(t_filler *filler, char **line, int fd)
 {
 	return ;
 }
 
-void		fill_manhattan_distance(t_filler *filler)
-{
-	int i;
-	int j;
+void		record_piece(t_filler *filler, char **line)
+{	
+	int		j;
+	char	**tmp;
 
-	i = 0;
 	j = 0;
-	while (i < filler->map->height)
+	tmp = ft_strsplit(*line, ' ');
+	filler->piece->height = ft_atoi(*(tmp + 1));
+	filler->piece->width = ft_atoi(*(tmp + 2));
+	// printf("%d\n", filler->piece->height);
+	// printf("%d\n", filler->piece->width);
+	if (!(filler->piece->piece = (int **)malloc(sizeof(int *) * filler->piece->height)))
+		exit(1);
+	while (j < filler->piece->height)
 	{
-		j = 0;
-		while (j < filler->map->width)
-		{
-			if (filler->map->map[i][j] != -1 && filler->map->map[i][j] != -2)
-				filler->map->map[i][j] = manhattan_formula(filler->pos->x, filler->pos->y, i, j);
-			printf("%3d", filler->map->map[i][j]);
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
+		if (!(filler->piece->piece[j] = (int *)malloc(sizeof(int) * filler->piece->width)))
+			exit(1);
+		j++;
+	}	
 	return ;
+}
+
+int         min_distance(t_filler *filler, int x, int y)
+{
+    int i;
+    int j;
+    int min;
+    i = x;
+    min = manhattan_formula(filler->pos->x, filler->pos->y, x, y);
+    while (i < filler->map->height)
+    {
+        j = y;
+        while (j < filler->map->width)
+        {
+            if (filler->map->map[i][j] == -2 && manhattan_formula(i, j, x, y) < min)
+                min = manhattan_formula(i, j, x, y);
+            j++;
+        }
+        i++;
+    }
+    return (min);           
+}
+
+void        fill_manhattan_distance(t_filler *filler)
+{
+    int i;
+    int j;
+    i = 0;
+    j = 0;
+    while (i < filler->map->height)
+    {
+        j = 0;
+        while (j < filler->map->width)
+        {
+            if (filler->map->map[i][j] != -1 && filler->map->map[i][j] != -2)
+                filler->map->map[i][j] = min_distance(filler, i, j);
+            printf("%3d", filler->map->map[i][j]);
+            j++;
+        }
+        printf("\n");
+        i++;
+    }
+    return ;
 }
 
 void		record_map_positions(t_filler *filler, char **line, int fd)
@@ -35,6 +77,8 @@ void		record_map_positions(t_filler *filler, char **line, int fd)
 
 	i = 0;
 	j = 0;
+	if (!(get_next_line(fd, &(*line))))
+			exit(1);
 	while (i < filler->map->height)
 	{
 		if (!(get_next_line(fd, &(*line))))
@@ -69,15 +113,15 @@ void		record_map_positions(t_filler *filler, char **line, int fd)
 	return ;
 }
 
-void		record_map(t_filler *filler, char *line)
+void		record_map(t_filler *filler, char **line, int fd)
 {
 	int		j;
+	char	**tmp;
 
 	j = 0;
-	line = line + ft_td(line);
-	filler->map->height = ft_atoi(line);
-	line = line + ft_fd(line);
-	filler->map->width = ft_atoi(line);
+	tmp = ft_strsplit(*line, ' ');
+	filler->map->height = ft_atoi(*(tmp + 1));
+	filler->map->width = ft_atoi(*(tmp + 2));
 	if (!(filler->map->map = (int **)malloc(sizeof(int *) * filler->map->height)))
 		exit(1);
 	while (j < filler->map->height)
@@ -119,8 +163,10 @@ void		check_starting_data(t_filler *filler, char **line)
         exit(1);
     }
 
-	while (get_next_line(fd, &(*line)))
+	while (TRUE)
 	{
+		if (!(get_next_line(fd, &(*line))))
+			exit(1);
 		if (**line == '$' && !filler->ally)
 		{
 			if (ft_is_strstr(*line, NAME_ALLY))
@@ -129,9 +175,8 @@ void		check_starting_data(t_filler *filler, char **line)
 				record_player(filler, FALSE);
 		}
 		if (**line == 'P' && ft_is_strstr(*line, NAME_FIELD))
-			record_map(filler, *line);
-		if (**line == ' ')
 		{
+			record_map(filler, &(*line), fd);
 			record_map_positions(filler, &(*line), fd);
 			break;
 		}
@@ -140,7 +185,7 @@ void		check_starting_data(t_filler *filler, char **line)
 	/* ЭТО ДОЛЖНО БЫТЬ В ОТДЕЛЬНОЙ ФУНКЦИИ */
 	while (TRUE)
 	{
-		if(!(get_next_line(fd, &(*line))))
+		if (!(get_next_line(fd, &(*line))))
 			exit(1);
 		if (**line == 'P' && ft_is_strstr(*line, NAME_PIECE))
 			record_piece(filler, &(*line));
