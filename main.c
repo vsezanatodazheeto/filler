@@ -1,29 +1,96 @@
 #include "filler.h"
 
-void		record_piece_positions(t_filler *filler, char **line, int fd)
+int         count_summ(t_filler *filler, int x, int y)
 {
-	return ;
+    int count;
+    int i;
+    int j;
+    int s;
+    s = 0;
+    count = 0;
+    if (x + filler->piece->height > filler->map->height
+        || y + filler->piece->width > filler->map->width)
+        return (0);
+    i = 0;
+    while (i < filler->piece->height)
+    {
+        j = 0;
+        while (j < filler->piece->width)
+        {
+            if (filler->map->map[x + i][y + j] == -2)
+                return (0);
+            if (filler->map->map[x + i][y + j] == -1 && filler->piece->piece[i][j] ==1)
+                count++;
+            if (count > 1)
+                return (0);
+            if (filler->map->map[x + i][y + j])
+                s += filler->map->map[x + i][y + j];
+            j++;
+        }
+        i++;
+    }
+    return (count == 1 ? s : 0);
 }
 
-void		record_piece(t_filler *filler, char **line)
-{	
-	int		j;
-	char	**tmp;
+void        find_best_pos(t_filler *filler)
+{
+    int i;
+    int j;
+    int min;
+    int s;
+    min = 10000;
+    s = 0;
+    i = 0;
+    filler->pos->i = -1;
+    filler->pos->j = -1;
+    while (i < filler->map->height)
+    {
+        j = 0;
+        while (j < filler->map->width)
+        {
+            if (filler->map->map[i][j] != -2)
+            {
+                s = count_summ(filler, i, j);
+                if (s && s < min)
+                {           
+                    min = s;
+                    filler->pos->i = i;
+                    filler->pos->j = j;
+                }
+            }
+            j++;
+        }
+        i++;
+    }
+    return ;            
+}
 
+void		record_piece_positions(t_filler *filler, char **line, int fd)
+{
+	int		i;
+	int		j;
+
+	i = 0;
 	j = 0;
-	tmp = ft_strsplit(*line, ' ');
-	filler->piece->height = ft_atoi(*(tmp + 1));
-	filler->piece->width = ft_atoi(*(tmp + 2));
-	// printf("%d\n", filler->piece->height);
-	// printf("%d\n", filler->piece->width);
-	if (!(filler->piece->piece = (int **)malloc(sizeof(int *) * filler->piece->height)))
-		exit(1);
-	while (j < filler->piece->height)
+	// printf("here:%s\n", *line);
+	// exit(1);
+	while (i < filler->piece->height)
 	{
-		if (!(filler->piece->piece[j] = (int *)malloc(sizeof(int) * filler->piece->width)))
+		if (!(get_next_line(fd, &(*line))))
 			exit(1);
-		j++;
-	}	
+		j = 0;
+		while (j < filler->piece->width)
+		{
+			if ((*line)[j] == '.')
+				filler->piece->piece[i][j] = 0;
+			if ((*line)[j] == '*')
+				filler->piece->piece[i][j] = 1;
+			printf("%d", filler->piece->piece[i][j]);
+			j++;
+		}
+		printf(" : %d\n", j);
+		i++;
+	}
 	return ;
 }
 
@@ -32,11 +99,12 @@ int         min_distance(t_filler *filler, int x, int y)
     int i;
     int j;
     int min;
-    i = x;
+
+    i = 0;
     min = manhattan_formula(filler->pos->x, filler->pos->y, x, y);
     while (i < filler->map->height)
     {
-        j = y;
+        j = 0;
         while (j < filler->map->width)
         {
             if (filler->map->map[i][j] == -2 && manhattan_formula(i, j, x, y) < min)
@@ -113,44 +181,6 @@ void		record_map_positions(t_filler *filler, char **line, int fd)
 	return ;
 }
 
-void		record_map(t_filler *filler, char **line, int fd)
-{
-	int		j;
-	char	**tmp;
-
-	j = 0;
-	tmp = ft_strsplit(*line, ' ');
-	filler->map->height = ft_atoi(*(tmp + 1));
-	filler->map->width = ft_atoi(*(tmp + 2));
-	if (!(filler->map->map = (int **)malloc(sizeof(int *) * filler->map->height)))
-		exit(1);
-	while (j < filler->map->height)
-	{
-		if (!(filler->map->map[j] = (int *)malloc(sizeof(int) * filler->map->width)))
-			exit(1);
-		j++;
-	}
-	// printf("width: %d\n", filler->map->width);
-	// printf("height: %d\n", filler->map->height);
-	return ;
-}
-
-void		record_player(t_filler *filler, int i)
-{
-	if (i == 1)
-	{
-		filler->ally = 'O';
-		filler->enemy = 'X';
-	}
-	else
-	{
-		filler->ally = 'X';
-		filler->enemy = 'O';
-	}
-	// printf("%c\n", filler->ally);
-	// printf("%c\n", filler->enemy);
-}
-
 void		check_starting_data(t_filler *filler, char **line)
 {
 	int		fd;
@@ -188,8 +218,12 @@ void		check_starting_data(t_filler *filler, char **line)
 		if (!(get_next_line(fd, &(*line))))
 			exit(1);
 		if (**line == 'P' && ft_is_strstr(*line, NAME_PIECE))
+		{
 			record_piece(filler, &(*line));
+			record_piece_positions(filler, &(*line), fd);
+		}
 		fill_manhattan_distance(filler);
+		find_best_pos(filler);
 		break ;
 	}
 	
@@ -213,5 +247,6 @@ int			main()
 	/* считываем карту, записываем данные */
 	check_starting_data(filler, &line);
 	// printf("zaebumba: %s\n", line);
+	printf("%d %d\n", filler->pos->i, filler->pos->j);
 	return (0);
 }

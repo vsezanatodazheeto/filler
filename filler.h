@@ -62,17 +62,18 @@ void    		init_structs(t_filler *filler, t_piece *piece, t_map *map, t_pos *pos)
 void    		check_starting_data(t_filler *filler, char **line);
 void			record_player(t_filler *filler, int i);
 void			record_map(t_filler *filler, char **line, int fd);
-void			record_map_positions(t_filler *filler, char **line, int i);
+void			record_map_positions(t_filler *filler, char **line, int fd);
 void			record_piece(t_filler *filler, char **line);
-void			record_piece_positions(t_filler *filler, char **line, int i);
+void			record_piece_positions(t_filler *filler, char **line, int fd);
 void			fill_manhattan_distance(t_filler *filler);
 
 /*
 * вспомогательные функции для filler'а
 */
-int				ft_td(char *line);
-int				ft_fd(char *line);
 int				ft_is_strstr(char *str_dad, char *str_son);
 int				manhattan_formula(int x, int y, int i, int j);
 
 #endif
+
+// int				ft_td(char *line);
+// int				ft_fd(char *line);
