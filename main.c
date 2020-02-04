@@ -184,14 +184,13 @@ void		record_map_positions(t_filler *filler, char **line, int fd)
 void		check_starting_data(t_filler *filler, char **line)
 {
 	int		fd;
-
-	fd = 0;
+	fd = 1;
 	/* ДЛЯ ПРОВЕРКИ */
-    if ((fd = open("example", O_RDONLY)) < 0)
-    {
-        ft_printf("не смог открыть, еба!\n");
-        exit(1);
-    }
+    // if ((fd = open("example", O_RDONLY)) < 0)
+    // {
+    //     ft_printf("не смог открыть, еба!\n");
+    //     exit(1);
+    // }
 
 	while (TRUE)
 	{
@@ -199,7 +198,7 @@ void		check_starting_data(t_filler *filler, char **line)
 			exit(1);
 		if (**line == '$' && !filler->ally)
 		{
-			if (ft_is_strstr(*line, NAME_ALLY))
+			if (ft_is_strstr(*line, NAME_ALLY) && ft_is_strstr(*line, "p1"))
 				record_player(filler, TRUE);
 			else
 				record_player(filler, FALSE);
@@ -229,7 +228,7 @@ void		check_starting_data(t_filler *filler, char **line)
 	
 
 	/* ДЛЯ ПРОВЕРКИ */
-	close(fd);
+	// close(fd);
 	return ;
 }
 
@@ -247,6 +246,10 @@ int			main()
 	/* считываем карту, записываем данные */
 	check_starting_data(filler, &line);
 	// printf("zaebumba: %s\n", line);
-	printf("%d %d\n", filler->pos->i, filler->pos->j);
-	return (0);
+	ft_putnbr(filler->pos->i);
+	write(1, " ", 1);
+	ft_putnbr(filler->pos->y);
+	write(1, "\n", 1);
+	// ft_printf("%d %d\n", filler->pos->i, filler->pos->j);
+	return (1);
 }

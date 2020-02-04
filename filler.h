@@ -8,7 +8,7 @@
 #include <stdio.h> // for fwrite
 #include "gnl/libft/libft.h"
 
-#define NAME_ALLY "abanlin.filler"
+#define NAME_ALLY "a.out"
 #define NAME_FIELD "Plateau"
 #define NAME_PIECE "Piece"
 #define BUF_SIZE 1000
