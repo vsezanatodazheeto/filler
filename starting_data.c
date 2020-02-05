@@ -46,7 +46,7 @@ void		record_map(t_filler *filler, char **line, int fd)
 
 void		record_player(t_filler *filler, int i)
 {
-	if (i == 1)
+	if (i)
 	{
 		filler->ally = 'O';
 		filler->enemy = 'X';

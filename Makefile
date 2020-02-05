@@ -13,7 +13,7 @@
 # ./resources/filler_vm -f resources/maps/map01 -p1 resources/players/abanlin.filler -p2 ./a.out
 NAME = a.out
 all:
-	@gcc main.c auxiliary_functions.c starting_data.c printf/libftprintf.a gnl/get_next_line.c gnl/libft/*.c -I filler.h -o $(NAME)
+	@gcc main.c auxiliary_functions.c starting_data.c printf/libftprintf.a gnl_3/get_next_line.c gnl_3/libft/*.c -I filler.h -o $(NAME)
 clean:
 	@rm -f $(NAME)
 	@rm -f filler.trace

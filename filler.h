@@ -72,6 +72,8 @@ void			fill_manhattan_distance(t_filler *filler);
 */
 int				ft_is_strstr(char *str_dad, char *str_son);
 int				manhattan_formula(int x, int y, int i, int j);
+void			printf_map(t_filler *filler); //delete me
+void			printf_map_fill(t_filler *filler); // delete me
 
 #endif
 

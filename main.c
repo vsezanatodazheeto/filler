@@ -41,8 +41,8 @@ void        find_best_pos(t_filler *filler)
     min = 10000;
     s = 0;
     i = 0;
-    filler->pos->i = -1;
-    filler->pos->j = -1;
+    filler->pos->i = 0;
+    filler->pos->j = 0;
     while (i < filler->map->height)
     {
         j = 0;
@@ -85,10 +85,10 @@ void		record_piece_positions(t_filler *filler, char **line, int fd)
 				filler->piece->piece[i][j] = 0;
 			if ((*line)[j] == '*')
 				filler->piece->piece[i][j] = 1;
-			printf("%d", filler->piece->piece[i][j]);
+			// printf("%d", filler->piece->piece[i][j]);
 			j++;
 		}
-		printf(" : %d\n", j);
+		// printf(" : %d\n", j);
 		i++;
 	}
 	return ;
@@ -129,10 +129,10 @@ void        fill_manhattan_distance(t_filler *filler)
         {
             if (filler->map->map[i][j] != -1 && filler->map->map[i][j] != -2)
                 filler->map->map[i][j] = min_distance(filler, i, j);
-            printf("%3d", filler->map->map[i][j]);
+            // printf("%3d", filler->map->map[i][j]);
             j++;
         }
-        printf("\n");
+        // printf("\n");
         i++;
     }
     return ;
@@ -156,10 +156,10 @@ void		record_map_positions(t_filler *filler, char **line, int fd)
 		{
 			if ((*line + HGT)[j] == '.')
 				filler->map->map[i][j] = 0;
-			if ((*line + HGT)[j] == 'O' || (*line + HGT)[j] == 'X')
+			else if (ft_toupper((*line + HGT)[j]) == 'O' || ft_toupper((*line + HGT)[j]) == 'X')
 			{
-				if ((filler->ally == 'O' && (*line + HGT)[j] == 'O') ||
-											(filler->ally == 'X' && (*line + HGT)[j] == 'X'))
+				if ((filler->ally == 'O' && ft_toupper((*line + HGT)[j]) == 'O') ||
+											(filler->ally == 'X' && ft_toupper((*line + HGT)[j]) == 'X'))
 				{
 					filler->map->map[i][j] = -1;
 					filler->pos->i = i;
@@ -184,46 +184,71 @@ void		record_map_positions(t_filler *filler, char **line, int fd)
 void		check_starting_data(t_filler *filler, char **line)
 {
 	int		fd;
-	fd = 1;
+
+	fd = 0;
 	/* ДЛЯ ПРОВЕРКИ */
-    // if ((fd = open("example", O_RDONLY)) < 0)
-    // {
-    //     ft_printf("не смог открыть, еба!\n");
-    //     exit(1);
-    // }
+	// if ((fd = open("example2", O_RDONLY)) < 0)
+	// {
+		// ft_printf("не смог открыть, еба!\n");
+		// exit(1);
+	// }
 
 	while (TRUE)
 	{
+		// ft_printf("%s\n", "HERE");	
 		if (!(get_next_line(fd, &(*line))))
 			exit(1);
-		if (**line == '$' && !filler->ally)
+	
+		if (**line == '$' && filler->ally == '\0')
 		{
+						
 			if (ft_is_strstr(*line, NAME_ALLY) && ft_is_strstr(*line, "p1"))
 				record_player(filler, TRUE);
 			else
 				record_player(filler, FALSE);
+			
 		}
 		if (**line == 'P' && ft_is_strstr(*line, NAME_FIELD))
 		{
 			record_map(filler, &(*line), fd);
-			record_map_positions(filler, &(*line), fd);
+			record_map_positions(filler, &(*line), fd);	
 			break;
 		}
+		// {
+		// 	record_map(filler, &(*line), fd);
+		// 	record_map_positions(filler, &(*line), fd);
+		// 	// printf_map(filler);
+		// 	break;
+		// }
 	}
-
 	/* ЭТО ДОЛЖНО БЫТЬ В ОТДЕЛЬНОЙ ФУНКЦИИ */
 	while (TRUE)
 	{
 		if (!(get_next_line(fd, &(*line))))
 			exit(1);
-		if (**line == 'P' && ft_is_strstr(*line, NAME_PIECE))
+		else if (**line == 'P' && ft_is_strstr(*line, NAME_FIELD))
+		{
+			record_map_positions(filler, &(*line), fd);
+			fill_manhattan_distance(filler);
+			// printf_map(filler);
+			// printf_map_fill(filler);
+		}
+		else if (**line == 'P' && ft_is_strstr(*line, NAME_PIECE))
 		{
 			record_piece(filler, &(*line));
 			record_piece_positions(filler, &(*line), fd);
+		 	find_best_pos(filler);
+			if (filler->pos->i == 0 && filler->pos->j == 0)
+				return ;
+			ft_printf("%d %d\n", filler->pos->i, filler->pos->j);
+			// ft_putnbr(filler->pos->i);
+			// ft_putchar(' ');
+			// ft_putnbr(filler->pos->j);
+			// ft_putchar('\n');			
+			// break;
 		}
-		fill_manhattan_distance(filler);
-		find_best_pos(filler);
-		break ;
+		// else
+			// ft_printf("{red}[	%s	] - skipped line\n", *line);
 	}
 	
 
@@ -245,11 +270,5 @@ int			main()
 	init_structs(filler, piece, map, pos);
 	/* считываем карту, записываем данные */
 	check_starting_data(filler, &line);
-	// printf("zaebumba: %s\n", line);
-	ft_putnbr(filler->pos->i);
-	write(1, " ", 1);
-	ft_putnbr(filler->pos->y);
-	write(1, "\n", 1);
-	// ft_printf("%d %d\n", filler->pos->i, filler->pos->j);
-	return (1);
+	return (0);
 }

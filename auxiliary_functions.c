@@ -1,5 +1,99 @@
 #include "filler.h"
 
+void		printf_map_fill(t_filler *filler)
+{
+	int 	i;
+	int		j;
+	int		x;
+	int		xx;
+	int		y;
+
+	i = 0;
+	j = 0;
+	x = 0;
+	xx = 0;
+	y = 0;
+
+	ft_printf("    ");
+	while (x < filler->map->width)
+	{
+		if (xx > 9)
+			xx = 0;
+		ft_printf("{yellow}%3d{eoc}", xx);
+		x++;
+		xx++;
+	}
+	ft_printf("\n");
+	while (i < filler->map->height)
+	{
+		j = 0;
+		ft_printf("{yellow}% 3d{eoc} ", y);
+		while (j < filler->map->width)
+		{
+			if (filler->map->map[i][j] == -1)
+				ft_printf("{green}%3d", filler->map->map[i][j]);
+			else if (filler->map->map[i][j] == -2)
+				ft_printf("{red}%3d", filler->map->map[i][j]);
+			else
+				ft_printf("{eoc}%3d", filler->map->map[i][j]);
+			j++;
+		}
+		ft_printf("\n");
+		i++;
+		y++;
+	}
+		ft_printf("\n");
+	return ;
+}
+
+void		printf_map(t_filler *filler)
+{
+	int 	i;
+	int		j;
+	int		x;
+	int		xx;
+	int		y;
+
+	i = 0;
+	j = 0;
+	x = 0;
+	xx = 0;
+	y = 0;
+
+	ft_printf("    ");
+	while (x < filler->map->width)
+	{
+		if (xx > 9)
+			xx = 0;
+		ft_printf("%d", xx);
+		x++;
+		xx++;
+	}
+	ft_printf("\n");
+	while (i < filler->map->height)
+	{
+		j = 0;
+		ft_printf("%3d ", y);
+		while (j < filler->map->width)
+		{
+			if (filler->map->map[i][j] == -1)
+				ft_printf("{green}O");
+			else if (filler->map->map[i][j] == -2)
+			{
+				ft_printf("{red}X");
+			}
+			else
+				ft_printf("{eoc}.");
+			j++;
+		}
+		ft_printf("\n");
+		i++;
+		y++;
+	}
+		ft_printf("\n");
+	return ;
+}
+
 void 		init_structs(t_filler *filler, t_piece *piece, t_map *map, t_pos *pos)
 {
 	filler->ally = '\0';
@@ -20,11 +114,6 @@ void 		init_structs(t_filler *filler, t_piece *piece, t_map *map, t_pos *pos)
 	filler->map = map;
 	filler->piece = piece;
 	filler->pos = pos;
-}
-
-int			ft_tolow(int ch)
-{
-	return ((ch >= 'A' && ch <= 'Z') ? (ch - 'A' + 'a') : (ch));
 }
 
 int			manhattan_formula(int x, int y, int i, int j)
