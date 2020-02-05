@@ -145,8 +145,6 @@ void		record_map_positions(t_filler *filler, char **line, int fd)
 
 	i = 0;
 	j = 0;
-	if (!(get_next_line(fd, &(*line))))
-			exit(1);
 	while (i < filler->map->height)
 	{
 		if (!(get_next_line(fd, &(*line))))
@@ -187,15 +185,14 @@ void		check_starting_data(t_filler *filler, char **line)
 
 	fd = 0;
 	/* ДЛЯ ПРОВЕРКИ */
-	// if ((fd = open("example2", O_RDONLY)) < 0)
-	// {
-		// ft_printf("не смог открыть, еба!\n");
-		// exit(1);
-	// }
+	if ((fd = open("example", O_RDONLY)) < 0)
+	{
+		ft_printf("не смог открыть, еба!\n");
+		exit(1);
+	}
 
 	while (TRUE)
 	{
-		// ft_printf("%s\n", "HERE");	
 		if (!(get_next_line(fd, &(*line))))
 			exit(1);
 	
@@ -211,23 +208,18 @@ void		check_starting_data(t_filler *filler, char **line)
 		if (**line == 'P' && ft_is_strstr(*line, NAME_FIELD))
 		{
 			record_map(filler, &(*line), fd);
-			record_map_positions(filler, &(*line), fd);	
 			break;
 		}
-		// {
-		// 	record_map(filler, &(*line), fd);
-		// 	record_map_positions(filler, &(*line), fd);
-		// 	// printf_map(filler);
-		// 	break;
-		// }
 	}
 	/* ЭТО ДОЛЖНО БЫТЬ В ОТДЕЛЬНОЙ ФУНКЦИИ */
 	while (TRUE)
 	{
 		if (!(get_next_line(fd, &(*line))))
 			exit(1);
-		else if (**line == 'P' && ft_is_strstr(*line, NAME_FIELD))
+		else if (**line == ' ' && ft_is_strstr(*line, NAME_FIELD))
 		{
+			ft_printf("here:%s\n", *line);
+			exit(1);
 			record_map_positions(filler, &(*line), fd);
 			fill_manhattan_distance(filler);
 			// printf_map(filler);
@@ -241,10 +233,6 @@ void		check_starting_data(t_filler *filler, char **line)
 			if (filler->pos->i == 0 && filler->pos->j == 0)
 				return ;
 			ft_printf("%d %d\n", filler->pos->i, filler->pos->j);
-			// ft_putnbr(filler->pos->i);
-			// ft_putchar(' ');
-			// ft_putnbr(filler->pos->j);
-			// ft_putchar('\n');			
 			// break;
 		}
 		// else
@@ -253,7 +241,7 @@ void		check_starting_data(t_filler *filler, char **line)
 	
 
 	/* ДЛЯ ПРОВЕРКИ */
-	// close(fd);
+	close(fd);
 	return ;
 }
 
