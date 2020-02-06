@@ -9,8 +9,7 @@ void		record_piece(t_filler *filler, char **line)
 	tmp = ft_strsplit(*line, ' ');
 	filler->piece->height = ft_atoi(*(tmp + 1));
 	filler->piece->width = ft_atoi(*(tmp + 2));
-	// printf("%d\n", filler->piece->height);
-	// printf("%d\n", filler->piece->width);
+	ft_memdel((void **)tmp);
 	if (!(filler->piece->piece = (int **)malloc(sizeof(int *) * filler->piece->height)))
 		exit(1);
 	while (j < filler->piece->height)
@@ -22,7 +21,7 @@ void		record_piece(t_filler *filler, char **line)
 	return ;
 }
 
-void		record_map(t_filler *filler, char **line, int fd)
+void		record_map(t_filler *filler, char **line)
 {
 	int		j;
 	char	**tmp;
@@ -31,6 +30,7 @@ void		record_map(t_filler *filler, char **line, int fd)
 	tmp = ft_strsplit(*line, ' ');
 	filler->map->height = ft_atoi(*(tmp + 1));
 	filler->map->width = ft_atoi(*(tmp + 2));
+	ft_memdel((void **)tmp);
 	if (!(filler->map->map = (int **)malloc(sizeof(int *) * filler->map->height)))
 		exit(1);
 	while (j < filler->map->height)
@@ -39,8 +39,6 @@ void		record_map(t_filler *filler, char **line, int fd)
 			exit(1);
 		j++;
 	}
-	// printf("width: %d\n", filler->map->width);
-	// printf("height: %d\n", filler->map->height);
 	return ;
 }
 
@@ -56,6 +54,4 @@ void		record_player(t_filler *filler, int i)
 		filler->ally = 'X';
 		filler->enemy = 'O';
 	}
-	// printf("%c\n", filler->ally);
-	// printf("%c\n", filler->enemy);
 }

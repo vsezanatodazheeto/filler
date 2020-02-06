@@ -22,11 +22,6 @@ void 		init_structs(t_filler *filler, t_piece *piece, t_map *map, t_pos *pos)
 	filler->pos = pos;
 }
 
-int			ft_tolow(int ch)
-{
-	return ((ch >= 'A' && ch <= 'Z') ? (ch - 'A' + 'a') : (ch));
-}
-
 int			manhattan_formula(int x, int y, int i, int j)
 {
 	int a;
@@ -41,26 +36,6 @@ int			manhattan_formula(int x, int y, int i, int j)
 	else
 		b = y - j;
 	return (a + b);
-}
-
-int    		ft_td(char *line)
-{
-    int		i;
-
-    i = 0;
-    while ((line[i] < '0' || line[i] > '9') && line[i])
-        i++;
-    return (line[i] >= '0' && line[i] <= '9' ? i : FALSE);
-}
-
-int     	ft_fd(char *line)
-{   
-    int 	i;
-
-    i = 0;
-    while (line[i] >= '0' && line[i] <= '9' && line[i])
-        i++;
-    return ((line[i] >= '0' && line[i] <= '9') ? FALSE : i);
 }
 
 int			ft_is_strstr(char *str_dad, char *str_son)

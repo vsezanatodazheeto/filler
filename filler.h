@@ -61,7 +61,7 @@ char			**ft_strsplit(char const *str, char ch);
 void    		init_structs(t_filler *filler, t_piece *piece, t_map *map, t_pos *pos);
 void    		check_starting_data(t_filler *filler, char **line);
 void			record_player(t_filler *filler, int i);
-void			record_map(t_filler *filler, char **line, int fd);
+void			record_map(t_filler *filler, char **line);
 void			record_map_positions(t_filler *filler, char **line, int fd);
 void			record_piece(t_filler *filler, char **line);
 void			record_piece_positions(t_filler *filler, char **line, int fd);
@@ -79,3 +79,5 @@ void			printf_map_fill(t_filler *filler); // delete me
 
 // int				ft_td(char *line);
 // int				ft_fd(char *line);
+// нужно зафришить после ft_strsplit, после создания тетраминки в record_piece и после record_map при выходе
+// с программы

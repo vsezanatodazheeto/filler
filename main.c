@@ -72,8 +72,6 @@ void		record_piece_positions(t_filler *filler, char **line, int fd)
 
 	i = 0;
 	j = 0;
-	// printf("here:%s\n", *line);
-	// exit(1);
 	while (i < filler->piece->height)
 	{
 		if (!(get_next_line(fd, &(*line))))
@@ -185,41 +183,31 @@ void		check_starting_data(t_filler *filler, char **line)
 
 	fd = 0;
 	/* ДЛЯ ПРОВЕРКИ */
-	if ((fd = open("example", O_RDONLY)) < 0)
-	{
-		ft_printf("не смог открыть, еба!\n");
-		exit(1);
-	}
+	// if ((fd = open("example", O_RDONLY)) < 0)
+	// {
+	// 	ft_printf("не смог открыть, еба!\n");
+	// 	exit(1);
+	// }
 
-	while (TRUE)
+	while (get_next_line(fd, &(*line)))
 	{
-		if (!(get_next_line(fd, &(*line))))
-			exit(1);
-	
-		if (**line == '$' && filler->ally == '\0')
+		if (**line == '$' && !filler->ally)
 		{
-						
 			if (ft_is_strstr(*line, NAME_ALLY) && ft_is_strstr(*line, "p1"))
 				record_player(filler, TRUE);
 			else
 				record_player(filler, FALSE);
-			
-		}
-		if (**line == 'P' && ft_is_strstr(*line, NAME_FIELD))
-		{
-			record_map(filler, &(*line), fd);
-			break;
+			break ;
 		}
 	}
-	/* ЭТО ДОЛЖНО БЫТЬ В ОТДЕЛЬНОЙ ФУНКЦИИ */
 	while (TRUE)
 	{
 		if (!(get_next_line(fd, &(*line))))
-			exit(1);
-		else if (**line == ' ' && ft_is_strstr(*line, NAME_FIELD))
+			return ;
+		if (**line == 'P' && ft_is_strstr(*line, NAME_FIELD))
 		{
-			ft_printf("here:%s\n", *line);
-			exit(1);
+			if (!filler->map->map)
+				record_map(filler, &(*line));
 			record_map_positions(filler, &(*line), fd);
 			fill_manhattan_distance(filler);
 			// printf_map(filler);
@@ -233,15 +221,11 @@ void		check_starting_data(t_filler *filler, char **line)
 			if (filler->pos->i == 0 && filler->pos->j == 0)
 				return ;
 			ft_printf("%d %d\n", filler->pos->i, filler->pos->j);
-			// break;
 		}
-		// else
-			// ft_printf("{red}[	%s	] - skipped line\n", *line);
 	}
-	
 
 	/* ДЛЯ ПРОВЕРКИ */
-	close(fd);
+	// close(fd);
 	return ;
 }
 
@@ -258,5 +242,15 @@ int			main()
 	init_structs(filler, piece, map, pos);
 	/* считываем карту, записываем данные */
 	check_starting_data(filler, &line);
+	ft_printf("{orange}%s{eoc}\n", "дошли до конца или съебались");
+	if (filler->map->map)
+		ft_memdel((void **)&filler->map->map);
+	if (filler->piece->piece)
+		ft_memdel((void **)&filler->piece->piece);
+	if (line)
+	{
+		ft_memdel((void **)&line);
+		// ft_strdel(&line);
+	}
 	return (0);
 }
