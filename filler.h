@@ -6,7 +6,7 @@
 #include <fcntl.h> //for open
 #include <unistd.h> //for read
 #include <stdio.h> // for fwrite
-#include "gnl/libft/libft.h"
+#include "libft/libft.h"
 
 #define NAME_ALLY "a.out"
 #define NAME_FIELD "Plateau"
@@ -60,12 +60,14 @@ char			**ft_strsplit(char const *str, char ch);
 */
 void    		init_structs(t_filler *filler, t_piece *piece, t_map *map, t_pos *pos);
 void    		check_starting_data(t_filler *filler, char **line);
+void			solving_filler(t_filler *filler, char **line);
 void			record_player(t_filler *filler, int i);
 void			record_map(t_filler *filler, char **line);
 void			record_map_positions(t_filler *filler, char **line, int fd);
 void			record_piece(t_filler *filler, char **line);
 void			record_piece_positions(t_filler *filler, char **line, int fd);
 void			fill_manhattan_distance(t_filler *filler);
+void			free_data(t_filler *filler, char **line);
 
 /*
 * вспомогательные функции для filler'а
