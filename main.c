@@ -36,12 +36,12 @@ void        find_best_pos(t_filler *filler)
 {
     int i;
     int j;
-    int min;
     int s;
+    int min;
 
-    min = 10000;
-    s = 0;
     i = 0;
+    s = 0;
+    min = 10000;
     filler->pos->i = 0;
     filler->pos->j = 0;
     while (i < filler->map->height)
@@ -125,6 +125,7 @@ void        solving_filler(t_filler *filler, char **line)
 			record_piece(filler, &(*line));
 			record_piece_positions(filler, &(*line));
 		 	find_best_pos(filler);
+            printf_map_fill(filler);
 			if (filler->pos->i == 0 && filler->pos->j == 0)
 				return ;
 			ft_printf("%d %d\n", filler->pos->i - 1, filler->pos->j);

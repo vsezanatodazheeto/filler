@@ -14,6 +14,7 @@ void		printf_map_fill(t_filler *filler)
 	xx = 0;
 	y = 0;
 
+	ft_printf("\n\n");
 	ft_printf("    ");
 	while (x < filler->map->width)
 	{

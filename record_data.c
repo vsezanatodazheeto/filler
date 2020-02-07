@@ -62,17 +62,9 @@ void		record_map_positions(t_filler *filler, char **line)
 			{
 				if ((filler->ally == 'O' && ft_toupper((*line + HGT)[j]) == 'O') ||
 											(filler->ally == 'X' && ft_toupper((*line + HGT)[j]) == 'X'))
-				{
 					filler->map->map[i][j] = -1;
-					filler->pos->i = i;
-					filler->pos->j = j;
-				}
 				else
-				{
 					filler->map->map[i][j] = -2;
-					filler->pos->x = i;
-					filler->pos->y = j;
-				}
 			}
 			j++;
 		}
