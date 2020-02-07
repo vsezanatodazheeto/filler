@@ -1,16 +1,14 @@
 #include "filler.h"
 
-void		record_piece_positions(t_filler *filler, char **line, int fd)
+void		record_piece_positions(t_filler *filler, char **line)
 {
 	int		i;
 	int		j;
 
 	i = 0;
 	j = 0;
-	while (i < filler->piece->height)
+	while (i < filler->piece->height && get_next_line(0, &(*line)))
 	{
-		if (!(get_next_line(fd, &(*line))))
-			exit(1);
 		j = 0;
 		while (j < filler->piece->width)
 		{
@@ -46,17 +44,15 @@ void		record_piece(t_filler *filler, char **line)
 	return ;
 }
 
-void		record_map_positions(t_filler *filler, char **line, int fd)
+void		record_map_positions(t_filler *filler, char **line)
 {
 	int		i;
 	int		j;
 
 	i = 0;
 	j = 0;
-	while (i < filler->map->height)
+	while (i < filler->map->height && get_next_line(0, &(*line)))
 	{
-		if (!(get_next_line(fd, &(*line))))
-			exit(1);
 		j = 0;
 		while (j < filler->map->width)
 		{

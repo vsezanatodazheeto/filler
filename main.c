@@ -38,6 +38,7 @@ void        find_best_pos(t_filler *filler)
     int j;
     int min;
     int s;
+
     min = 10000;
     s = 0;
     i = 0;
@@ -72,7 +73,7 @@ int         min_distance(t_filler *filler, int x, int y)
     int min;
 
     i = 0;
-    min = manhattan_formula(filler->pos->x, filler->pos->y, x, y);
+    min = ((filler->map->height * filler->map->width) - 2);
     while (i < filler->map->height)
     {
         j = 0;
@@ -110,25 +111,23 @@ void        fill_manhattan_distance(t_filler *filler)
 
 void        solving_filler(t_filler *filler, char **line)
 {
-	while (TRUE)
+	while (get_next_line(0, &(*line)))
 	{
-		if (!(get_next_line(0, &(*line))))
-			return ;
 		if (**line == 'P' && ft_is_strstr(*line, NAME_FIELD))
 		{
 			if (!filler->map->map)
 				record_map(filler, &(*line));
-			record_map_positions(filler, &(*line), 0);
+			record_map_positions(filler, &(*line));
 			fill_manhattan_distance(filler);
 		}
 		else if (**line == 'P' && ft_is_strstr(*line, NAME_PIECE))
 		{
 			record_piece(filler, &(*line));
-			record_piece_positions(filler, &(*line), 0);
+			record_piece_positions(filler, &(*line));
 		 	find_best_pos(filler);
 			if (filler->pos->i == 0 && filler->pos->j == 0)
 				return ;
-			ft_printf("%d %d\n", filler->pos->i, filler->pos->j);
+			ft_printf("%d %d\n", filler->pos->i - 1, filler->pos->j);
 		}
 	}
 	return ;

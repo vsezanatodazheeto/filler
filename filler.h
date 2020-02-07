@@ -63,9 +63,9 @@ void    		check_starting_data(t_filler *filler, char **line);
 void			solving_filler(t_filler *filler, char **line);
 void			record_player(t_filler *filler, int i);
 void			record_map(t_filler *filler, char **line);
-void			record_map_positions(t_filler *filler, char **line, int fd);
+void			record_map_positions(t_filler *filler, char **line);
 void			record_piece(t_filler *filler, char **line);
-void			record_piece_positions(t_filler *filler, char **line, int fd);
+void			record_piece_positions(t_filler *filler, char **line);
 void			fill_manhattan_distance(t_filler *filler);
 void			free_data(t_filler *filler, char **line);
 
