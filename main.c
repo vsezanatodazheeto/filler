@@ -125,7 +125,7 @@ void        solving_filler(t_filler *filler, char **line)
 			record_piece(filler, &(*line));
 			record_piece_positions(filler, &(*line));
 		 	find_best_pos(filler);
-            printf_map_fill(filler);
+            // printf_map_fill(filler);
 			if (filler->pos->i == 0 && filler->pos->j == 0)
 				return ;
 			ft_printf("%d %d\n", filler->pos->i - 1, filler->pos->j);
@@ -158,13 +158,10 @@ int			main(void)
 	t_pos		pos[1];
 	char 		*line;
 
-    // ft_printf("{red}%2$20d %3$d %1$d", 20, 30, 40);
-    printf("%2$d", 2, 1);
-    exit(1);
 	line = NULL;
 	init_structs(filler, piece, map, pos);
 	check_starting_data(filler, &line);
     solving_filler(filler, &line);
-    free_data(filler, &line);
+    // free_data(filler, &line);
 	return (0);
 }
