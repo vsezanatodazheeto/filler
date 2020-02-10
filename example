@@ -5,8 +5,6 @@
 # -------------------------------------------- #
 launched players/abanlin.filler
 $$$ exec p1 : [players/a.out]
-launched players/superjeannot.filler
-$$$ exec p2 : [players/superjeannot.filler]
 Plateau 15 17:
     01234567890123456
 000 .................

@@ -158,6 +158,9 @@ int			main(void)
 	t_pos		pos[1];
 	char 		*line;
 
+    // ft_printf("{red}%2$20d %3$d %1$d", 20, 30, 40);
+    printf("%2$d", 2, 1);
+    exit(1);
 	line = NULL;
 	init_structs(filler, piece, map, pos);
 	check_starting_data(filler, &line);
