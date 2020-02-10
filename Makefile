@@ -6,14 +6,14 @@
 #    By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/10 19:41:13 by yshawn            #+#    #+#              #
-#    Updated: 2020/02/10 22:26:38 by yshawn           ###   ########.fr        #
+#    Updated: 2020/02/10 22:32:38 by yshawn           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # ./resources/filler_vm -f resources/maps/map01 -p1 resources/players/abanlin.filler -p2 ./a.out
 NAME = a.out
 all:
-	@gcc main.c extra_functions.c record_data.c printf/libftprintf.a libft/*.c -I filler.h -o $(NAME)
+	@gcc main.c extra.c record_data.c printf/libftprintf.a libft/*.c -I filler.h -o $(NAME)
 clean:
 	@rm -f $(NAME)
 	@rm -f filler.trace
