@@ -6,6 +6,7 @@ FRAMEWORKS  =	-F./frameworks \
 				-rpath ./frameworks \
 				-framework SDL2 -framework SDL2_ttf -framework SDL2_image -framework SDL2_mixer
 all:
+	# @clang main.c -I include -L lib -l SDL2-2.0.0
 	@gcc main.c -I $(SDL_INCS) $(FRAMEWORKS)
 #g++ main.cpp -o play -I include -L lib -l SDL2-2.0.0
 #-I $(SDL_INCS) $(FRAMEWORKS)

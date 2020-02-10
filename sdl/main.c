@@ -6,13 +6,14 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 21:05:08 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/10 22:37:04 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/10 23:20:04 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <SDL2/SDL.h> 
-// #include <SDL2/SDL_image.h> 
-#include <SDL2/SDL_timer.h> 
+# include "frameworks/SDL2.framework/Headers/SDL.h"
+# include "frameworks/SDL2_ttf.framework/Headers/SDL_ttf.h"
+# include "frameworks/SDL2_image.framework/Headers/SDL_image.h"
+# include "frameworks/SDL2_mixer.framework/Headers/SDL_mixer.h"
   
 int main() 
 { 
@@ -36,7 +37,7 @@ int main()
     SDL_Surface* surface; 
   
     // please provide a path for your image 
-    surface = IMG_Load("./sal.jpg"); 
+    surface = IMG_Load("zubr.png"); 
   
     // loads image to our graphics hardware memory. 
     SDL_Texture* tex = SDL_CreateTextureFromSurface(rend, surface); 
