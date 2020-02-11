@@ -10,15 +10,271 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "frameworks/SDL2.framework/Headers/SDL.h"
-# include "frameworks/SDL2_ttf.framework/Headers/SDL_ttf.h"
-# include "frameworks/SDL2_image.framework/Headers/SDL_image.h"
-# include "frameworks/SDL2_mixer.framework/Headers/SDL_mixer.h"
-  
+#include "frameworks/SDL2.framework/Headers/SDL.h"
+#include "frameworks/SDL2_ttf.framework/Headers/SDL_ttf.h"
+#include "frameworks/SDL2_image.framework/Headers/SDL_image.h"
+#include "frameworks/SDL2_mixer.framework/Headers/SDL_mixer.h"
+#include "sdl.h"
+
+void		record_piece_positions(t_filler *filler, char **line)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	while (i < filler->piece->height && get_next_line(0, &(*line)))
+	{
+		j = 0;
+		while (j < filler->piece->width)
+		{
+			if ((*line)[j] == '.')
+				filler->piece->piece[i][j] = 0;
+			if ((*line)[j] == '*')
+				filler->piece->piece[i][j] = 1;
+			j++;
+		}
+		i++;
+	}
+	return ;
+}
+
+void		record_piece(t_filler *filler, char **line)
+{	
+	int		j;
+	char	**tmp;
+
+	j = 0;
+	tmp = ft_strsplit(*line, ' ');
+	filler->piece->height = ft_atoi(*(tmp + 1));
+	filler->piece->width = ft_atoi(*(tmp + 2));
+	ft_memdel((void **)tmp);
+	if (!(filler->piece->piece = (int **)malloc(sizeof(int *) * filler->piece->height)))
+		exit(1);
+	while (j < filler->piece->height)
+	{
+		if (!(filler->piece->piece[j] = (int *)malloc(sizeof(int) * filler->piece->width)))
+			exit(1);
+		j++;
+	}
+	return ;
+}
+
+void		record_map_positions(t_filler *filler, char **line)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	while (i < filler->map->height && get_next_line(0, &(*line)))
+	{
+		j = 0;
+		while (j < filler->map->width)
+		{
+			if ((*line + HGT)[j] == '.')
+				filler->map->map[i][j] = 0;
+			else if (ft_toupper((*line + HGT)[j]) == 'O' || ft_toupper((*line + HGT)[j]) == 'X')
+			{
+				if ((filler->ally == 'O' && ft_toupper((*line + HGT)[j]) == 'O') ||
+											(filler->ally == 'X' && ft_toupper((*line + HGT)[j]) == 'X'))
+					filler->map->map[i][j] = -1;
+				else
+					filler->map->map[i][j] = -2;
+			}
+			j++;
+		}
+		i++;
+	}
+	return ;
+}
+
+void		record_map(t_filler *filler, char **line)
+{
+	int		j;
+	char	**tmp;
+
+	j = 0;
+	tmp = ft_strsplit(*line, ' ');
+	filler->map->height = ft_atoi(*(tmp + 1));
+	filler->map->width = ft_atoi(*(tmp + 2));
+	ft_memdel((void **)tmp);
+	if (!(filler->map->map = (int **)malloc(sizeof(int *) * filler->map->height)))
+		exit(1);
+	while (j < filler->map->height)
+	{
+		if (!(filler->map->map[j] = (int *)malloc(sizeof(int) * filler->map->width)))
+			exit(1);
+		j++;
+	}
+	return ;
+}
+
+void		record_player(t_filler *filler, int i)
+{
+	if (i)
+	{
+		filler->ally = 'O';
+		filler->enemy = 'X';
+	}
+	else
+	{
+		filler->ally = 'X';
+		filler->enemy = 'O';
+	}
+}
+
+
+int			ft_is_strstr(char *str_dad, char *str_son)
+{
+	int		i;
+	int		n;
+
+	i = 0;
+	n = 0;
+	if (!*str_dad || !*str_son)
+		return (FALSE);
+	while (str_dad[i] && n == 0)
+	{
+		n = 0;
+		if (str_dad[i] == str_son[n])
+		{
+			while (str_son[n] && str_dad[i])
+			{
+				if (str_son[n] != str_dad[i])
+				{
+					n = 0;
+					break;
+				}
+				i++;
+				n++;
+			}
+		}
+		i++;
+	}
+	return ( n == 0 ? FALSE : i);
+}
+
+void		free_data(t_filler *filler, char **line)
+{
+	if (filler->map->map)
+		ft_memdel((void **)&filler->map->map);
+	if (filler->piece->piece)
+		ft_memdel((void **)&filler->piece->piece);
+	if (line)
+		ft_memdel((void **)&line);
+	return ;
+}
+
+void 		init_structs(t_filler *filler, t_piece *piece, t_map *map, t_pos *pos)
+{
+	filler->ally = '\0';
+	filler->enemy = '\0';
+	filler->piece = NULL;
+	filler->map = NULL;
+	filler->pos = NULL;
+	piece->width = 0;
+	piece->height = 0;
+	piece->piece = NULL;
+	map->width = 0;
+	map->height = 0;
+	map->map = NULL;
+	pos->i = 0;
+	pos->j = 0;
+	pos->x = 0;
+	pos->y = 0;
+	filler->map = map;
+	filler->piece = piece;
+	filler->pos = pos;
+    filler->next = NULL;
+}
+
+void        reading_to_struct(t_filler *filler, char **line)
+{
+	while (get_next_line(0, &(*line)))
+	{
+		if (**line == 'P' && ft_is_strstr(*line, NAME_FIELD))
+		{
+			if (!filler->map->map)
+				record_map(filler, &(*line));
+			record_map_positions(filler, &(*line));
+			// fill_manhattan_distance(filler);
+		}
+		else if (**line == 'P' && ft_is_strstr(*line, NAME_PIECE))
+		{
+			record_piece(filler, &(*line));
+			record_piece_positions(filler, &(*line));
+		 	// find_best_pos(filler);
+            // printf_map_fill(filler);
+			if (filler->pos->i == 0 && filler->pos->j == 0)
+				return ;
+			ft_printf("%d %d\n", filler->pos->i - 1, filler->pos->j);
+		}
+	}
+	return ;
+}
+
+void		check_starting_data(t_filler *filler, char **line)
+{
+	while (get_next_line(0, &(*line)))
+	{
+		if (**line == '$' && !filler->ally)
+		{
+			if (ft_is_strstr(*line, NAME_ALLY) && ft_is_strstr(*line, "p1"))
+				record_player(filler, TRUE);
+			else
+				record_player(filler, FALSE);
+			break ;
+		}
+	}
+    return ;
+}
+
+t_filler  *new_struct()
+{
+        t_filler  *ptr;
+
+        ptr = malloc(sizeof(t_filler));
+        if (NULL == ptr) {
+                return (NULL);
+        }
+        ptr->next = NULL;
+        return ptr;
+}
+
+void    add_struct(t_filler *filler)
+{
+        t_filler  *ptr;
+
+        ptr = new_struct();
+        filler->next = ptr;
+        return ;
+}
+
+
 int main() 
 { 
-  
-    // retutns zero on success else non-zero 
+    t_filler    *current;
+    t_filler	*filler;
+	t_piece		piece[1];
+	t_map		map[1];
+	t_pos		pos[1];
+	char 		*line;
+
+    //reading from vm to list of structures
+    filler = new_struct();
+	current = filler;
+    line = NULL;
+	init_structs(filler, piece, map, pos);
+	check_starting_data(filler, &line);
+    while(42) {
+       	init_structs(filler, piece, map, pos);
+        reading_to_struct(filler, &line);
+        add_struct(current);
+        current = current->next;
+    }
+
+    // returns zero on success else non-zero 
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) { 
         printf("error initializing SDL: %s\n", SDL_GetError()); 
     } 
