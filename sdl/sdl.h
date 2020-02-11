@@ -45,7 +45,7 @@ typedef struct	s_filler
 	t_piece		*piece;
 	t_map		*map;
 	t_pos		*pos;
-    struct s_filler    *next
+    struct s_filler    *next;
 }				t_filler;
 
 /*

@@ -1,14 +1,13 @@
 SDL_INCS =	-I./frameworks/SDL2.framework/Versions/A/Headers \
 			-I./frameworks/SDL2_image.framework/Versions/A/Headers \
 			-I./frameworks/SDL2_ttf.framework/Versions/A/Headers \
-			-I./frameworks/SDL2_mixer.framework/Versions/A/Headers \
-			.sdl.h
-FRAMEWORKS  =	-F./frameworks \
+			-I./frameworks/SDL2_mixer.framework/Versions/A/Headers 
+FRAMEWORKS  = -F./frameworks \
 				-rpath ./frameworks \
 				-framework SDL2 -framework SDL2_ttf -framework SDL2_image -framework SDL2_mixer
 all:
 	# @clang main.c -I include -L lib -l SDL2-2.0.0
-	@gcc main.c -I $(SDL_INCS) $(FRAMEWORKS)
+	@gcc main.c ../printf/libftprintf.a ../libft/*.c -I sdl.h $(SDL_INCS) $(FRAMEWORKS)
 #g++ main.cpp -o play -I include -L lib -l SDL2-2.0.0
 #-I $(SDL_INCS) $(FRAMEWORKS)
 #
