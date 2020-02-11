@@ -16,6 +16,54 @@
 #include "frameworks/SDL2_mixer.framework/Headers/SDL_mixer.h"
 #include "sdl.h"
 
+void		printf_map(t_filler *filler)
+{
+	int 	i;
+	int		j;
+	int		x;
+	int		xx;
+	int		y;
+
+	i = 0;
+	j = 0;
+	x = 0;
+	xx = 0;
+	y = 0;
+
+	ft_printf("    ");
+	while (x < filler->map->width)
+	{
+		if (xx > 9)
+			xx = 0;
+		ft_printf("%d", xx);
+		x++;
+		xx++;
+	}
+	ft_printf("\n");
+	while (i < filler->map->height)
+	{
+		j = 0;
+		ft_printf("%3d ", y);
+		while (j < filler->map->width)
+		{
+			if (filler->map->map[i][j] == -1)
+				ft_printf("{green}O");
+			else if (filler->map->map[i][j] == -2)
+			{
+				ft_printf("{red}X");
+			}
+			else
+				ft_printf("{eoc}.");
+			j++;
+		}
+		ft_printf("\n");
+		i++;
+		y++;
+	}
+		ft_printf("\n");
+	return ;
+}
+
 void		record_piece_positions(t_filler *filler, char **line)
 {
 	int		i;
@@ -198,17 +246,16 @@ void        reading_to_struct(t_filler *filler, char **line)
 			if (!filler->map->map)
 				record_map(filler, &(*line));
 			record_map_positions(filler, &(*line));
-			// fill_manhattan_distance(filler);
 		}
 		else if (**line == 'P' && ft_is_strstr(*line, NAME_PIECE))
 		{
 			record_piece(filler, &(*line));
 			record_piece_positions(filler, &(*line));
-		 	// find_best_pos(filler);
-            // printf_map_fill(filler);
+            // printf_map(filler);
 			if (filler->pos->i == 0 && filler->pos->j == 0)
 				return ;
 			ft_printf("%d %d\n", filler->pos->i - 1, filler->pos->j);
+			return ;
 		}
 	}
 	return ;
@@ -252,6 +299,7 @@ void    add_struct(t_filler *filler)
 }
 
 
+
 int main() 
 { 
     t_filler    *current;
@@ -260,18 +308,23 @@ int main()
 	t_map		map[1];
 	t_pos		pos[1];
 	char 		*line;
+	int			i;
 
+	i  = 0;
     //reading from vm to list of structures
     filler = new_struct();
 	current = filler;
     line = NULL;
-	init_structs(filler, piece, map, pos);
+	init_structs(current, piece, map, pos);
 	check_starting_data(filler, &line);
-    while(42) {
-       	init_structs(filler, piece, map, pos);
-        reading_to_struct(filler, &line);
+    while(i < 100) {
+		// printf("%s\n", line);
+       	init_structs(current, piece, map, pos);
+        reading_to_struct(current, &line);
         add_struct(current);
+		printf_map(current);
         current = current->next;
+		i++;
     }
 
     // returns zero on success else non-zero 
