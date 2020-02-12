@@ -6,17 +6,38 @@
 #    By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/10 19:41:13 by yshawn            #+#    #+#              #
-#    Updated: 2020/02/10 22:32:38 by yshawn           ###   ########.fr        #
+#    Updated: 2020/02/12 07:56:29 by yshawn           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# ./resources/filler_vm -f resources/maps/map01 -p1 resources/players/abanlin.filler -p2 ./a.out
+CC = gcc
+# FLAGS = -Wall -Wextra -Werror
 NAME = a.out
+
+DIR_S_1 = ./
+DIR_S_2 = src
+DIR_S_3 = a_printf
+
+HEADER = include/filler.h
+
+SOURCES_1 = main.c
+SOURCES_2 = extra.c record_data.c
+SOURCES_3 = libftprintf.a
+
+SRCS_1 = $(addprefix $(DIR_S_1)/,$(SOURCES_1))
+SRCS_2 = $(addprefix $(DIR_S_2)/,$(SOURCES_2))
+SRCS_3 = $(addprefix $(DIR_S_3)/,$(SOURCES_3))
 all:
-	@gcc main.c extra.c record_data.c printf/libftprintf.a libft/*.c -I filler.h -o $(NAME)
+	@$(CC) $(SRCS_1) $(SRCS_2) $(SRCS_3) a_libft/*.c -I $(HEADER)
 clean:
 	@rm -f $(NAME)
 	@rm -f filler.trace
+
+
+
+
+
+
 # CC = gcc
 # NAME = libftprintf.a
 # FLAGS = -Wall -Wextra -Werror -O2 -O3 -O1
