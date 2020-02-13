@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:57 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/13 13:42:03 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/13 22:42:51 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
 #include "../../a_libft/libft.h"
 #include "../../a_printf/header.h"
 #include "../frameworks/SDL2.framework/Headers/SDL.h"
-// #include "../frameworks/SDL2_ttf.framework/Headers/SDL_ttf.h"
-// #include "../frameworks/SDL2_image.framework/Headers/SDL_image.h"
-// #include "../frameworks/SDL2_mixer.framework/Headers/SDL_mixer.h"
+#include "../frameworks/SDL2_ttf.framework/Headers/SDL_ttf.h"
+#include "../frameworks/SDL2_image.framework/Headers/SDL_image.h"
+#include "../frameworks/SDL2_mixer.framework/Headers/SDL_mixer.h"
 
 #define NAME_ALLY "a.out"
 #define NAME_FIELD "Plateau"
@@ -83,7 +83,7 @@ void			record_got_pos(t_filler *filler, char **line);
 /*
 * ВИЗУАЛИЗАТОР
 */
-void			init_v();
+int			init_v(SDL_Window *win, SDL_Surface *scr);
 
 /*
 * вспомогательные функции для filler'а

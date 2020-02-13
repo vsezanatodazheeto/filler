@@ -12,7 +12,7 @@ NAME = a.out
 HEADER = include/filler_v.h
 
 SOURCES_1 = main.c
-SOURCES_2 = extra.c record_data.c new_struct.c sdl.c
+SOURCES_2 = extra.c record_data.c new_struct.c asd.c
 SOURCES_3 = libftprintf.a
 
 DIR_S_1 = ./
