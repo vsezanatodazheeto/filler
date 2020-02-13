@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:57 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/12 07:46:04 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/13 13:42:03 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,12 @@
 #include <fcntl.h> //for open
 #include <unistd.h> //for read
 #include <stdio.h> // for fwrite
-#include "../../libft/libft.h"
-#include "../../printf/header.h"
+#include "../../a_libft/libft.h"
+#include "../../a_printf/header.h"
+#include "../frameworks/SDL2.framework/Headers/SDL.h"
+// #include "../frameworks/SDL2_ttf.framework/Headers/SDL_ttf.h"
+// #include "../frameworks/SDL2_image.framework/Headers/SDL_image.h"
+// #include "../frameworks/SDL2_mixer.framework/Headers/SDL_mixer.h"
 
 #define NAME_ALLY "a.out"
 #define NAME_FIELD "Plateau"
@@ -85,6 +89,11 @@ void			init_v();
 * вспомогательные функции для filler'а
 */
 int				ft_is_strstr(char *str_dad, char *str_son);
-void			printf_map(t_filler *filler);
+void			print_everything(t_filler *filler);
+void    		add_struct(t_filler *cur_lst);
+t_filler 		*new_t_filler();
+t_pos  			*new_t_pos();
+t_map 			*new_t_map();
+t_piece			*new_t_piece();
 
 #endif

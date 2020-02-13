@@ -6,15 +6,11 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 06:27:08 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/12 07:21:48 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/13 12:50:48 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/filler_v.h"
-#include "../frameworks/SDL2.framework/Headers/SDL.h"
-#include "../frameworks/SDL2_ttf.framework/Headers/SDL_ttf.h"
-#include "../frameworks/SDL2_image.framework/Headers/SDL_image.h"
-#include "../frameworks/SDL2_mixer.framework/Headers/SDL_mixer.h"
 
 void	init_v()
 {

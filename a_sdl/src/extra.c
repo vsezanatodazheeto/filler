@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   extra_v.c                                          :+:      :+:    :+:   */
+/*   extra.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 01:17:40 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/12 07:21:13 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/13 13:51:12 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/filler_v.h"
 
-void		printf_map(t_filler *filler)
+void		print_everything(t_filler *filler)
 {
 	int 	i;
 	int		j;
@@ -31,7 +31,7 @@ void		printf_map(t_filler *filler)
 	{
 		if (xx > 9)
 			xx = 0;
-		ft_printf("%d", xx);
+		ft_printf("{orange}%d{eoc}", xx);
 		x++;
 		xx++;
 	}
@@ -39,7 +39,7 @@ void		printf_map(t_filler *filler)
 	while (i < filler->map->height)
 	{
 		j = 0;
-		ft_printf("%3d ", y);
+		ft_printf("{orange}%3d{eoc} ", y);
 		while (j < filler->map->width)
 		{
 			if (filler->map->map[i][j] == -1)
@@ -62,15 +62,15 @@ void		printf_map(t_filler *filler)
 
 void 		init_structs(t_filler *cur_lst, t_piece *piece, t_map *map, t_pos *pos)
 {
-	piece->width = 0;
-	piece->height = 0;
-	piece->piece = NULL;
-	map->width = 0;
-	map->height = 0;
-	map->map = NULL;
 	pos->i = 0;
 	pos->j = 0;
 	pos->turn = '\0';
+	map->width = 0;
+	map->height = 0;
+	map->map = NULL;
+	piece->width = 0;
+	piece->height = 0;
+	piece->piece = NULL;
 	cur_lst->ally = '\0';
 	cur_lst->enemy = '\0';
 	cur_lst->piece = NULL;

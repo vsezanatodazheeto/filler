@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   record_data_v.c                                    :+:      :+:    :+:   */
+/*   record_data.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:48 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/12 07:21:26 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/13 13:52:04 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void		record_got_pos(t_filler *filler, char **line)
 	tmp = ft_strsplit(*line, ' ');
 	filler->pos->i = ft_atoi(&(tmp[2][1]));
 	filler->pos->j = ft_atoi(&(tmp[3][0]));
-	ft_printf("positions: [%d, %d]\n", filler->pos->i, filler->pos->j);
+	// ft_printf("positions: [%d, %d]\n", filler->pos->i, filler->pos->j);
 	ft_memdel((void **)tmp);
 	return ;
 }
