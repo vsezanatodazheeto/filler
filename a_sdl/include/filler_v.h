@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:57 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/13 22:42:51 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/14 21:51:47 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,19 @@
 #include <stdio.h> // for fwrite
 #include "../../a_libft/libft.h"
 #include "../../a_printf/header.h"
-#include <SDL2/SDL.h> //for linux
-#include <SDL2/SDL_image.h> // for linux
-// #include "../frameworks/SDL2.framework/Headers/SDL.h"
-// #include "../frameworks/SDL2_ttf.framework/Headers/SDL_ttf.h"
-// #include "../frameworks/SDL2_image.framework/Headers/SDL_image.h"
-// #include "../frameworks/SDL2_mixer.framework/Headers/SDL_mixer.h"
+// #include <SDL2/SDL.h> //for linux
+// #include <SDL2/SDL_image.h> // for linux
+#include "../frameworks/SDL2.framework/Headers/SDL.h"
+#include "../frameworks/SDL2_ttf.framework/Headers/SDL_ttf.h"
+#include "../frameworks/SDL2_image.framework/Headers/SDL_image.h"
+#include "../frameworks/SDL2_mixer.framework/Headers/SDL_mixer.h"
 
+#define SCREEN_WIDTH 640
+#define SCREEN_HEIGHT 640
 #define NAME_ALLY "a.out"
 #define NAME_FIELD "Plateau"
 #define NAME_PIECE "Piece"
 #define NAME_GOT "got"
-#define BUF_SIZE 1000
 #define HGT 4
 #define TRUE 1
 #define FALSE 0
@@ -93,11 +94,12 @@ void			record_got_pos(t_filler *filler, char **line);
 /*
 * ВИЗУАЛИЗАТОР
 */
-int			init_v(SDL_Window *win, SDL_Surface *scr);
+// int			init_v(SDL_Window *win, SDL_Surface *scr);
 int			main_v();
-int			init(SDL_Window **win, SDL_Surface **scr);
-int			load(SDL_Surface **john, SDL_Surface **bg, SDL_Surface **scr);
-int 		quit(SDL_Window **win, SDL_Surface **scr, SDL_Surface **john);
+int			init(SDL_Window **win, SDL_Renderer **rend, SDL_Surface **scr);
+SDL_Texture	*load_texture(SDL_Renderer **rend);
+int 		load(SDL_Texture **textur, SDL_Renderer **rend);
+int 		quit(SDL_Window **win, SDL_Renderer **rend, SDL_Texture **textur);
 
 /*
 * вспомогательные функции для filler'а

@@ -1,9 +1,9 @@
-# SDL_INCS = -I./frameworks/SDL2.framework/Versions/A/Headers \
-# 		     -I./frameworks/SDL2_image.framework/Versions/A/Headers \
-# 			 -I./frameworks/SDL2_ttf.framework/Versions/A/Headers \
-# 			 -I./frameworks/SDL2_mixer.framework/Versions/A/Headers 
-# FRAMEWORKS  = -F./frameworks \
-# 				-rpath ./frameworks \
+SDL_INCS = -I./frameworks/SDL2.framework/Versions/A/Headers \
+		     -I./frameworks/SDL2_image.framework/Versions/A/Headers \
+			 -I./frameworks/SDL2_ttf.framework/Versions/A/Headers \
+			 -I./frameworks/SDL2_mixer.framework/Versions/A/Headers 
+FRAMEWORKS  = -F./frameworks \
+				-rpath ./frameworks \
 				-framework SDL2 -framework SDL2_ttf -framework SDL2_image -framework SDL2_mixer
 
 CC = gcc
@@ -24,9 +24,9 @@ SRCS_2 = $(addprefix $(DIR_S_2)/,$(SOURCES_2))
 SRCS_3 = $(addprefix $(DIR_S_3)/,$(SOURCES_3))
 
 all:
-	@$(CC) $(SRCS_1) $(SRCS_2) $(SRCS_3) ../a_libft/*.c -lSDL2 -lSDL2_image -I $(HEADER)
+	@$(CC) $(SRCS_1) $(SRCS_2) $(SRCS_3) ../a_libft/*.c -I $(HEADER) $(SDL_INCS) $(FRAMEWORKS) -o $(NAME)
 clean:
 	@rm -f $(NAME)
 re: clean all
 
-#@$(CC) $(SRCS_1) $(SRCS_2) $(SRCS_3) ../a_libft/*.c -I $(HEADER) $(SDL_INCS) $(FRAMEWORKS) -o $(NAME)
+#@$(CC) $(SRCS_1) $(SRCS_2) $(SRCS_3) ../a_libft/*.c -lSDL2 -lSDL2_image -I $(HEADER)
