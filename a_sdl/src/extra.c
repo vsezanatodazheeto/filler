@@ -26,37 +26,44 @@ void		print_everything(t_filler *filler)
 	xx = 0;
 	y = 0;
 
-	ft_printf("    ");
+	// ft_printf("    ");
 	while (x < filler->map->width)
 	{
 		if (xx > 9)
 			xx = 0;
-		ft_printf("{orange}%d{eoc}", xx);
+		// ft_printf("{orange}%d{eoc}", xx);
 		x++;
 		xx++;
 	}
-	ft_printf("\n");
+	// ft_printf("\n");
 	while (i < filler->map->height)
 	{
 		j = 0;
-		ft_printf("{orange}%3d{eoc} ", y);
+		// ft_printf("{orange}%3d{eoc} ", y);
 		while (j < filler->map->width)
 		{
 			if (filler->map->map[i][j] == -1)
-				ft_printf("{green}O");
+			{
+				// ft_printf("{green}O");
+				;
+			}
 			else if (filler->map->map[i][j] == -2)
 			{
-				ft_printf("{red}X");
+				;
+				// ft_printf("{red}X");
 			}
 			else
-				ft_printf("{eoc}.");
+			{
+				// ft_printf("{eoc}.");
+				;
+			}
 			j++;
 		}
-		ft_printf("\n");
+		// ft_printf("\n");
 		i++;
 		y++;
 	}
-		ft_printf("\n");
+		// ft_printf("\n");
 	return ;
 }
 

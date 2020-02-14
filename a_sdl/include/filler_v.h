@@ -20,10 +20,12 @@
 #include <stdio.h> // for fwrite
 #include "../../a_libft/libft.h"
 #include "../../a_printf/header.h"
-#include "../frameworks/SDL2.framework/Headers/SDL.h"
-#include "../frameworks/SDL2_ttf.framework/Headers/SDL_ttf.h"
-#include "../frameworks/SDL2_image.framework/Headers/SDL_image.h"
-#include "../frameworks/SDL2_mixer.framework/Headers/SDL_mixer.h"
+#include <SDL2/SDL.h> //for linux
+#include <SDL2/SDL_image.h> // for linux
+// #include "../frameworks/SDL2.framework/Headers/SDL.h"
+// #include "../frameworks/SDL2_ttf.framework/Headers/SDL_ttf.h"
+// #include "../frameworks/SDL2_image.framework/Headers/SDL_image.h"
+// #include "../frameworks/SDL2_mixer.framework/Headers/SDL_mixer.h"
 
 #define NAME_ALLY "a.out"
 #define NAME_FIELD "Plateau"
@@ -69,6 +71,14 @@ typedef struct			s_filler
 }						t_filler;
 
 /*
+* вспомогательные функции из библиотеки
+*/
+int				ft_tolow(int ch);
+int     		ft_printf(const char *str, ...);
+int     		get_next_line(int fd, char **line);
+char			**ft_strsplit(char const *str, char ch);
+
+/*
 * основные функции filler'a
 */
 void    		init_structs(t_filler *filler, t_piece *piece, t_map *map, t_pos *pos);
@@ -84,6 +94,10 @@ void			record_got_pos(t_filler *filler, char **line);
 * ВИЗУАЛИЗАТОР
 */
 int			init_v(SDL_Window *win, SDL_Surface *scr);
+int			main_v();
+int			init(SDL_Window **win, SDL_Surface **scr);
+int			load(SDL_Surface **john, SDL_Surface **bg, SDL_Surface **scr);
+int 		quit(SDL_Window **win, SDL_Surface **scr, SDL_Surface **john);
 
 /*
 * вспомогательные функции для filler'а
