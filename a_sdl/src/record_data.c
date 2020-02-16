@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:48 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/13 13:52:04 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/16 06:05:13 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,25 @@ void		record_map(t_filler *filler, char **line)
 	return ;
 }
 
-void		record_player(t_filler *filler, int i)
+// void		record_player_name(char **filler, char *name_p)
+// {
+// 	int		i;
+
+// 	i = ft_strlen(name_p);
+// 	*filler = (char **)malloc(sizeof(char*) * i);
+// 	*filler[i] = '\0';
+// 	i--;
+// 	write(1, "aaa\n", 4);
+// 	while (i >= 0)
+// 	{
+// 		*filler[i] = name_p[i];
+// 		i--;
+// 	}
+
+// 	return ;
+// }
+
+void 		record_player(t_filler *filler, int i)
 {
 	if (i)
 	{
@@ -138,16 +156,26 @@ void		record_player(t_filler *filler, int i)
 
 void		check_player(t_filler *filler, char **line)
 {
+	char	**p_1;
+	char	**p_2;
+
+	p_1 = NULL;
+	p_2 = NULL;
 	while (get_next_line(0, &(*line)))
 	{
 		if (**line == '$' && !filler->ally)
 		{
 			if (ft_is_strstr(*line, NAME_ALLY) && ft_is_strstr(*line, "p1"))
+			{
 				record_player(filler, TRUE);
+			}
 			else
+			{
 				record_player(filler, FALSE);
-			break ;
+			}
 		}
+		if (filler->name_ally && filler->name_enemy)
+			break;
 	}
-    return ;
+	return;
 }

@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 21:05:08 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/14 21:50:13 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/16 06:05:28 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int main()
         print_everything(cur_lst);
         cur_lst = cur_lst->next;
     }
-    main_v();
+    main_v(cur_lst);
 
 
 

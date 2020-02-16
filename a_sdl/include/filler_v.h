@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:57 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/14 21:51:47 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/16 06:31:49 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,14 @@
 #include "../frameworks/SDL2_image.framework/Headers/SDL_image.h"
 #include "../frameworks/SDL2_mixer.framework/Headers/SDL_mixer.h"
 
-#define SCREEN_WIDTH 640
-#define SCREEN_HEIGHT 640
+/*
+* visualiser constants
+*/
+#define SCREEN_WIDTH 2560
+#define SCREEN_HEIGHT 1440
+#define INDENT 32
+#define BAR_HEIGHT 112
+#define KEY_HEIGHT 1088
 #define NAME_ALLY "a.out"
 #define NAME_FIELD "Plateau"
 #define NAME_PIECE "Piece"
@@ -62,6 +68,8 @@ typedef struct			s_filler
 {
 	char				ally;
 	char				enemy;
+	char				*name_ally;
+	char				*name_enemy;
 	int					ally_c;
 	int					enemy_c;
 	t_piece				*piece;
@@ -95,11 +103,12 @@ void			record_got_pos(t_filler *filler, char **line);
 * ВИЗУАЛИЗАТОР
 */
 // int			init_v(SDL_Window *win, SDL_Surface *scr);
-int			main_v();
-int			init(SDL_Window **win, SDL_Renderer **rend, SDL_Surface **scr);
-SDL_Texture	*load_texture(SDL_Renderer **rend);
-int 		load(SDL_Texture **textur, SDL_Renderer **rend);
-int 		quit(SDL_Window **win, SDL_Renderer **rend, SDL_Texture **textur);
+int				main_v(t_filler *filler);
+int				init();
+int				create(SDL_Window **win, SDL_Renderer **rend);
+int				load(SDL_Renderer **rend, SDL_Texture **bg, SDL_Texture **m_key, SDL_Texture **m_filler, SDL_Texture **m_p1, SDL_Texture **m_p2, SDL_Texture **m_corona);
+int				quit(SDL_Window **win, SDL_Renderer **rend, SDL_Texture **bg, SDL_Texture **m_key, SDL_Texture **m_p1, SDL_Texture **m_p2);
+SDL_Texture		*load_texture(SDL_Renderer **rend, char *path);
 
 /*
 * вспомогательные функции для filler'а
