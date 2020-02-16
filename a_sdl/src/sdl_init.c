@@ -20,17 +20,24 @@ int				init()
 	flags = IMG_INIT_PNG;
 	if (!(IMG_Init(flags) & flags))
 	{
-		ft_printf("{red}SDL_image could not initialize!{eoc}\n");
+		// ft_printf("{red}SDL_image could not initialize!{eoc}\n");
 		return (1);
 	}
 	//Initialize SDL
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
+	{
 		return (1);
+	}
 	if (TTF_Init() != 0)
+	{
 		return (1);
+	}
 	//Set texture filtering to linear
 	if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
-		ft_printf("{blue}linear texture filtering not enabled!{eoc}\n");
+	{
+		;
+		// ft_printf("{blue}linear texture filtering not enabled!{eoc}\n");
+	}
 	return (0);
 }
 
@@ -40,7 +47,10 @@ int				create(SDL_Window **win, SDL_Renderer **rend)
 
 	render_flags = SDL_RENDERER_ACCELERATED;
 	if(init() != 0)
+	{
+		write(1, "bbb\n", 3);
 		return (1);
+	}
 	//Create window
     if (!(*win = SDL_CreateWindow("Filler",
 									SDL_WINDOWPOS_UNDEFINED,
@@ -60,32 +70,32 @@ int				load(SDL_Renderer **rend, SDL_Texture **bg, SDL_Texture **m_key, SDL_Text
 {
     if(!(*bg = load_texture(&(*rend), "resources/checker.png")))
 	{
-		ft_printf("{red}failed to load texture image!{eoc}\n");
+		// ft_printf("{red}failed to load texture image!{eoc}\n");
         return (1);
 	}
     if(!(*m_key = load_texture(&(*rend), "resources/bg.png")))
 	{
-		ft_printf("{red}failed to load texture image!{eoc}\n");
+		// ft_printf("{red}failed to load texture image!{eoc}\n");
         return (1);
 	}
 	if(!(*m_filler = load_texture(&(*rend), "resources/bg.png")))
 	{
-		ft_printf("{red}failed to load texture image!{eoc}\n");
+		// ft_printf("{red}failed to load texture image!{eoc}\n");
         return (1);
 	}
     if(!(*m_p1 = load_texture(&(*rend), "resources/bg.png")))
 	{
-		ft_printf("{red}failed to load texture image!{eoc}\n");
+		// ft_printf("{red}failed to load texture image!{eoc}\n");
         return (1);
 	}
     if(!(*m_p2 = load_texture(&(*rend), "resources/bg.png")))
 	{
-		ft_printf("{red}failed to load texture image!{eoc}\n");
+		// ft_printf("{red}failed to load texture image!{eoc}\n");
         return (1);
 	}
-	if(!(*m_corona = load_texture(&(*rend), "resources/corona_2.png")))
+	if(!(*m_corona = load_texture(&(*rend), "resources/bg.png")))
 	{
-		ft_printf("{red}failed to load texture image!{eoc}\n");
+		// ft_printf("{red}failed to load texture image!{eoc}\n");
         return (1);
 	}
     return (0);
@@ -118,7 +128,7 @@ SDL_Texture		*load_texture(SDL_Renderer **rend, char *path)
 	
 	if(!(loaded_scr = IMG_Load(path)))
 	{
-		ft_printf("{red}unable to load image!{eoc}\n");
+		// ft_printf("{red}unable to load image!{eoc}\n");
 		return (NULL);
 	}
 	else

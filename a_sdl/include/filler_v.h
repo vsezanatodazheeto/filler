@@ -18,10 +18,11 @@
 #include <fcntl.h> //for open
 #include <unistd.h> //for read
 #include <stdio.h> // for fwrite
-#include "../../a_libft/libft.h"
 #include "../../a_printf/header.h"
+#include "../../a_libft/libft.h"
 #include <SDL2/SDL.h> //for linux
 #include <SDL2/SDL_image.h> // for linux
+#include <SDL2/SDL_ttf.h> // for linux
 // #include "../frameworks/SDL2.framework/Headers/SDL.h"
 // #include "../frameworks/SDL2_ttf.framework/Headers/SDL_ttf.h"
 // #include "../frameworks/SDL2_image.framework/Headers/SDL_image.h"
@@ -30,11 +31,14 @@
 /*
 * visualiser constants
 */
-#define SCREEN_WIDTH 2560
-#define SCREEN_HEIGHT 1440
-#define INDENT 32
-#define BAR_HEIGHT 112
+#define SCREEN_WIDTH 1920
+#define SCREEN_HEIGHT 1080
+#define INDENT 16
+#define BAR_HEIGHT 90
 #define KEY_HEIGHT 1088
+/*
+* filler constants
+*/
 #define NAME_ALLY "a.out"
 #define NAME_FIELD "Plateau"
 #define NAME_PIECE "Piece"
@@ -83,7 +87,7 @@ typedef struct			s_filler
 * вспомогательные функции из библиотеки
 */
 int				ft_tolow(int ch);
-int     		ft_printf(const char *str, ...);
+// int     		ft_printf(const char *str, ...);
 int     		get_next_line(int fd, char **line);
 char			**ft_strsplit(char const *str, char ch);
 
