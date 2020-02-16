@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:57 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/16 06:31:49 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/16 06:38:09 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@
 #include <stdio.h> // for fwrite
 #include "../../a_libft/libft.h"
 #include "../../a_printf/header.h"
-// #include <SDL2/SDL.h> //for linux
-// #include <SDL2/SDL_image.h> // for linux
-#include "../frameworks/SDL2.framework/Headers/SDL.h"
-#include "../frameworks/SDL2_ttf.framework/Headers/SDL_ttf.h"
-#include "../frameworks/SDL2_image.framework/Headers/SDL_image.h"
-#include "../frameworks/SDL2_mixer.framework/Headers/SDL_mixer.h"
+#include <SDL2/SDL.h> //for linux
+#include <SDL2/SDL_image.h> // for linux
+// #include "../frameworks/SDL2.framework/Headers/SDL.h"
+// #include "../frameworks/SDL2_ttf.framework/Headers/SDL_ttf.h"
+// #include "../frameworks/SDL2_image.framework/Headers/SDL_image.h"
+// #include "../frameworks/SDL2_mixer.framework/Headers/SDL_mixer.h"
 
 /*
 * visualiser constants

@@ -24,9 +24,8 @@ SRCS_2 = $(addprefix $(DIR_S_2)/,$(SOURCES_2))
 SRCS_3 = $(addprefix $(DIR_S_3)/,$(SOURCES_3))
 
 all:
-	@$(CC) $(SRCS_1) $(SRCS_2) $(SRCS_3) ../a_libft/*.c -I $(HEADER) $(SDL_INCS) $(FRAMEWORKS) -o $(NAME)
+	@$(CC) $(SRCS_1) $(SRCS_2) $(SRCS_3) ../a_libft/*.c -lSDL2 -lSDL2_image -I $(HEADER)
 clean:
 	@rm -f $(NAME)
 re: clean all
-
-#@$(CC) $(SRCS_1) $(SRCS_2) $(SRCS_3) ../a_libft/*.c -lSDL2 -lSDL2_image -I $(HEADER)
+@$(CC) $(SRCS_1) $(SRCS_2) $(SRCS_3) ../a_libft/*.c -I $(HEADER) $(SDL_INCS) $(FRAMEWORKS) -o $(NAME)
