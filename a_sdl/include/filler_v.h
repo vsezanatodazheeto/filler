@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:57 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/16 06:38:09 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/17 09:41:17 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,34 @@
 #include <stdio.h> // for fwrite
 #include "../../a_printf/header.h"
 #include "../../a_libft/libft.h"
-#include <SDL2/SDL.h> //for linux
-#include <SDL2/SDL_image.h> // for linux
-#include <SDL2/SDL_ttf.h> // for linux
-// #include "../frameworks/SDL2.framework/Headers/SDL.h"
-// #include "../frameworks/SDL2_ttf.framework/Headers/SDL_ttf.h"
-// #include "../frameworks/SDL2_image.framework/Headers/SDL_image.h"
-// #include "../frameworks/SDL2_mixer.framework/Headers/SDL_mixer.h"
+// #include <SDL2/SDL.h> //for linux
+// #include <SDL2/SDL_image.h> // for linux
+// #include <SDL2/SDL_ttf.h> // for linux
+#include "../frameworks/SDL2.framework/Headers/SDL.h"
+#include "../frameworks/SDL2_ttf.framework/Headers/SDL_ttf.h"
+#include "../frameworks/SDL2_image.framework/Headers/SDL_image.h"
+#include "../frameworks/SDL2_mixer.framework/Headers/SDL_mixer.h"
 
 /*
 * visualiser constants
 */
-#define SCREEN_WIDTH 1920
-#define SCREEN_HEIGHT 1080
-#define INDENT 16
-#define BAR_HEIGHT 90
+// 2560×1440 fullscreen mac
+#define SCREEN_WIDTH 1600
+#define SCREEN_HEIGHT 1120
+#define INDENT 32
+#define BAR_HEIGHT 64
 #define KEY_HEIGHT 1088
+#define FONT_SIZE 50
+#define FONT_SIZE_2 50
+#define K_QUIT "CMD + W"
+#define QUIT "quit"
+#define K_PAUSE "SPACE"
+#define PAUSE "pause"
+#define RESUME "resume"
+#define F_BACK "back"
+#define F_FORWARD "forward"
+#define BLEND_ON SDL_BLENDMODE_MOD
+#define BLEND_OFF SDL_BLENDMODE_BLEND
 /*
 * filler constants
 */
@@ -46,6 +58,62 @@
 #define HGT 4
 #define TRUE 1
 #define FALSE 0
+
+typedef struct			s_rect
+{
+	SDL_Rect			bg;
+    SDL_Rect			key;
+    SDL_Rect			filler;
+    SDL_Rect			bar;
+    SDL_Rect			k_quit;
+    SDL_Rect			quit;
+    SDL_Rect			k_pause;
+    SDL_Rect			pause;
+    SDL_Rect			resume;
+    SDL_Rect			cur;
+    SDL_Rect			back;
+    SDL_Rect			forward;
+    SDL_Rect			p_mvb;
+}						t_rect;
+
+typedef struct			s_font
+{
+	SDL_Texture			*k_quit;
+	SDL_Texture			*quit;
+	SDL_Texture			*k_pause;
+	SDL_Texture			*pause;
+	SDL_Texture			*resume;
+	SDL_Texture			*back;
+	SDL_Texture			*forward;
+	SDL_Texture			*p1;
+	SDL_Texture			*p2;
+
+}						t_font;
+
+typedef struct			s_textur
+{
+	SDL_Texture			*bg;
+    SDL_Texture			*cur;
+    SDL_Texture			*m_key;
+    SDL_Texture			*m_filler;
+    SDL_Texture			*m_bar;
+}						t_textur;
+
+typedef struct			s_rend
+{
+	SDL_RendererFlip 	flip;
+	SDL_BlendMode		blend_p;
+	SDL_BlendMode		blend_r;
+	SDL_Renderer 		*rend;
+	t_textur			*t;
+	t_font				*f;
+	t_rect				*rect;
+}						t_rend;
+
+
+
+
+
 
 typedef struct			s_map
 {
@@ -79,9 +147,36 @@ typedef struct			s_filler
 	t_piece				*piece;
 	t_map				*map;
 	t_pos				*pos;
-    struct s_filler    *next;
-    struct s_filler    *prev;
+    struct s_filler		*next;
+    struct s_filler		*prev;
 }						t_filler;
+
+/*
+* ВИЗУАЛИЗАТОР
+*/
+int					main_v(t_filler *filler);
+int					init_lib();
+void				init_t_rend(t_rend *r, t_textur *t, t_font *f, t_rect *rect);
+int					create(SDL_Window **win, t_rend *r);
+int					create_textur(t_rend *r);
+void				create_font(t_rend *r);
+int					quit(SDL_Window **win, t_rend *r);
+
+SDL_Texture			*load_texture(SDL_Renderer **rend, char *path);
+SDL_Texture			*load_font(SDL_Renderer **rend, char *path, int size);
+
+void				draw_bacground(t_rend *r, t_rect *rect);
+void				draw_fillboard(t_rend *r, t_rect *rect);
+void				draw_keyboard(t_rend *r, t_rect *rect);
+void				draw_bar(t_rend *r, t_rect *rect);
+void				draw_msg_quit(t_rend *r, t_rect *rect);
+void				draw_msg_pause(t_rend *r, t_rect *rect);
+void				draw_msg_cursor_back(t_rend *r, t_rect *rect);
+void				draw_msg_cursor_forward(t_rend *r, t_rect *rect);
+
+/*
+*
+*/
 
 /*
 * вспомогательные функции из библиотеки
@@ -103,16 +198,6 @@ void			record_piece(t_filler *filler, char **line);
 void			record_piece_positions(t_filler *filler, char **line);
 void			record_got_pos(t_filler *filler, char **line);
 
-/*
-* ВИЗУАЛИЗАТОР
-*/
-// int			init_v(SDL_Window *win, SDL_Surface *scr);
-int				main_v(t_filler *filler);
-int				init();
-int				create(SDL_Window **win, SDL_Renderer **rend);
-int				load(SDL_Renderer **rend, SDL_Texture **bg, SDL_Texture **m_key, SDL_Texture **m_filler, SDL_Texture **m_p1, SDL_Texture **m_p2, SDL_Texture **m_corona);
-int				quit(SDL_Window **win, SDL_Renderer **rend, SDL_Texture **bg, SDL_Texture **m_key, SDL_Texture **m_p1, SDL_Texture **m_p2);
-SDL_Texture		*load_texture(SDL_Renderer **rend, char *path);
 
 /*
 * вспомогательные функции для filler'а
