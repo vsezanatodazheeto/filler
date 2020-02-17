@@ -143,7 +143,16 @@ int			manhattan_formula(int x, int y, int i, int j)
 		b = y - j;
 	return (a + b);
 }
-
+void		ft_strdbl_del(char ***str)
+{
+	while (**str)
+	{	
+		free(&(**str));
+		(*str)++;
+	}
+	free(*str);
+	return ;
+}
 int			ft_is_strstr(char *str_dad, char *str_son)
 {
 	int		i;

@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:57 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/17 09:41:17 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/17 11:39:26 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,11 @@ typedef struct			s_rend
 
 
 
+typedef struct			s_players
+{
+	char				*p1;
+	int					*p2;
+}						t_players;
 
 typedef struct			s_map
 {
@@ -190,7 +195,7 @@ char			**ft_strsplit(char const *str, char ch);
 * основные функции filler'a
 */
 void    		init_structs(t_filler *filler, t_piece *piece, t_map *map, t_pos *pos);
-void    		check_player(t_filler *filler, char **line);
+void			check_player(t_filler *filler, t_players *players, char **line);
 void			record_player(t_filler *filler, int i);
 void			record_map(t_filler *filler, char **line);
 void			record_map_positions(t_filler *filler, char **line);

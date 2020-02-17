@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 07:53:09 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/12 07:53:21 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/17 11:42:42 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,17 @@ void		record_map(t_filler *filler, char **line)
 	char	**tmp;
 
 	j = 0;
+	int i = 0;
 	tmp = ft_strsplit(*line, ' ');
 	filler->map->height = ft_atoi(*(tmp + 1));
 	filler->map->width = ft_atoi(*(tmp + 2));
-	ft_memdel((void **)tmp);
+	// while (*tmp)
+	// {
+		// free(&(*tmp));
+		// tmp++;
+	// }
+	// free(tmp);
+	ft_strdbl_del(&tmp);
 	if (!(filler->map->map = (int **)malloc(sizeof(int *) * filler->map->height)))
 		exit(1);
 	while (j < filler->map->height)

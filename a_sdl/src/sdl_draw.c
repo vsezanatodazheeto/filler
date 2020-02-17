@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:37:15 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/17 10:39:55 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/17 10:49:50 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,9 @@ void				draw_msg_quit(t_rend *r, t_rect *rect)
 
 void				draw_bar(t_rend *r, t_rect *rect)
 {
-	rect->bar.x = INDENT;
+	rect->bar.x = INDENT + 300;
 	rect->bar.y = rect->filler.h + (INDENT * 2);
-	rect->bar.w = SCREEN_WIDTH - (INDENT * 2);
+	rect->bar.w = SCREEN_WIDTH - (INDENT * 2) - 300 * 2;
 	rect->bar.h = BAR_HEIGHT;
 	SDL_SetTextureColorMod(r->t->m_bar, 0, 0, 0);
 	SDL_SetTextureAlphaMod(r->t->m_bar, 255);

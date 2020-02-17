@@ -6,13 +6,13 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:48 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/16 06:05:13 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/17 11:39:48 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/filler_v.h"
 
-void		record_got_pos(t_filler *filler, char **line)
+void			record_got_pos(t_filler *filler, char **line)
 {
 	char	**tmp;
 
@@ -28,7 +28,7 @@ void		record_got_pos(t_filler *filler, char **line)
 	return ;
 }
 
-void		record_piece_positions(t_filler *filler, char **line)
+void			record_piece_positions(t_filler *filler, char **line)
 {
 	int		i;
 	int		j;
@@ -51,7 +51,7 @@ void		record_piece_positions(t_filler *filler, char **line)
 	return ;
 }
 
-void		record_piece(t_filler *filler, char **line)
+void			record_piece(t_filler *filler, char **line)
 {	
 	int		j;
 	char	**tmp;
@@ -72,7 +72,7 @@ void		record_piece(t_filler *filler, char **line)
 	return ;
 }
 
-void		record_map_positions(t_filler *filler, char **line)
+void			record_map_positions(t_filler *filler, char **line)
 {
 	int		i;
 	int		j;
@@ -101,7 +101,7 @@ void		record_map_positions(t_filler *filler, char **line)
 	return ;
 }
 
-void		record_map(t_filler *filler, char **line)
+void			record_map(t_filler *filler, char **line)
 {
 	int		j;
 	char	**tmp;
@@ -122,7 +122,7 @@ void		record_map(t_filler *filler, char **line)
 	return ;
 }
 
-// void		record_player_name(char **filler, char *name_p)
+// void			record_player_name(char **filler, char *name_p)
 // {
 // 	int		i;
 
@@ -140,7 +140,7 @@ void		record_map(t_filler *filler, char **line)
 // 	return ;
 // }
 
-void 		record_player(t_filler *filler, int i)
+void 			record_player(t_filler *filler, int i)
 {
 	if (i)
 	{
@@ -154,7 +154,7 @@ void 		record_player(t_filler *filler, int i)
 	}
 }
 
-void		check_player(t_filler *filler, char **line)
+void			check_player(t_filler *filler, t_players *players, char **line)
 {
 	char	**p_1;
 	char	**p_2;

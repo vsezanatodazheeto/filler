@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:37:06 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/17 10:36:38 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/17 10:58:04 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,3 +119,15 @@ int                 main_v (t_filler *lst)
 //     SDL_BlitSurface(bg, NULL, scr, &r);
 //     SDL_UpdateWindowSurface(win);
 // }
+
+
+
+// ПОНАДОБИТСЯ ДЛЯ BAR
+// SDL_SetRenderTarget(r, destiny);
+// SDL_SetBlendMod(r, SDL_BLENDMODE_NONE);
+// SDL_RenderCopy(r, source, destiny);
+// SDL_SetBlendMod(r, SDL_BLENDMODE_BLEND);
+// for(/* Each mask as m*/){ */
+//     SDL_SetColorMod(m, c[i].r, c[i].g, c[i].b);
+//     SDL_RenderCopy(r, source, destiny);
+}
