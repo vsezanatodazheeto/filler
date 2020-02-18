@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 01:17:40 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/16 05:36:41 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/18 12:27:31 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,13 @@ void		print_everything(t_filler *filler)
 	return ;
 }
 
+void		init_struct_players(t_players *players)
+{
+	players->p1 = NULL;
+	players->p2 = NULL;
+	return ;
+}
+
 void 		init_structs(t_filler *cur_lst, t_piece *piece, t_map *map, t_pos *pos)
 {
 	pos->i = 0;
@@ -80,8 +87,6 @@ void 		init_structs(t_filler *cur_lst, t_piece *piece, t_map *map, t_pos *pos)
 	piece->piece = NULL;
 	cur_lst->ally = '\0';
 	cur_lst->enemy = '\0';
-	cur_lst->name_ally = NULL;
-	cur_lst->name_enemy = NULL;
 	cur_lst->piece = NULL;
 	cur_lst->map = map;
 	cur_lst->piece = piece;

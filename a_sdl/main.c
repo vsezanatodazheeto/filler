@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 21:05:08 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/17 11:38:46 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/18 12:37:01 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int main()
 	t_piece		*piece;
 	t_map		*map;
 	t_pos		*pos;
-    t_players   *players;
+    t_players   players[1];
 	char 		*line;
 	int			i;
 
@@ -59,6 +59,7 @@ int main()
     fst_lst = new_t_filler();
 	cur_lst = fst_lst;
     line = NULL;
+    init_struct_players(players);
 	check_player(cur_lst, players, &line);
     while(++i < 12)
     {
@@ -71,7 +72,9 @@ int main()
         print_everything(cur_lst);
         cur_lst = cur_lst->next;
     }
-    main_v(cur_lst);
+    ft_printf("%s\n", players->p1);
+    ft_printf("%s\n", players->p2);
+    main_v(cur_lst, players);
 
 
 

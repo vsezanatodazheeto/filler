@@ -6,13 +6,13 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:37:06 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/17 10:58:04 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/18 12:48:16 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/filler_v.h"
 
-int                 main_v (t_filler *lst)
+int                 main_v (t_filler *lst, t_players *player)
 {
 	SDL_Window      *win = NULL;
     t_rect			rect[1];
@@ -32,7 +32,7 @@ int                 main_v (t_filler *lst)
 
 	init_t_rend(r, t, f, rect);
 
-    if (create(&win, r))
+    if (create(&win, r, player))
         return (1);
     while (run)
     {
@@ -77,6 +77,7 @@ int                 main_v (t_filler *lst)
 		draw_msg_pause(r, rect);
         draw_msg_cursor_back(r, rect);
         draw_msg_cursor_forward(r, rect);
+		draw_player(r, rect);
         //Update screen
         SDL_RenderPresent(r->rend);
     }
@@ -130,4 +131,3 @@ int                 main_v (t_filler *lst)
 // for(/* Each mask as m*/){ */
 //     SDL_SetColorMod(m, c[i].r, c[i].g, c[i].b);
 //     SDL_RenderCopy(r, source, destiny);
-}

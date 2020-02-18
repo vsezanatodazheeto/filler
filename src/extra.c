@@ -98,11 +98,11 @@ void		printf_map(t_filler *filler)
 void		free_data(t_filler *filler, char **line)
 {
 	if (filler->map->map)
-		ft_memdel((void **)&filler->map->map);
+		ft_arrdel((void ***)&filler->map->map);
 	if (filler->piece->piece)
-		ft_memdel((void **)&filler->piece->piece);
-	if (line)
-		ft_memdel((void **)&line);
+		ft_arrdel((void ***)&filler->piece->piece);
+	if (*line)
+		free(*line);
 	return ;
 }
 
@@ -143,16 +143,22 @@ int			manhattan_formula(int x, int y, int i, int j)
 		b = y - j;
 	return (a + b);
 }
-void		ft_strdbl_del(char ***str)
+
+void		ft_arrdel(void ***arr)
 {
-	while (**str)
-	{	
-		free(&(**str));
-		(*str)++;
+	void	**first;
+
+	first = *arr;
+	while (**arr)
+	{
+		free(**arr);
+		(*arr)++;
 	}
-	free(*str);
+	free(first);
+	first = NULL;
 	return ;
 }
+
 int			ft_is_strstr(char *str_dad, char *str_son)
 {
 	int		i;

@@ -6,7 +6,7 @@
 #    By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/10 19:41:13 by yshawn            #+#    #+#              #
-#    Updated: 2020/02/12 07:56:29 by yshawn           ###   ########.fr        #
+#    Updated: 2020/02/18 08:52:16 by yshawn           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ SRCS_1 = $(addprefix $(DIR_S_1)/,$(SOURCES_1))
 SRCS_2 = $(addprefix $(DIR_S_2)/,$(SOURCES_2))
 SRCS_3 = $(addprefix $(DIR_S_3)/,$(SOURCES_3))
 all:
-	@$(CC) $(SRCS_1) $(SRCS_2) $(SRCS_3) a_libft/*.c -I $(HEADER)
+	@$(CC) $(SRCS_1) $(SRCS_2) $(SRCS_3) a_my_libft/*.c -I $(HEADER)
 clean:
 	@rm -f $(NAME)
 	@rm -f filler.trace

@@ -6,11 +6,28 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:37:15 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/17 10:49:50 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/18 20:58:41 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/filler_v.h"
+
+void				draw_player(t_rend *r, t_rect *rect)
+{
+	rect->p1.x = INDENT + 10;
+	rect->p1.y = rect->filler.h + (INDENT * 2) + 10;
+	rect->p1.w = rect->key.w;
+	rect->p1.h = BAR_HEIGHT;
+	SDL_QueryTexture(r->f->p1, NULL, NULL, &(rect->p1.w), &(rect->p1.h));
+	SDL_RenderCopy(r->rend, r->f->p1, NULL, &(rect->p1));
+	rect->p2.x = SCREEN_WIDTH - (INDENT * 2) - (r->player->p2_len * 18) ;
+	rect->p2.y = rect->filler.h + (INDENT * 2) + 10;
+	rect->p2.w = (r->player->p2_len * 18);
+	rect->p2.h = BAR_HEIGHT;
+	SDL_QueryTexture(r->f->p2, NULL, NULL, &(rect->p2.w), &(rect->p2.h));
+	SDL_RenderCopy(r->rend, r->f->p2, NULL, &(rect->p2));
+	return ;
+}
 
 void				draw_msg_cursor_forward(t_rend *r, t_rect *rect)
 {
@@ -88,9 +105,9 @@ void				draw_msg_quit(t_rend *r, t_rect *rect)
 
 void				draw_bar(t_rend *r, t_rect *rect)
 {
-	rect->bar.x = INDENT + 300;
+	rect->bar.x = INDENT;
 	rect->bar.y = rect->filler.h + (INDENT * 2);
-	rect->bar.w = SCREEN_WIDTH - (INDENT * 2) - 300 * 2;
+	rect->bar.w = SCREEN_WIDTH - (INDENT * 2);
 	rect->bar.h = BAR_HEIGHT;
 	SDL_SetTextureColorMod(r->t->m_bar, 0, 0, 0);
 	SDL_SetTextureAlphaMod(r->t->m_bar, 255);

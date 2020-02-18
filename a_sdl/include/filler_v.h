@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:57 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/17 11:39:26 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/18 13:15:11 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,13 @@
 #define TRUE 1
 #define FALSE 0
 
+typedef struct			s_players
+{
+	char				*p1;
+	char				*p2;
+	int					p2_len;
+}						t_players;
+
 typedef struct			s_rect
 {
 	SDL_Rect			bg;
@@ -73,7 +80,8 @@ typedef struct			s_rect
     SDL_Rect			cur;
     SDL_Rect			back;
     SDL_Rect			forward;
-    SDL_Rect			p_mvb;
+    SDL_Rect			p1;
+    SDL_Rect			p2;
 }						t_rect;
 
 typedef struct			s_font
@@ -105,6 +113,7 @@ typedef struct			s_rend
 	SDL_BlendMode		blend_p;
 	SDL_BlendMode		blend_r;
 	SDL_Renderer 		*rend;
+	t_players			*player;
 	t_textur			*t;
 	t_font				*f;
 	t_rect				*rect;
@@ -114,11 +123,7 @@ typedef struct			s_rend
 
 
 
-typedef struct			s_players
-{
-	char				*p1;
-	int					*p2;
-}						t_players;
+
 
 typedef struct			s_map
 {
@@ -145,8 +150,6 @@ typedef struct			s_filler
 {
 	char				ally;
 	char				enemy;
-	char				*name_ally;
-	char				*name_enemy;
 	int					ally_c;
 	int					enemy_c;
 	t_piece				*piece;
@@ -159,12 +162,12 @@ typedef struct			s_filler
 /*
 * ВИЗУАЛИЗАТОР
 */
-int					main_v(t_filler *filler);
+int					main_v(t_filler *filler, t_players *players);
 int					init_lib();
 void				init_t_rend(t_rend *r, t_textur *t, t_font *f, t_rect *rect);
-int					create(SDL_Window **win, t_rend *r);
+int					create(SDL_Window **win, t_rend *r, t_players *player);
 int					create_textur(t_rend *r);
-void				create_font(t_rend *r);
+void				create_font(t_rend *r, t_players *player);
 int					quit(SDL_Window **win, t_rend *r);
 
 SDL_Texture			*load_texture(SDL_Renderer **rend, char *path);
@@ -178,6 +181,7 @@ void				draw_msg_quit(t_rend *r, t_rect *rect);
 void				draw_msg_pause(t_rend *r, t_rect *rect);
 void				draw_msg_cursor_back(t_rend *r, t_rect *rect);
 void				draw_msg_cursor_forward(t_rend *r, t_rect *rect);
+void				draw_player(t_rend *r, t_rect *rect);
 
 /*
 *
@@ -194,6 +198,7 @@ char			**ft_strsplit(char const *str, char ch);
 /*
 * основные функции filler'a
 */
+void			init_struct_players(t_players *players);
 void    		init_structs(t_filler *filler, t_piece *piece, t_map *map, t_pos *pos);
 void			check_player(t_filler *filler, t_players *players, char **line);
 void			record_player(t_filler *filler, int i);

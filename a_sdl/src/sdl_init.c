@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:37:15 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/17 09:44:37 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/18 13:04:26 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int				quit(SDL_Window **win, t_rend *r)
     return 0;
 }
 
-void				create_font(t_rend *r)
+void				create_font(t_rend *r, t_players *player)
 {
 	r->f->k_quit = load_font(&(r->rend), K_QUIT, FONT_SIZE);
 	r->f->quit = load_font(&(r->rend), QUIT, FONT_SIZE_2);
@@ -49,6 +49,8 @@ void				create_font(t_rend *r)
     r->f->resume = load_font(&(r->rend), RESUME, FONT_SIZE_2);
     r->f->back = load_font(&(r->rend), F_BACK, FONT_SIZE_2);
     r->f->forward = load_font(&(r->rend), F_FORWARD, FONT_SIZE_2);
+	r->f->p1 = load_font(&(r->rend), player->p1, FONT_SIZE);
+	r->f->p2 = load_font(&(r->rend), player->p2, FONT_SIZE);
     // f->mv_fw = load_font(&(*rend), F_FORW);
     // r->f->arr_bk = load_texture(&(r->rend), "resources/arrow.png");
 	return ;
@@ -69,7 +71,7 @@ int				create_textur(t_rend *r)
     return (0);
 }
 
-int				create(SDL_Window **win, t_rend *r)
+int				create(SDL_Window **win, t_rend *r, t_players *player)
 {
 	Uint32 render_flags;
 
@@ -85,8 +87,10 @@ int				create(SDL_Window **win, t_rend *r)
 	else
 		SDL_SetRenderDrawColor(r->rend, 255, 255, 255, 255);
 	// CREATE RENDER DATA
-	create_font(r);
+	create_font(r, player);
 	create_textur(r);
+	r->player = player;
+	ft_printf("%d\n", r->player->p2_len);
     return (0);
 }
 

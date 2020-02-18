@@ -42,6 +42,7 @@ typedef struct	s_filler
 {
 	char		ally;
 	char		enemy;
+	int			fd;
 	t_piece		*piece;
 	t_map		*map;
 	t_pos		*pos;
@@ -59,12 +60,12 @@ char			**ft_strsplit(char const *str, char ch);
 * основные функции filler'a
 */
 void    		init_structs(t_filler *filler, t_piece *piece, t_map *map, t_pos *pos);
-void    		check_starting_data(t_filler *filler, char **line);
+int				check_starting_data(t_filler *filler, char **line);
 void			solving_filler(t_filler *filler, char **line);
 void			record_player(t_filler *filler, int i);
-void			record_map(t_filler *filler, char **line);
+int				record_map(t_filler *filler, char **line);
 void			record_map_positions(t_filler *filler, char **line);
-void			record_piece(t_filler *filler, char **line);
+int				record_piece(t_filler *filler, char **line);
 void			record_piece_positions(t_filler *filler, char **line);
 void			fill_manhattan_distance(t_filler *filler);
 void			free_data(t_filler *filler, char **line);
@@ -76,6 +77,7 @@ int				ft_is_strstr(char *str_dad, char *str_son);
 int				manhattan_formula(int x, int y, int i, int j);
 void			printf_map(t_filler *filler); //delete me
 void			printf_map_fill(t_filler *filler); // delete me
+void			ft_arrdel(void ***arr);
 
 #endif
 

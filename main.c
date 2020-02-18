@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 07:54:15 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/12 07:54:17 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/18 23:26:53 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,9 @@ void        find_best_pos(t_filler *filler)
                 {           
                     min = s;
                     filler->pos->i = i;
+					// ft_printf("%d ", filler->pos->i);
                     filler->pos->j = j;
+					// ft_printf("%d\n", filler->pos->j);
                 }
             }
             j++;
@@ -123,32 +125,36 @@ void        fill_manhattan_distance(t_filler *filler)
 
 void        solving_filler(t_filler *filler, char **line)
 {
-	while (get_next_line(0, &(*line)))
+	while (get_next_line(filler->fd, &(*line)))
 	{
 		if (**line == 'P' && ft_is_strstr(*line, NAME_FIELD))
 		{
 			if (!filler->map->map)
-				record_map(filler, &(*line));
+				if (record_map(filler, &(*line)) == 1)
+					break ;
 			record_map_positions(filler, &(*line));
 			fill_manhattan_distance(filler);
 		}
 		else if (**line == 'P' && ft_is_strstr(*line, NAME_PIECE))
 		{
-			record_piece(filler, &(*line));
+			if (record_piece(filler, &(*line)) == 1)
+				break ;
 			record_piece_positions(filler, &(*line));
 		 	find_best_pos(filler);
             // printf_map_fill(filler);
-			if (filler->pos->i == 0 && filler->pos->j == 0)
-				return ;
-			ft_printf("%d %d\n", filler->pos->i - 1, filler->pos->j);
+			// if (filler->pos->i == 0 && filler->pos->j == 0)
+			// 	return ;
+            // if (filler->pos->i != 0)
+            //     (filler->pos->i)--;
+			ft_printf("%d %d\n", filler->pos->i, filler->pos->j);
 		}
 	}
 	return ;
 }
 
-void		check_starting_data(t_filler *filler, char **line)
+int			check_starting_data(t_filler *filler, char **line)
 {
-	while (get_next_line(0, &(*line)))
+	while (get_next_line(filler->fd, &(*line)))
 	{
 		if (**line == '$' && !filler->ally)
 		{
@@ -159,7 +165,7 @@ void		check_starting_data(t_filler *filler, char **line)
 			break ;
 		}
 	}
-    return ;
+    return (filler->ally && filler->enemy ? 0: 1);
 }
 
 int			main(void)
@@ -171,9 +177,16 @@ int			main(void)
 	char 		*line;
 
 	line = NULL;
+    filler->fd = 0;
+    // filler->fd = open("z_example", O_RDONLY);
 	init_structs(filler, piece, map, pos);
-	check_starting_data(filler, &line);
+	if (check_starting_data(filler, &line) == 1)
+	{
+		ft_strdel(&line);
+		return (1);
+	}
     solving_filler(filler, &line);
-    // free_data(filler, &line);
+    free_data(filler, &line);
+	// close(filler->fd);
 	return (0);
 }

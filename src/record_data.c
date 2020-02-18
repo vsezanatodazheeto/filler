@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 07:53:09 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/17 11:42:42 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/18 23:27:21 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void		record_piece_positions(t_filler *filler, char **line)
 
 	i = 0;
 	j = 0;
-	while (i < filler->piece->height && get_next_line(0, &(*line)))
+	while (i < filler->piece->height && get_next_line(filler->fd, &(*line)))
 	{
 		j = 0;
 		while (j < filler->piece->width)
@@ -35,7 +35,7 @@ void		record_piece_positions(t_filler *filler, char **line)
 	return ;
 }
 
-void		record_piece(t_filler *filler, char **line)
+int			record_piece(t_filler *filler, char **line)
 {	
 	int		j;
 	char	**tmp;
@@ -44,16 +44,24 @@ void		record_piece(t_filler *filler, char **line)
 	tmp = ft_strsplit(*line, ' ');
 	filler->piece->height = ft_atoi(*(tmp + 1));
 	filler->piece->width = ft_atoi(*(tmp + 2));
-	ft_memdel((void **)tmp);
-	if (!(filler->piece->piece = (int **)malloc(sizeof(int *) * filler->piece->height)))
-		exit(1);
+	ft_arrdel((void ***)&tmp);
+	if (filler->piece->piece)
+		ft_arrdel((void ***)&filler->piece->piece);
+	if (!(filler->piece->piece = (int **)malloc(sizeof(int *) * (filler->piece->height + 1))))
+		return (1);
+	else
+		filler->piece->piece[filler->piece->height] = NULL;
 	while (j < filler->piece->height)
 	{
 		if (!(filler->piece->piece[j] = (int *)malloc(sizeof(int) * filler->piece->width)))
-			exit(1);
+		{
+			filler->piece->piece[j] = NULL;
+			ft_arrdel((void ***)&filler->piece->piece);
+			return (1);
+		}
 		j++;
 	}
-	return ;
+	return (0);
 }
 
 void		record_map_positions(t_filler *filler, char **line)
@@ -63,7 +71,10 @@ void		record_map_positions(t_filler *filler, char **line)
 
 	i = 0;
 	j = 0;
-	while (i < filler->map->height && get_next_line(0, &(*line)))
+	// exit(1);
+	if (get_next_line(0, &(*line)))
+	 		;
+	while (i < filler->map->height && get_next_line(filler->fd, &(*line)))
 	{
 		j = 0;
 		while (j < filler->map->width)
@@ -85,7 +96,7 @@ void		record_map_positions(t_filler *filler, char **line)
 	return ;
 }
 
-void		record_map(t_filler *filler, char **line)
+int			record_map(t_filler *filler, char **line)
 {
 	int		j;
 	char	**tmp;
@@ -95,22 +106,22 @@ void		record_map(t_filler *filler, char **line)
 	tmp = ft_strsplit(*line, ' ');
 	filler->map->height = ft_atoi(*(tmp + 1));
 	filler->map->width = ft_atoi(*(tmp + 2));
-	// while (*tmp)
-	// {
-		// free(&(*tmp));
-		// tmp++;
-	// }
-	// free(tmp);
-	ft_strdbl_del(&tmp);
-	if (!(filler->map->map = (int **)malloc(sizeof(int *) * filler->map->height)))
-		exit(1);
+	ft_arrdel((void ***)&tmp);
+	if (!(filler->map->map = (int **)malloc(sizeof(int *) * (filler->map->height + 1))))
+		return (1);
+	else
+		filler->map->map[filler->map->height] = NULL;
 	while (j < filler->map->height)
 	{
 		if (!(filler->map->map[j] = (int *)malloc(sizeof(int) * filler->map->width)))
-			exit(1);
+		{
+			filler->map->map[j] = NULL;
+			ft_arrdel((void ***)&filler->map->map);
+			return (1);
+		}
 		j++;
 	}
-	return ;
+	return (0);
 }
 
 void		record_player(t_filler *filler, int i)

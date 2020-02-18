@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:48 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/17 11:39:48 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/18 12:54:10 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,26 +156,38 @@ void 			record_player(t_filler *filler, int i)
 
 void			check_player(t_filler *filler, t_players *players, char **line)
 {
-	char	**p_1;
-	char	**p_2;
+	int			i;
+	int			z;
+	char		**p_1;
+	char		**p_2;
 
+	i = 0;
+	z = 0;
 	p_1 = NULL;
 	p_2 = NULL;
 	while (get_next_line(0, &(*line)))
 	{
-		if (**line == '$' && !filler->ally)
+		if (**line == 'l' && z == 1)
+		{
+			p_2 = ft_strsplit(*line, '/');
+			players->p2 = ft_strdup(p_2[1]);
+			players->p2_len = ft_strlen(players->p2);
+			break ;
+		}
+		if (**line == 'l' && z == 0)
+		{
+			p_1 = ft_strsplit(*line, '/');
+			players->p1 = ft_strdup(p_1[1]);
+			z = 1;
+		}
+		if (**line == '$' && !filler->ally && i == 0)
 		{
 			if (ft_is_strstr(*line, NAME_ALLY) && ft_is_strstr(*line, "p1"))
-			{
 				record_player(filler, TRUE);
-			}
 			else
-			{
 				record_player(filler, FALSE);
-			}
+			i = 1;
 		}
-		if (filler->name_ally && filler->name_enemy)
-			break;
 	}
 	return;
 }
