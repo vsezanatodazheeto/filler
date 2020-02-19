@@ -6,11 +6,12 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:48 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/18 12:54:10 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/19 17:14:07 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/filler_v.h"
+#include "../include/filler.h"
+#include "../include/sdl.h"
 
 void			record_got_pos(t_filler *filler, char **line)
 {
@@ -171,7 +172,6 @@ void			check_player(t_filler *filler, t_players *players, char **line)
 		{
 			p_2 = ft_strsplit(*line, '/');
 			players->p2 = ft_strdup(p_2[1]);
-			players->p2_len = ft_strlen(players->p2);
 			break ;
 		}
 		if (**line == 'l' && z == 0)

@@ -6,11 +6,12 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 22:53:36 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/17 10:02:01 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/19 17:12:05 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/filler_v.h"
+#include "../include/filler.h"
+#include "../include/sdl.h"
 
 void				change_blend(SDL_BlendMode b1, SDL_BlendMode b2)
 {

@@ -6,11 +6,12 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 21:05:08 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/18 12:37:01 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/19 20:03:01 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/filler_v.h"
+#include "include/filler.h"
+#include "include/sdl.h"
 
 void        reading_to_struct(t_filler *filler, char **line)
 {
@@ -69,12 +70,12 @@ int main()
         init_structs(cur_lst, piece, map, pos);
         reading_to_struct(cur_lst, &line);
         add_struct(cur_lst);
-        print_everything(cur_lst);
         cur_lst = cur_lst->next;
     }
     ft_printf("%s\n", players->p1);
     ft_printf("%s\n", players->p2);
-    main_v(cur_lst, players);
+    print_everything(fst_lst);
+    main_v(fst_lst, players);
 
 
 

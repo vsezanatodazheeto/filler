@@ -6,11 +6,12 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 01:17:40 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/18 12:27:31 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/19 20:05:06 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/filler_v.h"
+#include "../include/filler.h"
+#include "../include/sdl.h"
 
 void		print_everything(t_filler *filler)
 {
@@ -31,39 +32,39 @@ void		print_everything(t_filler *filler)
 	{
 		if (xx > 9)
 			xx = 0;
-		// ft_printf("{orange}%d{eoc}", xx);
+		ft_printf("{orange}%d{eoc}", xx);
 		x++;
 		xx++;
 	}
-	// ft_printf("\n");
+	ft_printf("\n");
 	while (i < filler->map->height)
 	{
 		j = 0;
-		// ft_printf("{orange}%3d{eoc} ", y);
+		ft_printf("{orange}%3d{eoc} ", y);
 		while (j < filler->map->width)
 		{
 			if (filler->map->map[i][j] == -1)
 			{
-				// ft_printf("{green}O");
+				ft_printf("{green}O");
 				;
 			}
 			else if (filler->map->map[i][j] == -2)
 			{
-				;
-				// ft_printf("{red}X");
+				// ;
+				ft_printf("{red}X");
 			}
 			else
 			{
-				// ft_printf("{eoc}.");
+				ft_printf("{eoc}.");
 				;
 			}
 			j++;
 		}
-		// ft_printf("\n");
+		ft_printf("\n");
 		i++;
 		y++;
 	}
-		// ft_printf("\n");
+		ft_printf("\n");
 	return ;
 }
 

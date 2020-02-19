@@ -6,19 +6,20 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:37:06 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/18 12:48:16 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/19 19:35:38 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/filler_v.h"
+#include "../include/filler.h"
+#include "../include/sdl.h"
 
 int                 main_v (t_filler *lst, t_players *player)
 {
 	SDL_Window      *win = NULL;
-    t_rect			rect[1];
     t_rend          r[1];
     t_textur		t[1];
     t_font			f[1];
+    t_rect			rect[1];
     SDL_Event       e;
 	int				run;
 	int				i;
@@ -77,7 +78,9 @@ int                 main_v (t_filler *lst, t_players *player)
 		draw_msg_pause(r, rect);
         draw_msg_cursor_back(r, rect);
         draw_msg_cursor_forward(r, rect);
+		draw_player_name(r, rect);
 		draw_player(r, rect);
+		draw_map(r, rect, lst);
         //Update screen
         SDL_RenderPresent(r->rend);
     }

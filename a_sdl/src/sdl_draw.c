@@ -6,27 +6,95 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:37:15 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/18 20:58:41 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/19 20:17:47 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/filler_v.h"
+#include "../include/filler.h"
+#include "../include/sdl.h"
 
+
+void				draw_map(t_rend *r, t_rect *rect, t_filler *lst)
+{
+
+	rect->asian.x = 32;
+	rect->asian.y = 32;
+	rect->asian.w = ((SCREEN_WIDTH / 1.30) - (INDENT * 4) / lst->map->width ) - rect->filler.w;
+	rect->asian.h = (SCREEN_HEIGHT - (BAR_HEIGHT) - (INDENT * 3) / lst->map->height) - rect->filler.h;
+	rect->cv_19.x = 32;
+	rect->cv_19.y = 32;
+	rect->cv_19.w = ((SCREEN_WIDTH / 1.30) - (INDENT * 4) / lst->map->width ) - rect->filler.w;
+	rect->cv_19.h = (SCREEN_HEIGHT - (BAR_HEIGHT) - (INDENT * 3) / lst->map->height) - rect->filler.h;
+	int i = 0;
+	while (i < lst->map->height)
+	{
+		int j = 0;
+		while (j < lst->map->width)
+		{
+			if (lst->map->map[i][j] == -2)
+			{
+				rect->asian.x = rect->asian.x + 32 * i;
+				rect->asian.y = rect->asian.y + 32 * j;
+				SDL_QueryTexture(r->t->asian, NULL, NULL, &(rect->asian.w) - 100, &(rect->asian.h) - 100);
+				SDL_RenderCopy(r->rend, r->t->asian, NULL, &(rect->asian));
+			}
+			else// if (lst->map->map[i][j] >= -1) 
+			{
+				rect->cv_19.x = rect->cv_19.x + 32 * i;
+				rect->cv_19.y = rect->cv_19.y + 32 * j;
+				SDL_QueryTexture(r->t->cv_19, NULL, NULL, &(rect->cv_19.w) - 100, &(rect->cv_19.h) - 100);
+				SDL_RenderCopy(r->rend, r->t->cv_19, NULL, &(rect->cv_19));
+			}
+			j++;
+		}
+		i++;
+	}
+	return ;
+}
 void				draw_player(t_rend *r, t_rect *rect)
 {
 	rect->p1.x = INDENT + 10;
 	rect->p1.y = rect->filler.h + (INDENT * 2) + 10;
-	rect->p1.w = rect->key.w;
-	rect->p1.h = BAR_HEIGHT;
+	rect->p1.w = 1;
+	rect->p1.h = 1;
 	SDL_QueryTexture(r->f->p1, NULL, NULL, &(rect->p1.w), &(rect->p1.h));
 	SDL_RenderCopy(r->rend, r->f->p1, NULL, &(rect->p1));
-	rect->p2.x = SCREEN_WIDTH - (INDENT * 2) - (r->player->p2_len * 18) ;
+	rect->p2.x = SCREEN_WIDTH - (INDENT * 2) - 130;
 	rect->p2.y = rect->filler.h + (INDENT * 2) + 10;
-	rect->p2.w = (r->player->p2_len * 18);
-	rect->p2.h = BAR_HEIGHT;
+	rect->p2.w = 1;
+	rect->p2.h = 1;
 	SDL_QueryTexture(r->f->p2, NULL, NULL, &(rect->p2.w), &(rect->p2.h));
 	SDL_RenderCopy(r->rend, r->f->p2, NULL, &(rect->p2));
+	// это отдельная функция
+	rect->p1.x = rect->filler.w + INDENT + 20;
+	rect->p1.y = rect->p1_name.y - INDENT - 20;
+	rect->p1.w = 1;
+	rect->p1.h = 1;
+	SDL_QueryTexture(r->f->p1_, NULL, NULL, &(rect->p1.w), &(rect->p1.h));
+	SDL_RenderCopy(r->rend, r->f->p1_, NULL, &(rect->p1));
+	rect->p2.x = rect->filler.w + INDENT + 20;
+	rect->p2.y = rect->p2_name.y - INDENT - 20;
+	rect->p2.w = 1;
+	rect->p2.h = 1;
+	SDL_QueryTexture(r->f->p2_, NULL, NULL, &(rect->p2.w), &(rect->p2.h));
+	SDL_RenderCopy(r->rend, r->f->p2_, NULL, &(rect->p2));
 	return ;
+}
+
+void				draw_player_name(t_rend *r, t_rect *rect)
+{
+	rect->p1_name.x = rect->filler.w + INDENT + 20;
+	rect->p1_name.y = rect->key.h - (INDENT * 5);
+	rect->p1_name.w = 1;
+	rect->p1_name.h = 1;
+	SDL_QueryTexture(r->f->p1_name, NULL, NULL, &(rect->p1_name.w), &(rect->p1_name.h));
+	SDL_RenderCopy(r->rend, r->f->p1_name, NULL, &(rect->p1_name));
+	rect->p2_name.x = rect->filler.w + INDENT + 20;
+	rect->p2_name.y = rect->key.h - INDENT;
+	rect->p2_name.w = 1;
+	rect->p2_name.h = 1;
+	SDL_QueryTexture(r->f->p2_name, NULL, NULL, &(rect->p2_name.w), &(rect->p2_name.h));
+	SDL_RenderCopy(r->rend, r->f->p2_name, NULL, &(rect->p2_name));
 }
 
 void				draw_msg_cursor_forward(t_rend *r, t_rect *rect)
@@ -36,10 +104,10 @@ void				draw_msg_cursor_forward(t_rend *r, t_rect *rect)
 	rect->cur.w = 60;
 	rect->cur.h = 30;
 	SDL_RenderCopy(r->rend, r->t->cur, NULL, &(rect->cur));
-	rect->forward.x = rect->cur.x + rect->cur.w + 170;
+	rect->forward.x = rect->cur.x + rect->cur.w + 195;
 	rect->forward.y = BAR_HEIGHT * 3 + INDENT + 20;
-	rect->forward.w = rect->key.w;
-	rect->forward.h = 	BAR_HEIGHT;
+	rect->forward.w = 1;
+	rect->forward.h = 1;
 	SDL_QueryTexture(r->f->forward, NULL, NULL, &(rect->forward.w), &(rect->forward.h));
 	SDL_RenderCopy(r->rend, r->f->forward, NULL, &(rect->forward));
 	return ;
@@ -52,10 +120,10 @@ void				draw_msg_cursor_back(t_rend *r, t_rect *rect)
 	rect->cur.w = 60;
 	rect->cur.h = 30;
 	SDL_RenderCopyEx(r->rend, r->t->cur, NULL, &(rect->cur), 0.0, 0, r->flip);
-	rect->back.x = rect->cur.x + rect->cur.w + 228;
+	rect->back.x = rect->cur.x + rect->cur.w + 255;
 	rect->back.y = BAR_HEIGHT * 2 + INDENT + 20;
-	rect->back.w = rect->key.w;
-	rect->back.h = 	BAR_HEIGHT;
+	rect->back.w = 1;
+	rect->back.h = 1;
 	SDL_QueryTexture(r->f->back, NULL, NULL, &(rect->back.w), &(rect->back.h));
 	SDL_RenderCopy(r->rend, r->f->back, NULL, &(rect->back));
 	return ;
@@ -65,21 +133,21 @@ void				draw_msg_pause(t_rend *r, t_rect *rect)
 {
 	rect->k_pause.x = rect->filler.w + INDENT + 20;
 	rect->k_pause.y = BAR_HEIGHT + INDENT + 20;
-	rect->k_pause.w = rect->key.w;
-	rect->k_pause.h = BAR_HEIGHT;
+	rect->k_pause.w = 1;
+	rect->k_pause.h = 1;
 	SDL_QueryTexture(r->f->k_pause, NULL, NULL, &(rect->k_pause.w), &(rect->k_pause.h));
 	SDL_RenderCopy(r->rend, r->f->k_pause, NULL, &(rect->k_pause));
-	rect->pause.x = rect->k_pause.x + rect->k_pause.w + 168;
+	rect->pause.x = rect->k_pause.x + rect->k_pause.w + 193;
 	rect->pause.y = rect->k_pause.y;
-	rect->pause.w = rect->key.w;
-	rect->pause.h = BAR_HEIGHT;
+	rect->pause.w = 1;
+	rect->pause.h = 1;
 	SDL_SetTextureBlendMode(r->f->pause, r->blend_p);
 	SDL_QueryTexture(r->f->pause, NULL, NULL, &(rect->pause.w), &(rect->pause.h));
 	SDL_RenderCopy(r->rend, r->f->pause, NULL, &(rect->pause));
-	rect->resume.x = rect->k_pause.x + rect->k_pause.w + 144;
+	rect->resume.x = rect->k_pause.x + rect->k_pause.w + 169;
 	rect->resume.y = rect->k_pause.y;
-	rect->resume.w = rect->key.w;
-	rect->resume.h = BAR_HEIGHT;
+	rect->resume.w = 1;
+	rect->resume.h = 1;
 	SDL_SetTextureBlendMode(r->f->resume, r->blend_r);
 	SDL_QueryTexture(r->f->resume, NULL, NULL, &(rect->resume.w), &(rect->resume.h));
 	SDL_RenderCopy(r->rend, r->f->resume, NULL, &(rect->resume));
@@ -90,14 +158,14 @@ void				draw_msg_quit(t_rend *r, t_rect *rect)
 {
 	rect->k_quit.x = rect->filler.w + INDENT + 20;
 	rect->k_quit.y = INDENT + 20;
-	rect->k_quit.w = rect->key.w;
-	rect->k_quit.h = BAR_HEIGHT;
+	rect->k_quit.w = 1;
+	rect->k_quit.h = 1;
 	SDL_QueryTexture(r->f->k_quit, NULL, NULL, &(rect->k_quit.w), &(rect->k_quit.h));
 	SDL_RenderCopy(r->rend, r->f->k_quit, NULL, &(rect->k_quit));
-	rect->quit.x = rect->k_quit.x + rect->k_quit.w + 160;
+	rect->quit.x = rect->k_quit.x + rect->k_quit.w + 185;
 	rect->quit.y = rect->k_quit.y;
-	rect->quit.w = rect->key.w;
-	rect->quit.h = BAR_HEIGHT;
+	rect->quit.w = 1;
+	rect->quit.h = 1;
 	SDL_QueryTexture(r->f->quit, NULL, NULL, &(rect->quit.w), &(rect->quit.h));
 	SDL_RenderCopy(r->rend, r->f->quit, NULL, &(rect->quit));
 	return ;
