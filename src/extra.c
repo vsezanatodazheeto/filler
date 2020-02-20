@@ -1,137 +1,44 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   extra.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/20 18:40:59 by yshawn            #+#    #+#             */
+/*   Updated: 2020/02/20 20:22:23 by yshawn           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/filler.h"
 
-void		printf_map_fill(t_filler *filler)
+void		free_data(t_f *f, char **line)
 {
-	int 	i;
-	int		j;
-	int		x;
-	int		xx;
-	int		y;
-
-	i = 0;
-	j = 0;
-	x = 0;
-	xx = 0;
-	y = 0;
-
-	ft_printf("\n\n");
-	ft_printf("    ");
-	while (x < filler->map->width)
-	{
-		if (xx > 9)
-			xx = 0;
-		ft_printf("{yellow}%3d{eoc}", xx);
-		x++;
-		xx++;
-	}
-	ft_printf("\n");
-	while (i < filler->map->height)
-	{
-		j = 0;
-		ft_printf("{yellow}% 3d{eoc} ", y);
-		while (j < filler->map->width)
-		{
-			if (filler->map->map[i][j] == -1)
-				ft_printf("{green}%3d", filler->map->map[i][j]);
-			else if (filler->map->map[i][j] == -2)
-				ft_printf("{red}%3d", filler->map->map[i][j]);
-			else
-				ft_printf("{eoc}%3d", filler->map->map[i][j]);
-			j++;
-		}
-		ft_printf("\n");
-		i++;
-		y++;
-	}
-		ft_printf("\n");
-	return ;
-}
-
-void		printf_map(t_filler *filler)
-{
-	int 	i;
-	int		j;
-	int		x;
-	int		xx;
-	int		y;
-
-	i = 0;
-	j = 0;
-	x = 0;
-	xx = 0;
-	y = 0;
-
-	ft_printf("    ");
-	while (x < filler->map->width)
-	{
-		if (xx > 9)
-			xx = 0;
-		ft_printf("%d", xx);
-		x++;
-		xx++;
-	}
-	ft_printf("\n");
-	while (i < filler->map->height)
-	{
-		j = 0;
-		ft_printf("%3d ", y);
-		while (j < filler->map->width)
-		{
-			if (filler->map->map[i][j] == -1)
-				ft_printf("{green}O");
-			else if (filler->map->map[i][j] == -2)
-			{
-				ft_printf("{red}X");
-			}
-			else
-				ft_printf("{eoc}.");
-			j++;
-		}
-		ft_printf("\n");
-		i++;
-		y++;
-	}
-		ft_printf("\n");
-	return ;
-}
-
-void		free_data(t_filler *filler, char **line)
-{
-	if (filler->map->map)
-		ft_arrdel((void ***)&filler->map->map);
-	if (filler->piece->piece)
-		ft_arrdel((void ***)&filler->piece->piece);
+	if (f->m->map)
+		ft_arrdel((void ***)&f->m->map);
+	if (f->p->piece)
+		ft_arrdel((void ***)&f->p->piece);
 	if (*line)
 		free(*line);
 	return ;
 }
 
-void 		init_structs(t_filler *filler, t_piece *piece, t_map *map, t_pos *pos)
+int			get_size(int *height, int *width, char **line)
 {
-	filler->ally = '\0';
-	filler->enemy = '\0';
-	filler->piece = NULL;
-	filler->map = NULL;
-	filler->pos = NULL;
-	piece->width = 0;
-	piece->height = 0;
-	piece->piece = NULL;
-	map->width = 0;
-	map->height = 0;
-	map->map = NULL;
-	pos->i = 0;
-	pos->j = 0;
-	pos->x = 0;
-	pos->y = 0;
-	filler->map = map;
-	filler->piece = piece;
-	filler->pos = pos;
+	char	**tmp;
+
+	if (!(tmp = ft_strsplit(*line, ' ')))
+		return (1);
+	*height = ft_atoi(*(tmp + 1));
+	*width = ft_atoi(*(tmp + 2));
+	ft_arrdel((void ***)&tmp);
+	return (0);
 }
 
 int			manhattan_formula(int x, int y, int i, int j)
 {
-	int a;
-	int b;
+	int		a;
+	int		b;
 
 	if (i > x)
 		a = i - x;
@@ -144,47 +51,24 @@ int			manhattan_formula(int x, int y, int i, int j)
 	return (a + b);
 }
 
-void		ft_arrdel(void ***arr)
+void		init_structs(t_f *f, t_p *p, t_m *m, t_pos *pos)
 {
-	void	**first;
-
-	first = *arr;
-	while (**arr)
-	{
-		free(**arr);
-		(*arr)++;
-	}
-	free(first);
-	first = NULL;
-	return ;
-}
-
-int			ft_is_strstr(char *str_dad, char *str_son)
-{
-	int		i;
-	int		n;
-
-	i = 0;
-	n = 0;
-	if (!*str_dad || !*str_son)
-		return (FALSE);
-	while (str_dad[i] && n == 0)
-	{
-		n = 0;
-		if (str_dad[i] == str_son[n])
-		{
-			while (str_son[n] && str_dad[i])
-			{
-				if (str_son[n] != str_dad[i])
-				{
-					n = 0;
-					break;
-				}
-				i++;
-				n++;
-			}
-		}
-		i++;
-	}
-	return ( n == 0 ? FALSE : i);
+	f->ally = '\0';
+	f->enemy = '\0';
+	f->p = NULL;
+	f->m = NULL;
+	f->pos = NULL;
+	p->width = 0;
+	p->height = 0;
+	p->piece = NULL;
+	m->width = 0;
+	m->height = 0;
+	m->map = NULL;
+	pos->i = 0;
+	pos->j = 0;
+	pos->x = 0;
+	pos->y = 0;
+	f->m = m;
+	f->p = p;
+	f->pos = pos;
 }

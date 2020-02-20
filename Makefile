@@ -6,7 +6,7 @@
 #    By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/10 19:41:13 by yshawn            #+#    #+#              #
-#    Updated: 2020/02/18 08:52:16 by yshawn           ###   ########.fr        #
+#    Updated: 2020/02/20 20:03:39 by yshawn           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ DIR_S_3 = a_printf
 HEADER = include/filler.h
 
 SOURCES_1 = main.c
-SOURCES_2 = extra.c record_data.c
+SOURCES_2 = extra.c extra_2.c record_data.c govno_ydalit.c
 SOURCES_3 = libftprintf.a
 
 SRCS_1 = $(addprefix $(DIR_S_1)/,$(SOURCES_1))
