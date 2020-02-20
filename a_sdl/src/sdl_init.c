@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:37:15 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/20 18:21:11 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/20 22:47:16 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int				create(SDL_Window **win, t_rend *r, t_player *player)
 									SDL_WINDOWPOS_UNDEFINED,
 									SDL_WINDOWPOS_UNDEFINED,
 									SCREEN_WIDTH, SCREEN_HEIGHT,
-									SDL_WINDOW_SHOWN)))
+									SDL_WINDOW_RESIZABLE | SDL_WINDOW_SHOWN)))
 		return (1);
 	if (!(r->rend = SDL_CreateRenderer(*win, -1, render_flags)))
 		return (1);

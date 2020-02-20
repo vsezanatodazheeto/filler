@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 07:54:15 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/20 21:08:14 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/20 22:42:04 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ int			count_summ(t_f *f, int x, int y)
 	j = 0;
 	s = 0;
 	count = 0;
-	if (x + f->p->height > f->m->height
-			|| y + f->p->width > f->m->width)
+	if (x + f->p->height > f->m->height || y + f->p->width > f->m->width)
 		return (0);
 	while (i < f->p->height)
 	{
