@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:48 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/19 17:14:07 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/20 18:21:25 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ void			record_map_positions(t_filler *filler, char **line)
 
 	i = 0;
 	j = 0;
+	if (get_next_line(0, &(*line)))
+	 		;
 	while (i < filler->map->height && get_next_line(0, &(*line)))
 	{
 		j = 0;
@@ -123,24 +125,6 @@ void			record_map(t_filler *filler, char **line)
 	return ;
 }
 
-// void			record_player_name(char **filler, char *name_p)
-// {
-// 	int		i;
-
-// 	i = ft_strlen(name_p);
-// 	*filler = (char **)malloc(sizeof(char*) * i);
-// 	*filler[i] = '\0';
-// 	i--;
-// 	write(1, "aaa\n", 4);
-// 	while (i >= 0)
-// 	{
-// 		*filler[i] = name_p[i];
-// 		i--;
-// 	}
-
-// 	return ;
-// }
-
 void 			record_player(t_filler *filler, int i)
 {
 	if (i)
@@ -155,7 +139,7 @@ void 			record_player(t_filler *filler, int i)
 	}
 }
 
-void			check_player(t_filler *filler, t_players *players, char **line)
+void			check_player(t_filler *filler, t_player *players, char **line)
 {
 	int			i;
 	int			z;

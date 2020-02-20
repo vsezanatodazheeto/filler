@@ -6,12 +6,59 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 01:17:40 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/19 20:05:06 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/20 18:21:38 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/filler.h"
 #include "../include/sdl.h"
+
+void		printf_map_fill(t_filler *filler)
+{
+	int 	i;
+	int		j;
+	int		x;
+	int		xx;
+	int		y;
+
+	i = 0;
+	j = 0;
+	x = 0;
+	xx = 0;
+	y = 0;
+
+	ft_printf("\n\n");
+	ft_printf("    ");
+	while (x < filler->map->width)
+	{
+		if (xx > 9)
+			xx = 0;
+		ft_printf("{yellow}%3d{eoc}", xx);
+		x++;
+		xx++;
+	}
+	ft_printf("\n");
+	while (i < filler->map->height)
+	{
+		j = 0;
+		ft_printf("{yellow}% 3d{eoc} ", y);
+		while (j < filler->map->width)
+		{
+			if (filler->map->map[i][j] == -1)
+				ft_printf("{green}%3d", filler->map->map[i][j]);
+			else if (filler->map->map[i][j] == -2)
+				ft_printf("{red}%3d", filler->map->map[i][j]);
+			else
+				ft_printf("{eoc}%3d", filler->map->map[i][j]);
+			j++;
+		}
+		ft_printf("\n");
+		i++;
+		y++;
+	}
+		ft_printf("\n");
+	return ;
+}
 
 void		print_everything(t_filler *filler)
 {
@@ -27,7 +74,7 @@ void		print_everything(t_filler *filler)
 	xx = 0;
 	y = 0;
 
-	// ft_printf("    ");
+	ft_printf("    ");
 	while (x < filler->map->width)
 	{
 		if (xx > 9)
@@ -44,20 +91,11 @@ void		print_everything(t_filler *filler)
 		while (j < filler->map->width)
 		{
 			if (filler->map->map[i][j] == -1)
-			{
 				ft_printf("{green}O");
-				;
-			}
 			else if (filler->map->map[i][j] == -2)
-			{
-				// ;
 				ft_printf("{red}X");
-			}
 			else
-			{
 				ft_printf("{eoc}.");
-				;
-			}
 			j++;
 		}
 		ft_printf("\n");
@@ -68,10 +106,10 @@ void		print_everything(t_filler *filler)
 	return ;
 }
 
-void		init_struct_players(t_players *players)
+void		init_struct_player(t_player *player)
 {
-	players->p1 = NULL;
-	players->p2 = NULL;
+	player->p1 = NULL;
+	player->p2 = NULL;
 	return ;
 }
 

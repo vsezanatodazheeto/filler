@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:37:15 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/19 20:13:36 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/20 18:21:11 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,14 @@ int				create_textur(t_rend *r)
 		return (1);
 	if(!(r->t->m_bar = load_texture(&(r->rend), "resources/bg.png")))
 		return (1);
-	if(!(r->t->asian = load_texture(&(r->rend), "resources/asian.png")))
+	if(!(r->t->asian = load_texture(&(r->rend), "resources/bg.png")))
 		return (1);
-	if(!(r->t->cv_19 = load_texture(&(r->rend), "resources/corona.png")))
+	if(!(r->t->cv_19 = load_texture(&(r->rend), "resources/bg.png")))
 		return (1);
     return (0);
 }
 
-int				create(SDL_Window **win, t_rend *r, t_players *player)
+int				create(SDL_Window **win, t_rend *r, t_player *player)
 {
 	Uint32 render_flags;
 

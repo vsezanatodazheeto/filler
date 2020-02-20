@@ -6,14 +6,14 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:37:06 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/19 19:35:38 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/20 18:20:57 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/filler.h"
 #include "../include/sdl.h"
 
-int                 main_v (t_filler *lst, t_players *player)
+int                 main_v (t_filler *lst, t_player *player)
 {
 	SDL_Window      *win = NULL;
     t_rend          r[1];

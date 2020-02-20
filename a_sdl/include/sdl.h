@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:57 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/19 20:13:54 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/20 18:20:27 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,16 +101,16 @@ typedef struct			s_rend
 	SDL_BlendMode		blend_p;
 	SDL_BlendMode		blend_r;
 	SDL_Renderer 		*rend;
-	t_players			*player;
+	t_player			*player;
 	t_textur			*t;
 	t_font				*f;
 	t_rect				*rect;
 }						t_rend;
 
-int					main_v(t_filler *filler, t_players *players);
+int					main_v(t_filler *filler, t_player *player);
 int					init_lib();
 void				init_t_rend(t_rend *r, t_textur *t, t_font *f, t_rect *rect);
-int					create(SDL_Window **win, t_rend *r, t_players *player);
+int					create(SDL_Window **win, t_rend *r, t_player *player);
 int					create_textur(t_rend *r);
 void				create_font(t_rend *r);
 int					quit(SDL_Window **win, t_rend *r);
