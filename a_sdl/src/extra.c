@@ -6,12 +6,50 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 01:17:40 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/20 18:21:38 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/21 21:33:52 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/filler.h"
 #include "../include/sdl.h"
+
+void			check_player(t_f *f, t_player *players, char **line)
+{
+	int			i;
+	int			z;
+	char		**p_1;
+	char		**p_2;
+
+	i = 0;
+	z = 0;
+	p_1 = NULL;
+	p_2 = NULL;
+	while (get_next_line(0, &(*line)))
+	{
+		if (**line == 'l' && z == 1)
+		{
+			p_2 = ft_strsplit(*line, '/');
+			players->p2 = ft_strdup(p_2[1]);
+			break ;
+		}
+		if (**line == 'l' && z == 0)
+		{
+			p_1 = ft_strsplit(*line, '/');
+			players->p1 = ft_strdup(p_1[1]);
+			z = 1;
+		}
+		if (**line == '$' && !f->ally && i == 0)
+		{
+			ft_printf("pizdeeeeec\n");
+			if (ft_strinstr(*line, "p1"))
+				record_player(f, TRUE);
+			else
+				record_player(f, FALSE);
+			i = 1;
+		}
+	}
+	return;
+}
 
 // void		print_everything(t_f *f)
 // {
@@ -59,6 +97,18 @@
 // 	return ;
 // }
 
+int			get_size(int *height, int *width, char **line)
+{
+	char	**tmp;
+
+	if (!(tmp = ft_strsplit(*line, ' ')))
+		return (1);
+	*height = ft_atoi(*(tmp + 1));
+	*width = ft_atoi(*(tmp + 2));
+	ft_arrdel((void ***)&tmp);
+	return (0);
+}
+
 void		init_struct_player(t_player *player)
 {
 	player->p1 = NULL;
@@ -85,34 +135,4 @@ void 		init_structs(t_f *curlst, t_p *p, t_m *m, t_pos *pos)
 	curlst->m = m;
 	curlst->p = p;
 	curlst->pos = pos;
-}
-
-int			ft_is_strstr(char *str_dad, char *str_son)
-{
-	int		i;
-	int		n;
-
-	i = 0;
-	n = 0;
-	if (!*str_dad || !*str_son)
-		return (FALSE);
-	while (str_dad[i] && n == 0)
-	{
-		n = 0;
-		if (str_dad[i] == str_son[n])
-		{
-			while (str_son[n] && str_dad[i])
-			{
-				if (str_son[n] != str_dad[i])
-				{
-					n = 0;
-					break;
-				}
-				i++;
-				n++;
-			}
-		}
-		i++;
-	}
-	return ( n == 0 ? FALSE : i);
 }

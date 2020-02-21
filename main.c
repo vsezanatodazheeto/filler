@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 07:54:15 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/20 22:42:04 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/21 23:08:35 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int			count_summ(t_f *f, int x, int y)
 {
 	int count;
+	int count2;
 	int i;
 	int j;
 	int s;
@@ -23,6 +24,7 @@ int			count_summ(t_f *f, int x, int y)
 	j = 0;
 	s = 0;
 	count = 0;
+	count2 = 0;
 	if (x + f->p->height > f->m->height || y + f->p->width > f->m->width)
 		return (0);
 	while (i < f->p->height)
@@ -34,9 +36,11 @@ int			count_summ(t_f *f, int x, int y)
 				return (0);
 			if (f->m->map[i + x][j + y] == -1 && f->p->piece[i][j] == 1)
 				count++;
-			if (count > 1)
+			if (f->m->map[i + x][j + y] == -2 && f->p->piece[i][j] == 1)
+				count2++;
+			if (count > 1 || count2)
 				return (0);
-			if (f->m->map[i + x][j + y])
+			if (f->m->map[i + x][j + y] && f->p->piece[i][j] == 1)
 				s = s + f->m->map[i + x][j + y];
 			j++;
 		}
@@ -62,20 +66,18 @@ void		find_best_pos(t_f *f)
 		j = 0;
 		while (j < f->m->width)
 		{
-			if (f->m->map[i][j] != -2)
+			s = count_summ(f, i, j);
+			if (s && s < min)
 			{
-				s = count_summ(f, i, j);
-				if (s && s < min)
-				{
-					min = s;
-					f->pos->i = i;
-					f->pos->j = j;
-				}
+				min = s;
+				f->pos->i = i;
+				f->pos->j = j;
 			}
 			j++;
 		}
 		i++;
 	}
+	// ft_printf("%d\n", min);
 	return ;
 }
 
@@ -130,42 +132,23 @@ void		solving_filler(t_f *f, char **line)
 		{
 			if (!f->m->map)
 				if (record_map(f, &(*line)) == 1)
-					return ;
+					break ;
 			if (!(get_next_line(0, &(*line))))
-				return ;
+				break ;
 			record_map_positions(f, &(*line));
 			fill_manhattan_distance(f);
+			// printf_map_fill(f);
 		}
 		else if (**line == 'P' && ft_strinstr(*line, NAME_PIECE))
 		{
 			if (record_piece(f, &(*line)) == 1)
-				return ;
+				break ;
 			record_piece_positions(f, &(*line));
 			find_best_pos(f);
-			// ft_printf("%d %d\n", f->pos->i, f->pos->j);
-			ft_putnbr(f->pos->i);
-			ft_putstr(" ");
-			ft_putnbr(f->pos->j);
-			ft_putstr("\n");
+			ft_printf("%d %d\n", f->pos->i, f->pos->j);
 		}
 	}
 	return ;
-}
-
-int			check_player(t_f *f, char **line)
-{
-	while (get_next_line(0, &(*line)))
-	{
-		if (**line == '$' && !f->ally)
-		{
-			if (ft_strinstr(*line, NAME_ALLY) && ft_strinstr(*line, "p1"))
-				record_player(f, TRUE);
-			else
-				record_player(f, FALSE);
-			break ;
-		}
-	}
-	return (f->ally && f->enemy ? 0 : 1);
 }
 
 int			main(void)

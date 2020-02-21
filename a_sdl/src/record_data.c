@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:48 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/20 18:21:25 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/21 17:28:43 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void			record_got_pos(t_f *f, char **line)
 {
 	char	**tmp;
 
-	if (ft_is_strstr(*line, "O"))
+	if (ft_strinstr(*line, "O"))
 		f->pos->turn = 'O';
 	else
 		f->pos->turn = 'X';
@@ -52,28 +52,29 @@ void			record_piece_positions(t_f *f, char **line)
 	return ;
 }
 
-void			record_piece(t_f *f, char **line)
+int			record_piece(t_f *f, char **line)
 {	
 	int		j;
-	char	**tmp;
 
 	j = 0;
-	tmp = ft_strsplit(*line, ' ');
-	f->p->height = ft_atoi(*(tmp + 1));
-	f->p->width = ft_atoi(*(tmp + 2));
-	ft_memdel((void **)tmp);
+	if (get_size(&f->p->height, &f->p->width, &(*line)) == 1)
+		return (1);
 	if (!(f->p->piece = (int **)malloc(sizeof(int *) * f->p->height)))
-		exit(1);
+		return (1);
 	while (j < f->p->height)
 	{
 		if (!(f->p->piece[j] = (int *)malloc(sizeof(int) * f->p->width)))
-			exit(1);
+		{
+			f->p->piece[j] = NULL;
+			ft_arrdel((void ***)&f->p->piece);
+			return (1);
+		}
 		j++;
 	}
-	return ;
+	return (0);
 }
 
-void			record_map_positions(t_f *f, char **line)
+void		record_map_positions(t_f *f, char **line)
 {
 	int		i;
 	int		j;
@@ -89,10 +90,9 @@ void			record_map_positions(t_f *f, char **line)
 		{
 			if ((*line + HGT)[j] == '.')
 				f->m->map[i][j] = 0;
-			else if (ft_toupper((*line + HGT)[j]) == 'O' || ft_toupper((*line + HGT)[j]) == 'X')
+			else if (ft_isupch((*line + HGT)[j], 'O', 'X'))
 			{
-				if ((f->ally == 'O' && ft_toupper((*line + HGT)[j]) == 'O') ||
-											(f->ally == 'X' && ft_toupper((*line + HGT)[j]) == 'X'))
+				if (ft_isupch_2((*line + HGT)[j], f->ally, 'O', 'X'))
 					f->m->map[i][j] = -1;
 				else
 					f->m->map[i][j] = -2;
@@ -104,25 +104,26 @@ void			record_map_positions(t_f *f, char **line)
 	return ;
 }
 
-void			record_map(t_f *f, char **line)
+int			record_map(t_f *f, char **line)
 {
 	int		j;
-	char	**tmp;
 
 	j = 0;
-	tmp = ft_strsplit(*line, ' ');
-	f->m->height = ft_atoi(*(tmp + 1));
-	f->m->width = ft_atoi(*(tmp + 2));
-	ft_memdel((void **)tmp);
+	if (get_size(&f->m->height, &f->m->width, &(*line)) == 1)
+		return (1);
 	if (!(f->m->map = (int **)malloc(sizeof(int *) * f->m->height)))
-		exit(1);
+		return (1);
 	while (j < f->m->height)
 	{
 		if (!(f->m->map[j] = (int *)malloc(sizeof(int) * f->m->width)))
-			exit(1);
+		{
+			f->m->map[j] = NULL;
+			ft_arrdel((void ***)&f->m->map);
+			return (1);
+		}
 		j++;
 	}
-	return ;
+	return (0);
 }
 
 void 			record_player(t_f *f, int i)
@@ -137,41 +138,4 @@ void 			record_player(t_f *f, int i)
 		f->ally = 'X';
 		f->enemy = 'O';
 	}
-}
-
-void			check_player(t_f *f, t_player *players, char **line)
-{
-	int			i;
-	int			z;
-	char		**p_1;
-	char		**p_2;
-
-	i = 0;
-	z = 0;
-	p_1 = NULL;
-	p_2 = NULL;
-	while (get_next_line(0, &(*line)))
-	{
-		if (**line == 'l' && z == 1)
-		{
-			p_2 = ft_strsplit(*line, '/');
-			players->p2 = ft_strdup(p_2[1]);
-			break ;
-		}
-		if (**line == 'l' && z == 0)
-		{
-			p_1 = ft_strsplit(*line, '/');
-			players->p1 = ft_strdup(p_1[1]);
-			z = 1;
-		}
-		if (**line == '$' && !f->ally && i == 0)
-		{
-			if (ft_is_strstr(*line, "p1"))
-				record_player(f, TRUE);
-			else
-				record_player(f, FALSE);
-			i = 1;
-		}
-	}
-	return;
 }

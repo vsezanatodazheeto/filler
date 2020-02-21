@@ -6,11 +6,27 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 18:40:59 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/20 20:22:23 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/21 17:06:13 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/filler.h"
+
+int			check_player(t_f *f, char **line)
+{
+	while (get_next_line(0, &(*line)))
+	{
+		if (**line == '$' && !f->ally)
+		{
+			if (ft_strinstr(*line, NAME_ALLY) && ft_strinstr(*line, "p1"))
+				record_player(f, TRUE);
+			else
+				record_player(f, FALSE);
+			break ;
+		}
+	}
+	return (f->ally && f->enemy ? 0 : 1);
+}
 
 void		free_data(t_f *f, char **line)
 {
