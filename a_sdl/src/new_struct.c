@@ -13,25 +13,25 @@
 #include "../include/filler.h"
 #include "../include/sdl.h"
 
-t_piece  *new_t_piece()
+t_p*	new_t_piece()
 {
-        t_piece  *ptr;
+        t_p  *ptr;
 
-        if (!(ptr = malloc(sizeof(t_piece))))
+        if (!(ptr = malloc(sizeof(t_p))))
 			return (NULL);
         return ptr;
 }
 
-t_map  *new_t_map()
+t_m		*new_t_map()
 {
-        t_map  *ptr;
+        t_m  *ptr;
 
-        if (!(ptr = malloc(sizeof(t_map))))
+        if (!(ptr = malloc(sizeof(t_m))))
 			return (NULL);
         return ptr;
 }
 
-t_pos  *new_t_pos()
+t_pos	*new_t_pos()
 {
         t_pos  *ptr;
 
@@ -40,11 +40,11 @@ t_pos  *new_t_pos()
         return ptr;
 }
 
-t_filler  *new_t_filler()
+t_f  *new_t_filler()
 {
-        t_filler  *ptr;
+        t_f  *ptr;
 
-        if (!(ptr = malloc(sizeof(t_filler))))
+        if (!(ptr = malloc(sizeof(t_f))))
 			return (NULL);
         ptr->next = NULL;
         return ptr;

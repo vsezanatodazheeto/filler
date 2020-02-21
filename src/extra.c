@@ -53,11 +53,6 @@ int			manhattan_formula(int x, int y, int i, int j)
 
 void		init_structs(t_f *f, t_p *p, t_m *m, t_pos *pos)
 {
-	f->ally = '\0';
-	f->enemy = '\0';
-	f->p = NULL;
-	f->m = NULL;
-	f->pos = NULL;
 	p->width = 0;
 	p->height = 0;
 	p->piece = NULL;
@@ -68,7 +63,9 @@ void		init_structs(t_f *f, t_p *p, t_m *m, t_pos *pos)
 	pos->j = 0;
 	pos->x = 0;
 	pos->y = 0;
-	f->m = m;
+	f->ally = '\0';
+	f->enemy = '\0';
 	f->p = p;
+	f->m = m;
 	f->pos = pos;
 }

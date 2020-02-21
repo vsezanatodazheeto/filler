@@ -122,7 +122,7 @@ void		fill_manhattan_distance(t_f *f)
 	return ;
 }
 
-void		solving_f(t_f *f, char **line)
+void		solving_filler(t_f *f, char **line)
 {
 	while (get_next_line(0, &(*line)))
 	{
@@ -142,7 +142,11 @@ void		solving_f(t_f *f, char **line)
 				return ;
 			record_piece_positions(f, &(*line));
 			find_best_pos(f);
-			ft_printf("%d %d\n", f->pos->i, f->pos->j);
+			// ft_printf("%d %d\n", f->pos->i, f->pos->j);
+			ft_putnbr(f->pos->i);
+			ft_putstr(" ");
+			ft_putnbr(f->pos->j);
+			ft_putstr("\n");
 		}
 	}
 	return ;
@@ -179,7 +183,7 @@ int			main(void)
 		ft_strdel(&line);
 		return (1);
 	}
-	solving_f(f, &line);
+	solving_filler(f, &line);
 	free_data(f, &line);
 	return (0);
 }

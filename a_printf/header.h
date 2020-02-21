@@ -100,9 +100,9 @@ typedef struct		s_mult
 /*
 ** standart functions
 */
-//void				ft_bzero(void *str, size_t n);
-//int					ft_atoi(const char *str);
-//size_t				ft_strlen(const char *str);
+void				ft_bzero(void *str, size_t n);
+int					ft_atoi(const char *str);
+size_t				ft_strlen(const char *str);
 int					ft_numlen(uint64_t num, int base);
 int					ft_str_sym_cmp(char *str_dad, char *str_son, char ch);
 //void				ft_strdel(char **str);

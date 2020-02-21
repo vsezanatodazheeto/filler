@@ -27,7 +27,7 @@ SDL_Texture			*load_texture(SDL_Renderer **rend, char *path)
 	
 	if(!(loaded_scr = IMG_Load(path)))
 	{
-		ft_printf("{red}unable to load image in LOAD_TEXTURE!{eoc}\n");
+		// ft_printf("{red}unable to load image in LOAD_TEXTURE!{eoc}\n");
 		return (NULL);
 	}
 	else
@@ -44,7 +44,7 @@ SDL_Texture			*load_font(SDL_Renderer **rend, char *path, int size)
     SDL_Color white = {255, 255, 255};  
 	if(!(loaded_scr = TTF_RenderText_Blended(sans, path, white)))
 	{
-		ft_printf("{red}unable to load image in LOAD_FONT!{eoc}\n");
+		// ft_printf("{red}unable to load image in LOAD_FONT!{eoc}\n");
 		return (NULL);
 	}
 	else

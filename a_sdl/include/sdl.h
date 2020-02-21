@@ -13,17 +13,18 @@
 #ifndef SDL_H
 # define SDL_H
 
-// #include <SDL2/SDL.h> //for linux
-// #include <SDL2/SDL_image.h> // for linux
-// #include <SDL2/SDL_ttf.h> // for linux
-#include "../frameworks/SDL2.framework/Headers/SDL.h"
-#include "../frameworks/SDL2_ttf.framework/Headers/SDL_ttf.h"
-#include "../frameworks/SDL2_image.framework/Headers/SDL_image.h"
-#include "../frameworks/SDL2_mixer.framework/Headers/SDL_mixer.h"
+#include <SDL2/SDL.h> //for linux
+#include <SDL2/SDL_image.h> // for linux
+#include <SDL2/SDL_ttf.h> // for linux
+// #include "../frameworks/SDL2.framework/Headers/SDL.h"
+// #include "../frameworks/SDL2_ttf.framework/Headers/SDL_ttf.h"
+// #include "../frameworks/SDL2_image.framework/Headers/SDL_image.h"
+// #include "../frameworks/SDL2_mixer.framework/Headers/SDL_mixer.h"
 
 // 2560×1440 fullscreen mac
+// 1600 x 1120
 #define SCREEN_WIDTH 1600
-#define SCREEN_HEIGHT 1120
+#define SCREEN_HEIGHT 800
 #define INDENT 32
 #define BAR_HEIGHT 64
 #define KEY_HEIGHT 1088
@@ -107,7 +108,7 @@ typedef struct			s_rend
 	t_rect				*rect;
 }						t_rend;
 
-int					main_v(t_filler *filler, t_player *player);
+int					main_v(t_f *f, t_player *player);
 int					init_lib();
 void				init_t_rend(t_rend *r, t_textur *t, t_font *f, t_rect *rect);
 int					create(SDL_Window **win, t_rend *r, t_player *player);
@@ -128,6 +129,6 @@ void				draw_msg_cursor_back(t_rend *r, t_rect *rect);
 void				draw_msg_cursor_forward(t_rend *r, t_rect *rect);
 void				draw_player(t_rend *r, t_rect *rect);
 void				draw_player_name(t_rend *r, t_rect *rect);
-void				draw_map(t_rend *r, t_rect *rect, t_filler *lst);
+void				draw_map(t_rend *r, t_rect *rect, t_f *curlst);
 
 #endif

@@ -14,7 +14,7 @@
 #include "../include/sdl.h"
 
 
-void				draw_map(t_rend *r, t_rect *rect, t_filler *lst)
+void				draw_map(t_rend *r, t_rect *rect, t_f *lst)
 {
 
 	// rect->asian.x = 32;

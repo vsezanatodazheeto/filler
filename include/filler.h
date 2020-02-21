@@ -67,7 +67,7 @@ char			**ft_strsplit(char const *str, char ch);
 */
 void			init_structs(t_f *f, t_p *p, t_m *m, t_pos *pos);
 int				check_player(t_f *f, char **line);
-void			solving_f(t_f *f, char **line);
+void			solving_filler(t_f *f, char **line);
 void			record_player(t_f *f, int i);
 int				record_map(t_f *f, char **line);
 void			record_map_positions(t_f *f, char **line);

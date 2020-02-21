@@ -13,7 +13,7 @@
 #include "../include/filler.h"
 #include "../include/sdl.h"
 
-int                 main_v (t_filler *lst, t_player *player)
+int                 main_v (t_f *lst, t_player *player)
 {
 	SDL_Window      *win = NULL;
     t_rend          r[1];

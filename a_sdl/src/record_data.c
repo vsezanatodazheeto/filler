@@ -13,38 +13,38 @@
 #include "../include/filler.h"
 #include "../include/sdl.h"
 
-void			record_got_pos(t_filler *filler, char **line)
+void			record_got_pos(t_f *f, char **line)
 {
 	char	**tmp;
 
 	if (ft_is_strstr(*line, "O"))
-		filler->pos->turn = 'O';
+		f->pos->turn = 'O';
 	else
-		filler->pos->turn = 'X';
+		f->pos->turn = 'X';
 	tmp = ft_strsplit(*line, ' ');
-	filler->pos->i = ft_atoi(&(tmp[2][1]));
-	filler->pos->j = ft_atoi(&(tmp[3][0]));
-	// ft_printf("positions: [%d, %d]\n", filler->pos->i, filler->pos->j);
+	f->pos->i = ft_atoi(&(tmp[2][1]));
+	f->pos->j = ft_atoi(&(tmp[3][0]));
+	// ft_printf("positions: [%d, %d]\n", f->pos->i, f->pos->j);
 	ft_memdel((void **)tmp);
 	return ;
 }
 
-void			record_piece_positions(t_filler *filler, char **line)
+void			record_piece_positions(t_f *f, char **line)
 {
 	int		i;
 	int		j;
 
 	i = 0;
 	j = 0;
-	while (i < filler->piece->height && get_next_line(0, &(*line)))
+	while (i < f->p->height && get_next_line(0, &(*line)))
 	{
 		j = 0;
-		while (j < filler->piece->width)
+		while (j < f->p->width)
 		{
 			if ((*line)[j] == '.')
-				filler->piece->piece[i][j] = 0;
+				f->p->piece[i][j] = 0;
 			if ((*line)[j] == '*')
-				filler->piece->piece[i][j] = 1;
+				f->p->piece[i][j] = 1;
 			j++;
 		}
 		i++;
@@ -52,28 +52,28 @@ void			record_piece_positions(t_filler *filler, char **line)
 	return ;
 }
 
-void			record_piece(t_filler *filler, char **line)
+void			record_piece(t_f *f, char **line)
 {	
 	int		j;
 	char	**tmp;
 
 	j = 0;
 	tmp = ft_strsplit(*line, ' ');
-	filler->piece->height = ft_atoi(*(tmp + 1));
-	filler->piece->width = ft_atoi(*(tmp + 2));
+	f->p->height = ft_atoi(*(tmp + 1));
+	f->p->width = ft_atoi(*(tmp + 2));
 	ft_memdel((void **)tmp);
-	if (!(filler->piece->piece = (int **)malloc(sizeof(int *) * filler->piece->height)))
+	if (!(f->p->piece = (int **)malloc(sizeof(int *) * f->p->height)))
 		exit(1);
-	while (j < filler->piece->height)
+	while (j < f->p->height)
 	{
-		if (!(filler->piece->piece[j] = (int *)malloc(sizeof(int) * filler->piece->width)))
+		if (!(f->p->piece[j] = (int *)malloc(sizeof(int) * f->p->width)))
 			exit(1);
 		j++;
 	}
 	return ;
 }
 
-void			record_map_positions(t_filler *filler, char **line)
+void			record_map_positions(t_f *f, char **line)
 {
 	int		i;
 	int		j;
@@ -82,20 +82,20 @@ void			record_map_positions(t_filler *filler, char **line)
 	j = 0;
 	if (get_next_line(0, &(*line)))
 	 		;
-	while (i < filler->map->height && get_next_line(0, &(*line)))
+	while (i < f->m->height && get_next_line(0, &(*line)))
 	{
 		j = 0;
-		while (j < filler->map->width)
+		while (j < f->m->width)
 		{
 			if ((*line + HGT)[j] == '.')
-				filler->map->map[i][j] = 0;
+				f->m->map[i][j] = 0;
 			else if (ft_toupper((*line + HGT)[j]) == 'O' || ft_toupper((*line + HGT)[j]) == 'X')
 			{
-				if ((filler->ally == 'O' && ft_toupper((*line + HGT)[j]) == 'O') ||
-											(filler->ally == 'X' && ft_toupper((*line + HGT)[j]) == 'X'))
-					filler->map->map[i][j] = -1;
+				if ((f->ally == 'O' && ft_toupper((*line + HGT)[j]) == 'O') ||
+											(f->ally == 'X' && ft_toupper((*line + HGT)[j]) == 'X'))
+					f->m->map[i][j] = -1;
 				else
-					filler->map->map[i][j] = -2;
+					f->m->map[i][j] = -2;
 			}
 			j++;
 		}
@@ -104,42 +104,42 @@ void			record_map_positions(t_filler *filler, char **line)
 	return ;
 }
 
-void			record_map(t_filler *filler, char **line)
+void			record_map(t_f *f, char **line)
 {
 	int		j;
 	char	**tmp;
 
 	j = 0;
 	tmp = ft_strsplit(*line, ' ');
-	filler->map->height = ft_atoi(*(tmp + 1));
-	filler->map->width = ft_atoi(*(tmp + 2));
+	f->m->height = ft_atoi(*(tmp + 1));
+	f->m->width = ft_atoi(*(tmp + 2));
 	ft_memdel((void **)tmp);
-	if (!(filler->map->map = (int **)malloc(sizeof(int *) * filler->map->height)))
+	if (!(f->m->map = (int **)malloc(sizeof(int *) * f->m->height)))
 		exit(1);
-	while (j < filler->map->height)
+	while (j < f->m->height)
 	{
-		if (!(filler->map->map[j] = (int *)malloc(sizeof(int) * filler->map->width)))
+		if (!(f->m->map[j] = (int *)malloc(sizeof(int) * f->m->width)))
 			exit(1);
 		j++;
 	}
 	return ;
 }
 
-void 			record_player(t_filler *filler, int i)
+void 			record_player(t_f *f, int i)
 {
 	if (i)
 	{
-		filler->ally = 'O';
-		filler->enemy = 'X';
+		f->ally = 'O';
+		f->enemy = 'X';
 	}
 	else
 	{
-		filler->ally = 'X';
-		filler->enemy = 'O';
+		f->ally = 'X';
+		f->enemy = 'O';
 	}
 }
 
-void			check_player(t_filler *filler, t_player *players, char **line)
+void			check_player(t_f *f, t_player *players, char **line)
 {
 	int			i;
 	int			z;
@@ -164,12 +164,12 @@ void			check_player(t_filler *filler, t_player *players, char **line)
 			players->p1 = ft_strdup(p_1[1]);
 			z = 1;
 		}
-		if (**line == '$' && !filler->ally && i == 0)
+		if (**line == '$' && !f->ally && i == 0)
 		{
-			if (ft_is_strstr(*line, NAME_ALLY) && ft_is_strstr(*line, "p1"))
-				record_player(filler, TRUE);
+			if (ft_is_strstr(*line, "p1"))
+				record_player(f, TRUE);
 			else
-				record_player(filler, FALSE);
+				record_player(f, FALSE);
 			i = 1;
 		}
 	}

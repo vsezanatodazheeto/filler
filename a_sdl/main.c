@@ -13,32 +13,32 @@
 #include "include/filler.h"
 #include "include/sdl.h"
 
-void        reading_to_struct(t_filler *filler, char **line)
+void        reading_to_struct(t_f *f, char **line)
 {
 	while (get_next_line(0, &(*line)))
 	{
 		if (**line == 'P' && ft_is_strstr(*line, NAME_FIELD))
 		{
-			record_map(filler, &(*line));
-			record_map_positions(filler, &(*line));
+			record_map(f, &(*line));
+			record_map_positions(f, &(*line));
 		}
 		else if (**line == 'P' && ft_is_strstr(*line, NAME_PIECE))
 		{
-			record_piece(filler, &(*line));
-			record_piece_positions(filler, &(*line));
+			record_piece(f, &(*line));
+			record_piece_positions(f, &(*line));
 		}
 		else if (**line == '<' && ft_is_strstr(*line, NAME_GOT))
 		{
-			record_got_pos(filler, &(*line));
+			record_got_pos(f, &(*line));
 			return ;
 		}
 	}
 	return ;
 }
 
-void    add_struct(t_filler *cur_lst)
+void    add_struct(t_f *cur_lst)
 {
-        t_filler  *ptr;
+        t_f  *ptr;
 
         ptr = new_t_filler();
         cur_lst->next = ptr;
@@ -47,10 +47,10 @@ void    add_struct(t_filler *cur_lst)
 
 int main() 
 { 
-    t_filler    *cur_lst;
-    t_filler	*fst_lst;
-	t_piece		*piece;
-	t_map		*map;
+    t_f			*cur_lst;
+    t_f			*fst_lst;
+	t_p			*p;
+	t_m			*m;
 	t_pos		*pos;
     t_player    player[1];
 	char 		*line;
@@ -64,17 +64,12 @@ int main()
 	check_player(cur_lst, player, &line);
     while(++i < 12) // исправить
     {
-        map = new_t_map();
-        pos = new_t_pos();
-        piece = new_t_piece();
-        init_structs(cur_lst, piece, map, pos);
+        init_structs(cur_lst, p, m, pos);
         reading_to_struct(cur_lst, &line);
         add_struct(cur_lst);
         cur_lst = cur_lst->next;
         break ;
     }
-    print_everything(fst_lst);
-	// exit(1);
     main_v(fst_lst, player);
     return (0);
 } 

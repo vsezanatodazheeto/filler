@@ -15,7 +15,7 @@ NAME = libftprintf.a
 FLAGS = -Wall -Wextra -Werror -O2 -O3 -O1
 DIR_S = SRC
 DIR_O = OBJ
-HEADER = header.h
+HEADER = ./header.h
 SOURCES = ft_strlen.c ft_numlen.c ft_itoabasex.c ft_atoi.c ft_str_sym_cmp.c ft_bzero.c ft_strdup.c ft_strjoin.c ft_strdel.c \
 ft_clean_struct.c ft_clean_mult.c \
 ft_cast_size_di.c ft_cast_size_poxu.c ft_cast_size_float.c \
@@ -43,3 +43,9 @@ clean:
 fclean: clean
 	@rm -f $(NAME)
 re: fclean all
+
+# % gcc -c -ggdb -std=c99 cs50.c -o cs50.o
+# % ar rcs libcs50.a cs50.o
+# % rm -f cs50.o
+# % cp cs50.h /usr/local/include
+# % cp libcs50.a /usr/local/lib
