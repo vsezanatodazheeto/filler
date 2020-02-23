@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 18:40:59 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/20 22:09:14 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/23 21:01:05 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,15 @@ int			ft_isupch_2(char str_ch_1, char str_ch_2, char ch_1, char ch_2)
 			|| (ft_toupper(str_ch_1) == ch_2 && str_ch_2 == ch_2)) ? 1 : 0);
 }
 
-int			ft_strintchr(char *s, char ch)
+int			ft_stsp(char *s)
 {
 	int		i;
 
 	i = 0;
 	while (s)
 	{
-		if (*s == ch)
-			return (i);
+		if (*s == ' ')
+			return (i + 1);
 		i++;
 		s++;
 	}

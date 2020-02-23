@@ -27,27 +27,47 @@ void	add_struct(t_f *lst)
 	return ;
 }
 
+int			ft_strtospace(char *s, char ch)
+{
+	int		i;
+
+	i = 0;
+	while (s)
+	{
+		if (*s == ch)
+			return (i + 1);
+		i++;
+		s++;
+	}
+	return (0);
+}
+
 int		main()
 {
-	int i;
-	t_f *lst;
-	t_f *cur;
+	char *line;
 
-	lst = new_t_f();
-	cur = lst;
+	line = "here we go";
 
-	add_struct(cur);
-	cur = cur->next;
-	add_struct(cur);
-	cur = cur->next;
-	add_struct(cur);
-	cur = cur->next;
-	add_struct(cur);
-	cur = cur->next;
-	while (lst->next)
-	{
-		lst = lst->next;
-		printf("kek\n");
-	}
+	printf("%s\n", line + ft_strintch(line, ' '));
+	// int i;
+	// t_f *lst;
+	// t_f *cur;
+
+	// lst = new_t_f();
+	// cur = lst;
+
+	// add_struct(cur);
+	// cur = cur->next;
+	// add_struct(cur);
+	// cur = cur->next;
+	// add_struct(cur);
+	// cur = cur->next;
+	// add_struct(cur);
+	// cur = cur->next;
+	// while (lst->next)
+	// {
+	// 	lst = lst->next;
+	// 	printf("kek\n");
+	// }
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 22:37:13 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/21 22:25:38 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/23 23:00:33 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 
 # define NAME_ALLY "a.out"
 # define NAME_FIELD "Plateau"
-# define NAME_PIECE "P"
-# define HGT 4
+# define NAME_PIECE "Piece"
+# define INTMAX 0x7FFFFFFF
 # define TRUE 1
 # define FALSE 0
 
@@ -59,7 +59,6 @@ typedef struct	s_f
 */
 int				ft_printf(const char *str, ...);
 int				get_next_line(int fd, char **line);
-char			**ft_strsplit(char const *str, char ch);
 
 /*
 ** основные функции f'a
@@ -73,6 +72,9 @@ void			record_map_positions(t_f *f, char **line);
 int				record_piece(t_f *f, char **line);
 void			record_piece_positions(t_f *f, char **line);
 void			fill_manhattan_distance(t_f *f);
+int				min_distance(t_f *f, int x, int y);
+void			find_best_pos(t_f *f);
+int				count_summ(t_f *f, int x, int y, int count);
 void			free_data(t_f *f, char **line);
 
 /*
@@ -82,10 +84,8 @@ int				manhattan_formula(int x, int y, int i, int j);
 int				ft_isupch(char ch_1, char ch_2, char ch_3);
 int				ft_isupch_2(char str_ch_1, char str_ch_2, char ch_1, char ch_2);
 int				get_size(int *height, int *width, char **line);
-int				ft_strintchr(char *s, char ch);
+int				ft_stsp(char *s);
 int				ft_strinstr(char *str_dad, char *str_son);
 void			ft_arrdel(void ***arr);
-void			printf_map(t_f *f); //delete me
-void			printf_map_fill(t_f *f); // delete me
 
 #endif
