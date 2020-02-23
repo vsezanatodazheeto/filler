@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:37:06 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/20 18:20:57 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/23 03:13:41 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int                 main_v (t_f *lst, t_player *player)
 
     
 	i = 0;
+	int n = 0;
 	run = TRUE;
 
 	if (init_lib())
@@ -51,18 +52,12 @@ int                 main_v (t_f *lst, t_player *player)
 					{
 						r->blend_p = BLEND_ON;
 						r->blend_r = BLEND_OFF;
-						// SDL_SetTextureColorMod(r->f->pause, 255, 255, 255);
-						// SDL_RenderCopy(r->rend, r->f->pause, NULL, &(rect->pause));
 					}
 					else
 					{
 						r->blend_p = BLEND_OFF;
 						r->blend_r = BLEND_ON;
-						// SDL_SetTextureColorMod(r->f->resume, 32, 32, 32);
-						// SDL_RenderCopy(r->rend, r->f->resume, NULL, &(rect->resume));
 					}
-					
-					// run = FALSE;
 					;
                 }
         	}
@@ -82,6 +77,12 @@ int                 main_v (t_f *lst, t_player *player)
 		draw_player(r, rect);
 		draw_map(r, rect, lst);
         //Update screen
+		if (lst->next && n < 154)
+		{
+			lst = lst->next;
+			n++;
+		}
+		SDL_Delay(50);
         SDL_RenderPresent(r->rend);
     }
     return quit(&win, r);

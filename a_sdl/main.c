@@ -6,14 +6,14 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 21:05:08 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/21 21:31:01 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/23 02:13:51 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/filler.h"
 #include "include/sdl.h"
 
-void        reading_to_struct(t_f *f, char **line)
+void        reading_to_struct(t_f *f, t_player *player, char **line)
 {
 	while (get_next_line(0, &(*line)))
 	{
@@ -23,7 +23,8 @@ void        reading_to_struct(t_f *f, char **line)
 				break ;
 			if (!(get_next_line(0, &(*line))))
 				break ;
-			record_map_positions(f, &(*line));
+			record_map_positions(f, player, &(*line));
+			// printf_map(f);
 		}
 		else if (**line == 'P' && ft_strinstr(*line, NAME_PIECE))
 		{
@@ -66,15 +67,30 @@ int main()
 	cur_lst = fst_lst;
     init_struct_player(player);
 	check_player(cur_lst, player, &line);
-    while(++i < 12) // исправить
+    while(TRUE) // исправить
     {
+		if (*line == '=')
+			break;
         init_structs(cur_lst, p, m, pos);
-        reading_to_struct(cur_lst, &line);
+        reading_to_struct(cur_lst, player, &line);
         add_struct(cur_lst);
         cur_lst = cur_lst->next;
-        break ;
     }
-	ft_printf("fist lst:\nally is: %c\nenemy is: %c", fst_lst->ally, fst_lst->enemy);
+	cur_lst->ally_c = 0;
+	cur_lst->enemy_c = 0;
+	cur_lst->p = NULL;
+	cur_lst->m = NULL;
+	cur_lst->pos = NULL;
+	cur_lst->next = NULL;
+	cur_lst->prev = NULL;
+	int n = 0;
+	// while (fst_lst->next && n < 200)
+	// 	{	
+	// 		print_everything(fst_lst);
+	// 		fst_lst = fst_lst->next;
+	// 		n++;
+	// 	}
+	// exit(1);
     main_v(fst_lst, player);
     return (0);
 } 

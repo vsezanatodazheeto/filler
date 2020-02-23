@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 07:54:15 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/21 23:08:35 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/23 06:14:42 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ void		find_best_pos(t_f *f)
 		}
 		i++;
 	}
-	// ft_printf("%d\n", min);
 	return ;
 }
 
@@ -137,7 +136,6 @@ void		solving_filler(t_f *f, char **line)
 				break ;
 			record_map_positions(f, &(*line));
 			fill_manhattan_distance(f);
-			// printf_map_fill(f);
 		}
 		else if (**line == 'P' && ft_strinstr(*line, NAME_PIECE))
 		{

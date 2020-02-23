@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:48 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/21 17:28:43 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/22 23:04:24 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void			record_got_pos(t_f *f, char **line)
 	tmp = ft_strsplit(*line, ' ');
 	f->pos->i = ft_atoi(&(tmp[2][1]));
 	f->pos->j = ft_atoi(&(tmp[3][0]));
-	// ft_printf("positions: [%d, %d]\n", f->pos->i, f->pos->j);
 	ft_memdel((void **)tmp);
 	return ;
 }
@@ -74,15 +73,13 @@ int			record_piece(t_f *f, char **line)
 	return (0);
 }
 
-void		record_map_positions(t_f *f, char **line)
+void		record_map_positions(t_f *f, t_player * player, char **line)
 {
 	int		i;
 	int		j;
 
 	i = 0;
 	j = 0;
-	if (get_next_line(0, &(*line)))
-	 		;
 	while (i < f->m->height && get_next_line(0, &(*line)))
 	{
 		j = 0;
@@ -92,7 +89,7 @@ void		record_map_positions(t_f *f, char **line)
 				f->m->map[i][j] = 0;
 			else if (ft_isupch((*line + HGT)[j], 'O', 'X'))
 			{
-				if (ft_isupch_2((*line + HGT)[j], f->ally, 'O', 'X'))
+				if (ft_isupch_2((*line + HGT)[j], player->ally, 'O', 'X'))
 					f->m->map[i][j] = -1;
 				else
 					f->m->map[i][j] = -2;
@@ -126,16 +123,16 @@ int			record_map(t_f *f, char **line)
 	return (0);
 }
 
-void 			record_player(t_f *f, int i)
+void 			record_player(t_player *player, int i)
 {
 	if (i)
 	{
-		f->ally = 'O';
-		f->enemy = 'X';
+		player->ally = 'O';
+		player->enemy = 'X';
 	}
 	else
 	{
-		f->ally = 'X';
-		f->enemy = 'O';
+		player->ally = 'X';
+		player->enemy = 'O';
 	}
 }

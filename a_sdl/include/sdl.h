@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:57 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/21 17:04:29 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/23 03:10:48 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 // 1600 x 1120
 #define SCREEN_WIDTH 1600
 #define SCREEN_HEIGHT 1120
-#define INDENT 32
+#define INDENT SCREEN_WIDTH / 100 * 2
 #define BAR_HEIGHT 64
 #define KEY_HEIGHT 1088
 #define FONT_SIZE 50
@@ -65,6 +65,7 @@ typedef struct			s_rect
     SDL_Rect			p2_name;
 	SDL_Rect			asian;
 	SDL_Rect			cv_19;
+	SDL_Rect			earth;
 }						t_rect;
 
 typedef struct			s_font
@@ -98,11 +99,11 @@ typedef struct			s_textur
 
 typedef struct			s_rend
 {
+	t_player			*player;
 	SDL_RendererFlip 	flip;
 	SDL_BlendMode		blend_p;
 	SDL_BlendMode		blend_r;
 	SDL_Renderer 		*rend;
-	t_player			*player;
 	t_textur			*t;
 	t_font				*f;
 	t_rect				*rect;

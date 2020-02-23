@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:57 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/21 17:26:45 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/22 20:16:23 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ typedef struct			s_player
 {
 	char				*p1;
 	char				*p2;
+	char				ally;
+	char				enemy;
 }						t_player;
 
 typedef struct			s_m
@@ -54,8 +56,6 @@ typedef struct			s_pos
 
 typedef struct			s_f
 {
-	char				ally;
-	char				enemy;
 	int					ally_c;
 	int					enemy_c;
 	t_p					*p;
@@ -75,12 +75,13 @@ char			**ft_strsplit(char const *str, char ch);
 /*
 * основные функции filler'a
 */
+void			check_player(t_f *f, t_player *player, char **line);
 void			init_struct_player(t_player *player);
 void    		init_structs(t_f *f, t_p *p, t_m *m, t_pos *pos);
-void			check_player(t_f *f, t_player *player, char **line);
-void			record_player(t_f *f, int i);
+void        	reading_to_struct(t_f *f, t_player *player, char **line);
+void 			record_player(t_player *player, int i);
 int				record_map(t_f *f, char **line);
-void			record_map_positions(t_f *f, char **line);
+void			record_map_positions(t_f *f, t_player *players, char **line);
 int				record_piece(t_f *f, char **line);
 void			record_piece_positions(t_f *f, char **line);
 void			record_got_pos(t_f *f, char **line);

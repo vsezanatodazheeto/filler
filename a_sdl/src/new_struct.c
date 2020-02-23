@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 12:56:52 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/19 17:14:11 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/22 22:32:08 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_p*	new_t_piece()
 
         if (!(ptr = malloc(sizeof(t_p))))
 			return (NULL);
-        return ptr;
+        return (ptr);
 }
 
 t_m		*new_t_map()
@@ -28,7 +28,7 @@ t_m		*new_t_map()
 
         if (!(ptr = malloc(sizeof(t_m))))
 			return (NULL);
-        return ptr;
+        return (ptr);
 }
 
 t_pos	*new_t_pos()
@@ -37,7 +37,7 @@ t_pos	*new_t_pos()
 
         if (!(ptr = malloc(sizeof(t_pos))))
 			return (NULL);
-        return ptr;
+        return (ptr);
 }
 
 t_f  *new_t_filler()
@@ -47,5 +47,5 @@ t_f  *new_t_filler()
         if (!(ptr = malloc(sizeof(t_f))))
 			return (NULL);
         ptr->next = NULL;
-        return ptr;
+        return (ptr);
 }
