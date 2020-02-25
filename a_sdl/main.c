@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 21:05:08 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/24 05:09:53 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/25 03:31:27 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void        reading_to_struct(t_f *f, t_player *player, char **line)
 {
 	while (get_next_line(0, &(*line)))
 	{
+		if (**line == '=')
+			break;
 		if (**line == 'P' && ft_strinstr(*line, NAME_FIELD))
 		{
 			if (record_map(f, &(*line)) == 1)
@@ -70,22 +72,11 @@ int main()
     {
         init_structs(cur_lst, p, m, pos);
         reading_to_struct(cur_lst, player, &line);
-		if (line)
-        {
-			add_struct(cur_lst);
-    		cur_lst = cur_lst->next;
-		}
-		else
+		if (!line || *line == '=')
 			break ;
+		add_struct(cur_lst);
+		cur_lst = cur_lst->next;
     }
-	cur_lst->ally_c = 0;
-	cur_lst->enemy_c = 0;
-	cur_lst->p = NULL;
-	cur_lst->m = NULL;
-	cur_lst->pos = NULL;
-	cur_lst->next = NULL;
-	cur_lst->prev = NULL;
-	int n = 0;
     main_v(fst_lst, player);
     return (0);
 } 

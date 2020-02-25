@@ -6,12 +6,15 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:37:06 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/24 05:11:19 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/25 14:06:40 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/filler.h"
 #include "../include/sdl.h"
+
+int keker = 0;
+int delay = 40;
 
 int                 main_v (t_f *lst, t_player *player)
 {
@@ -26,7 +29,7 @@ int                 main_v (t_f *lst, t_player *player)
 
     
 	i = 0;
-	int n = 0;
+	int n = 1;
 	run = TRUE;
 
 	if (init_lib())
@@ -36,10 +39,15 @@ int                 main_v (t_f *lst, t_player *player)
 
     if (create(&win, r, player))
         return (1);
+
+	menu_rect(r, rect);
+	word_rect(r, rect);
+	field_rect(r, rect, lst);
     while (run)
     {
 		i = 0;
 		// checking keyboard events
+		SDL_Delay(40);
 		while (SDL_PollEvent(&e) != 0)
 		{
 			if (e.type == SDL_QUIT)
@@ -48,6 +56,7 @@ int                 main_v (t_f *lst, t_player *player)
             {
                 if (e.key.keysym.sym == SDLK_SPACE)
                 {
+					n++;
 					if (r->blend_p == BLEND_OFF)
 					{
 						r->blend_p = BLEND_ON;
@@ -58,8 +67,17 @@ int                 main_v (t_f *lst, t_player *player)
 						r->blend_p = BLEND_OFF;
 						r->blend_r = BLEND_ON;
 					}
-					;
                 }
+				if (e.key.keysym.sym == SDLK_LEFT && delay < 80)
+				{
+					delay = delay + 20;
+					SDL_SetTextureColorMod( r->t->cur_2, 74, 66, 55);
+				}
+				if (e.key.keysym.sym == SDLK_RIGHT && delay > 0)
+				{
+					delay = delay - 20;
+					SDL_SetTextureColorMod( r->t->cur, 74, 66, 55);
+				}
         	}
 		}
 		//Clear screen
@@ -69,6 +87,7 @@ int                 main_v (t_f *lst, t_player *player)
 		draw_fillboard(r, rect);
 		draw_keyboard(r, rect);
 		draw_bar(r, rect);
+		draw_bar_bord(r, rect);
 		draw_msg_quit(r, rect);
 		draw_msg_pause(r, rect);
         draw_msg_cursor_back(r, rect);
@@ -77,10 +96,10 @@ int                 main_v (t_f *lst, t_player *player)
 		draw_player(r, rect);
 		draw_map(r, rect, lst);
         // Update screen
-		if (lst->next)
+		if (lst->next && n % 2 == 0)
 			lst = lst->next;
-		SDL_Delay(60);
         SDL_RenderPresent(r->rend);
+		SDL_Delay(delay);
     }
     return quit(&win, r);
 }
@@ -121,8 +140,6 @@ int                 main_v (t_f *lst, t_player *player)
 //     SDL_BlitSurface(bg, NULL, scr, &r);
 //     SDL_UpdateWindowSurface(win);
 // }
-
-
 
 // ПОНАДОБИТСЯ ДЛЯ BAR
 // SDL_SetRenderTarget(r, destiny);

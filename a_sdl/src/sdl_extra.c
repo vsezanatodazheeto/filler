@@ -6,12 +6,14 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 22:53:36 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/19 17:12:05 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/25 13:23:34 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/filler.h"
 #include "../include/sdl.h"
+
+extern int delay;
 
 void				change_blend(SDL_BlendMode b1, SDL_BlendMode b2)
 {
@@ -27,7 +29,7 @@ SDL_Texture			*load_texture(SDL_Renderer **rend, char *path)
 	
 	if(!(loaded_scr = IMG_Load(path)))
 	{
-		// ft_printf("{red}unable to load image in LOAD_TEXTURE!{eoc}\n");
+		ft_printf("{red}unable to load image in LOAD_TEXTURE!{eoc}\n");
 		return (NULL);
 	}
 	else
@@ -36,15 +38,14 @@ SDL_Texture			*load_texture(SDL_Renderer **rend, char *path)
 	return (new_textur);
 }
 
-SDL_Texture			*load_font(SDL_Renderer **rend, char *path, int size)
+SDL_Texture			*load_font(SDL_Renderer **rend, char *path, int size, SDL_Color clr)
 {
     TTF_Font		*sans = TTF_OpenFont("resources/zb.ttf", size);
 	SDL_Texture 	*new_textur = NULL;
 	SDL_Surface 	*loaded_scr;
-    SDL_Color white = {255, 255, 255};  
-	if(!(loaded_scr = TTF_RenderText_Blended(sans, path, white)))
+	if(!(loaded_scr = TTF_RenderText_Blended(sans, path, clr)))
 	{
-		// ft_printf("{red}unable to load image in LOAD_FONT!{eoc}\n");
+		ft_printf("{red}unable to load image in LOAD_FONT!{eoc}\n");
 		return (NULL);
 	}
 	else
