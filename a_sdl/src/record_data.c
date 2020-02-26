@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:48 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/22 23:04:24 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/26 17:10:55 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ void		record_map_positions(t_f *f, t_player * player, char **line)
 
 	i = 0;
 	j = 0;
+	// if (!player->field)
+		// player->field = ft_namefield(f->m->height, f->m->width);
 	while (i < f->m->height && get_next_line(0, &(*line)))
 	{
 		j = 0;
@@ -90,14 +92,21 @@ void		record_map_positions(t_f *f, t_player * player, char **line)
 			else if (ft_isupch((*line + HGT)[j], 'O', 'X'))
 			{
 				if (ft_isupch_2((*line + HGT)[j], player->ally, 'O', 'X'))
+				{
 					f->m->map[i][j] = -1;
+					f->ally_cnt++;
+				}
 				else
+				{
 					f->m->map[i][j] = -2;
+					f->enemy_cnt++;
+				}
 			}
 			j++;
 		}
 		i++;
 	}
+	f->field_cnt = f->m->width * f->m->height - f->ally_cnt - f->enemy_cnt;
 	return ;
 }
 

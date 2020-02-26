@@ -14,6 +14,7 @@
 #include "../include/sdl.h"
 
 extern int keker;
+extern int delay;
 
 void				draw_map(t_rend *r, t_rect *rect, t_f *lst)
 {
@@ -47,160 +48,152 @@ void				draw_map(t_rend *r, t_rect *rect, t_f *lst)
 		}
 		i++;
 	}
+	ft_printf("ally: %d\n", lst->ally_cnt);
+	ft_printf("enemy: %d\n", lst->enemy_cnt);
+	ft_printf("map:: %d\n", lst->field_cnt);
 	return;
 }
 void draw_player(t_rend *r, t_rect *rect)
-{
-	rect->p1.x = INDENT + 20;
-	rect->p1.y = rect->filler.h + (INDENT * 2) + 10;
-	rect->p1.w = 1;
-	rect->p1.h = 1;
-	SDL_QueryTexture(r->f->p1, NULL, NULL, &(rect->p1.w), &(rect->p1.h));
-	SDL_RenderCopy(r->rend, r->f->p1, NULL, &(rect->p1));
-	rect->p2.x = SCREEN_WIDTH - (INDENT * 2) - 110;
-	rect->p2.y = rect->filler.h + (INDENT * 2) + 10;
-	rect->p2.w = 1;
-	rect->p2.h = 1;
-	SDL_QueryTexture(r->f->p2, NULL, NULL, &(rect->p2.w), &(rect->p2.h));
-	SDL_RenderCopy(r->rend, r->f->p2, NULL, &(rect->p2));
-	// это отдельная функция
-	rect->p1.x = rect->filler.w + INDENT + 20;
-	rect->p1.y = rect->p1_name.y - INDENT - 20;
-	rect->p1.w = 1;
-	rect->p1.h = 1;
-	SDL_QueryTexture(r->f->p1_, NULL, NULL, &(rect->p1.w), &(rect->p1.h));
-	SDL_RenderCopy(r->rend, r->f->p1_, NULL, &(rect->p1));
-	rect->p2.x = rect->filler.w + INDENT + 20;
-	rect->p2.y = rect->p2_name.y - INDENT - 20;
-	rect->p2.w = 1;
-	rect->p2.h = 1;
-	SDL_QueryTexture(r->f->p2_, NULL, NULL, &(rect->p2.w), &(rect->p2.h));
-	SDL_RenderCopy(r->rend, r->f->p2_, NULL, &(rect->p2));
+{	
+	//ASIANS :
+	rect->p1_.x = rect->filler.w + INDENT + 20;
+	rect->p1_.y = rect->p1_name.y - INDENT - 20;
+	rect->p1_.w = 1;
+	rect->p1_.h = 1;
+	SDL_QueryTexture(r->f->p1_, NULL, NULL, &(rect->p1_.w), &(rect->p1_.h));
+	SDL_RenderCopy(r->rend, r->f->p1_, NULL, &(rect->p1_));
+	
+	// COVID19 :
+	rect->p2_.x = rect->filler.w + INDENT + 20;
+	rect->p2_.y = rect->p2_name.y - INDENT - 20;
+	rect->p2_.w = 1;
+	rect->p2_.h = 1;
+	SDL_QueryTexture(r->f->p2_, NULL, NULL, &(rect->p2_.w), &(rect->p2_.h));
+	SDL_RenderCopy(r->rend, r->f->p2_, NULL, &(rect->p2_));
+
+	// EARTH:
+	rect->p3_.x = rect->filler.w + INDENT + 20;
+	rect->p3_.y = rect->p3_name.y - INDENT - 24;
+	rect->p3_.w = 1;
+	rect->p3_.h = 1;
+	SDL_QueryTexture(r->f->p3_, NULL, NULL, &(rect->p3_.w), &(rect->p3_.h));
+	SDL_RenderCopy(r->rend, r->f->p3_, NULL, &(rect->p3_));
+
+
+
 	return ;
 }
 
 void				draw_player_name(t_rend *r, t_rect *rect)
 {
+	//PLAYER_1 that will play for ASIANS
 	rect->p1_name.x = rect->filler.w + INDENT + 20;
-	rect->p1_name.y = rect->key.h - (INDENT * 5);
+	rect->p1_name.y = rect->key.h - (INDENT * 5 - 8);
 	rect->p1_name.w = 1;
 	rect->p1_name.h = 1;
 	SDL_QueryTexture(r->f->p1_name, NULL, NULL, &(rect->p1_name.w), &(rect->p1_name.h));
 	SDL_RenderCopy(r->rend, r->f->p1_name, NULL, &(rect->p1_name));
+	//PLAYER_2 that will play for COVID
 	rect->p2_name.x = rect->filler.w + INDENT + 20;
 	rect->p2_name.y = rect->key.h - INDENT;
 	rect->p2_name.w = 1;
 	rect->p2_name.h = 1;
 	SDL_QueryTexture(r->f->p2_name, NULL, NULL, &(rect->p2_name.w), &(rect->p2_name.h));
 	SDL_RenderCopy(r->rend, r->f->p2_name, NULL, &(rect->p2_name));
+	//PLAYER_3 that will play for EARTH
+	rect->p3_name.x = rect->filler.w + INDENT + 20;
+	rect->p3_name.y = rect->key.h - (INDENT * 8 + 14);
+	rect->p3_name.w = 1;
+	rect->p3_name.h = 1;
+	SDL_QueryTexture(r->f->p3_name, NULL, NULL, &(rect->p3_name.w), &(rect->p3_name.h));
+	SDL_RenderCopy(r->rend, r->f->p3_name, NULL, &(rect->p3_name));
 }
 
-void				draw_msg_cursor_forward(t_rend *r, t_rect *rect)
-{
-	rect->cur.x = rect->filler.w + INDENT + 20;
-	rect->cur.y = BAR_HEIGHT * 3 + INDENT + 28;
-	rect->cur.w = 60;
-	rect->cur.h = 30;
-	SDL_RenderCopy(r->rend, r->t->cur, NULL, &(rect->cur));
-	SDL_SetTextureColorMod( r->t->cur, 255, 255, 255);
-	rect->forward.x = rect->cur.x + rect->cur.w + 195;
-	rect->forward.y = BAR_HEIGHT * 3 + INDENT + 20;
-	rect->forward.w = 1;
-	rect->forward.h = 1;
-	SDL_QueryTexture(r->f->forward, NULL, NULL, &(rect->forward.w), &(rect->forward.h));
-	SDL_RenderCopy(r->rend, r->f->forward, NULL, &(rect->forward));
-	return ;
-}
-
-void				draw_msg_cursor_back(t_rend *r, t_rect *rect)
-{
-	rect->cur_2.x = rect->filler.w + INDENT + 20;
-	rect->cur_2.y = BAR_HEIGHT * 2 + INDENT + 28;
-	rect->cur_2.w = 60;
-	rect->cur_2.h = 30;
-	SDL_RenderCopyEx(r->rend, r->t->cur_2, NULL, &(rect->cur_2), 0.0, 0, r->flip);
-	SDL_SetTextureColorMod( r->t->cur_2, 255, 255, 255);
-	rect->back.x = rect->cur.x + rect->cur.w + 255;
-	rect->back.y = BAR_HEIGHT * 2 + INDENT + 20;
-	rect->back.w = 1;
-	rect->back.h = 1;
-	SDL_QueryTexture(r->f->back, NULL, NULL, &(rect->back.w), &(rect->back.h));
-	SDL_RenderCopy(r->rend, r->f->back, NULL, &(rect->back));
-	return ;
-}
-
-void				draw_msg_pause(t_rend *r, t_rect *rect)
-{
-	SDL_RenderCopy(r->rend, r->f->k_pause, NULL, &(rect->k_pause));
-	SDL_RenderCopy(r->rend, r->f->pause, NULL, &(rect->pause));
-	SDL_RenderCopy(r->rend, r->f->resume, NULL, &(rect->resume));
-	return ;
-}
-
-void				draw_msg_quit(t_rend *r, t_rect *rect)
-{
+void				draw_message(t_rend *r, t_rect *rect)
+{	
+	// CMD + W
 	SDL_RenderCopy(r->rend, r->f->k_quit, NULL, &(rect->k_quit));
+	// QUIT
 	SDL_RenderCopy(r->rend, r->f->quit, NULL, &(rect->quit));
+
+	// SPACE
+	SDL_RenderCopy(r->rend, r->f->k_pause, NULL, &(rect->k_pause));
+	// PAUSE
+	SDL_SetTextureBlendMode(r->f->pause, r->blend_p);
+	SDL_RenderCopy(r->rend, r->f->pause, NULL, &(rect->pause));
+	// RESUME
+	SDL_SetTextureBlendMode(r->f->resume, r->blend_r);
+	SDL_RenderCopy(r->rend, r->f->resume, NULL, &(rect->resume));
+
+	// <----- CURSOR BACK
+	SDL_QueryTexture(r->t->cur_back, NULL, NULL, &(rect->cur_back.w), &(rect->cur_back.h));
+	SDL_RenderCopy(r->rend, r->t->cur_back, NULL, &(rect->cur_back));
+	SDL_SetTextureColorMod( r->t->cur_back, 255, 255, 255);
+	// -----> CURSOR FORWARD
+	SDL_QueryTexture(r->t->cur_forward, NULL, NULL, &(rect->cur_forward.w), &(rect->cur_forward.h));
+	SDL_RenderCopyEx(r->rend, r->t->cur_forward, NULL, &(rect->cur_forward), 0.0, 0, r->flip_hor);
+	SDL_SetTextureColorMod( r->t->cur_forward, 255, 255, 255);
+	// BACK_FORWARD
+	SDL_RenderCopy(r->rend, r->f->back_forward, NULL, &(rect->back_forward));
+
+	// /\ CURSOR UP
+	SDL_QueryTexture(r->t->cur_up, NULL, NULL, &(rect->cur_up.w), &(rect->cur_up.h));
+	SDL_RenderCopyEx(r->rend, r->t->cur_up, NULL, &(rect->cur_up), 90.0, 0, r->flip_non);
+	SDL_SetTextureColorMod( r->t->cur_up, 255, 255, 255);
+	// \/ CURSOR DOWN
+	SDL_QueryTexture(r->t->cur_down, NULL, NULL, &(rect->cur_down.w), &(rect->cur_down.h));
+	SDL_RenderCopyEx(r->rend, r->t->cur_down, NULL, &(rect->cur_down), 270.0, 0, r->flip_non);
+	SDL_SetTextureColorMod( r->t->cur_down, 255, 255, 255);
+	// SPEED
+	SDL_RenderCopy(r->rend, r->f->speed, NULL, &(rect->speed));
+	// SPEEDRATE
+	SDL_RenderCopy(r->rend, r->f->speedrate, NULL, &(rect->speedrate));
 	return ;
 }
 
-void				draw_bar_bord(t_rend *r, t_rect *rect)
-{
-	SDL_RenderCopy(r->rend, r->t->m_bar, NULL, &(rect->bar_bord));
-	SDL_RenderCopy(r->rend, r->t->m_bar, NULL, &(rect->bar_bord_2));
-	return ;
-}
-
-void				draw_bar(t_rend *r, t_rect *rect)
-{
-	// left bar
-	SDL_RenderCopy(r->rend, r->t->m_bar, NULL, &(rect->bar));
-	// right bar
-	SDL_RenderCopy(r->rend, r->t->m_bar, NULL, &(rect->bar_2));
-	// centered bar
-	SDL_RenderCopy(r->rend, r->t->m_bar, NULL, &(rect->bar_3));
-	return ;
-}
-
-void				draw_keyboard(t_rend *r, t_rect *rect)
-{
-	SDL_RenderCopy(r->rend, r->t->m_key, NULL, &(rect->key));
-	return ;
-}
-
-void				draw_fillboard(t_rend *r, t_rect *rect)
-{
+void				draw_menu(t_rend *r, t_rect *rect)
+{	
+	// FILLBOARD
 	SDL_RenderCopy(r->rend, r->t->m_filler, NULL, &(rect->filler));
+	// MENU KEY
+	SDL_RenderCopy(r->rend, r->t->m_key, NULL, &(rect->key));
+	// LEFT BAR
+	SDL_RenderCopy(r->rend, r->t->m_bar_left, NULL, &(rect->bar_left));
+	// RIGHT BAR
+	SDL_RenderCopy(r->rend, r->t->m_bar_right, NULL, &(rect->bar_right));
+	// CENTER BAR
+	SDL_RenderCopy(r->rend, r->t->m_bar_center, NULL, &(rect->bar_center));
+	// DELIMITER BAR
+	SDL_RenderCopy(r->rend, r->t->m_bar_delimiter, NULL, &(rect->bar_bord));
+	SDL_RenderCopy(r->rend, r->t->m_bar_delimiter, NULL, &(rect->bar_bord_2));
+	// ASIANS BAR
+	SDL_RenderCopy(r->rend, r->f->p1, NULL, &(rect->p1));
+	// COVID19 BAR
+	SDL_RenderCopy(r->rend, r->f->p2, NULL, &(rect->p2));
 	return ;
 }
 
 void				draw_bacground(t_rend *r, t_rect *rect)
 {
 	int 			i;
-	int				n;
 
 	i = 0;
-	n = 0;
-	while (i < SCREEN_WIDTH * SCREEN_HEIGHT)
+	while (i < SCREEN_WIDTH * SCREEN_HEIGHT + 2 * SCREEN_HEIGHT + 2 * SCREEN_WIDTH)
 	{
-		rect->bg.x = (n % SCREEN_WIDTH) + keker;
-		rect->bg.y = (n / SCREEN_WIDTH) * 32;
+		if (rect->bg.x >= SCREEN_WIDTH)
+		{
+			keker = 0;
+		}
+		rect->bg.x = (i % (SCREEN_WIDTH + 32) - INDENT) + keker;
+		rect->bg.y = (i / (SCREEN_WIDTH + 32)) * 32 - INDENT+ keker;
 		rect->bg.w = 32;
 		rect->bg.h = 32;
-		// if (rect->bg.x >= SCREEN_WIDTH)
-		// {	
-		// 	ft_printf("heh\n");
-		// 	n = 0;
-		// 	keker = 0;
-		// 	rect->bg.x = (n % SCREEN_WIDTH) + keker;
-		// }
 		// SDL_RenderSetViewport(rend, &topLeftViewport);
 		//Render texture to screen
 		SDL_SetTextureColorMod( r->t->bg, 75, 66, 55);
 		SDL_RenderCopy(r->rend, r->t->bg, NULL, &(rect->bg));
 		i = i + INDENT;
-		n = n + INDENT;
 	}
-	// keker++;
+	keker++;
 	return ;
 }

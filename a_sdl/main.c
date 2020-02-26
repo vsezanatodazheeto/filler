@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 21:05:08 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/25 03:31:27 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/26 19:42:03 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 void        reading_to_struct(t_f *f, t_player *player, char **line)
 {
+	char *tmp;
+
+	tmp = NULL;
 	while (get_next_line(0, &(*line)))
 	{
 		if (**line == '=')
@@ -36,6 +39,21 @@ void        reading_to_struct(t_f *f, t_player *player, char **line)
 		else if (**line == '<' && ft_strinstr(*line, NAME_GOT))
 		{
 			record_got_pos(f, &(*line));
+			// if (!(get_next_line(0, &tmp)))
+			// {
+			// 	if (*tmp == 'P' && ft_strinstr(tmp, NAME_PIECE))
+			// 	{
+			// 			if (record_piece(f, &tmp) == 1)
+			// 				break;
+			// 			record_piece_positions(f, &tmp);
+			// 			if (!(get_next_line(0, &tmp)))
+			// 				break;
+			// 			record_got_pos(f, &tmp);
+			// 			// почистить tmp обязательно
+			// 	}
+			// 	else if (*tmp == 'P' && ft_strinstr(*line, NAME_FIELD))
+			// 		*line = tmp;
+			// }
 			return ;
 		}
 	}
@@ -77,6 +95,7 @@ int main()
 		add_struct(cur_lst);
 		cur_lst = cur_lst->next;
     }
+	write(1, "a\n", 2);
     main_v(fst_lst, player);
     return (0);
 } 

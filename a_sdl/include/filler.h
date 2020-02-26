@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:57 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/25 03:48:50 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/26 15:18:28 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct			s_player
 {
 	char				*p1;
 	char				*p2;
+	char				*field;
 	char				ally;
 	char				enemy;
 }						t_player;
@@ -57,8 +58,9 @@ typedef struct			s_pos
 
 typedef struct			s_f
 {
-	int					ally_c;
-	int					enemy_c;
+	int					ally_cnt;
+	int					enemy_cnt;
+	int					field_cnt;
 	t_p					*p;
 	t_m					*m;
 	t_pos				*pos;

@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:37:06 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/25 14:06:40 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/26 20:22:35 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 int keker = 0;
 int delay = 40;
+int i = 2;
 
 int                 main_v (t_f *lst, t_player *player)
 {
@@ -24,12 +25,11 @@ int                 main_v (t_f *lst, t_player *player)
     t_font			f[1];
     t_rect			rect[1];
     SDL_Event       e;
+	t_f				*fst_lst;
 	int				run;
-	int				i;
-
-    
-	i = 0;
+	
 	int n = 1;
+	int kk = 0;
 	run = TRUE;
 
 	if (init_lib())
@@ -43,11 +43,22 @@ int                 main_v (t_f *lst, t_player *player)
 	menu_rect(r, rect);
 	word_rect(r, rect);
 	field_rect(r, rect, lst);
+	SDL_SetRenderDrawColor(r->rend, 255, 255, 255, 255);
+	fst_lst = lst;
     while (run)
     {
-		i = 0;
+		//Clear screen
+        SDL_RenderClear(r->rend);
+		//RENDERING TEXTURES
+		draw_bacground(r, rect);
+		draw_menu(r, rect);
+		draw_message(r, rect);
+		draw_player_name(r, rect);
+		draw_player(r, rect);
+		draw_map(r, rect, lst);
+		SDL_Delay(0);
+        SDL_RenderPresent(r->rend);
 		// checking keyboard events
-		SDL_Delay(40);
 		while (SDL_PollEvent(&e) != 0)
 		{
 			if (e.type == SDL_QUIT)
@@ -68,78 +79,54 @@ int                 main_v (t_f *lst, t_player *player)
 						r->blend_r = BLEND_ON;
 					}
                 }
-				if (e.key.keysym.sym == SDLK_LEFT && delay < 80)
+				if (e.key.keysym.sym == SDLK_UP && delay > 0)
 				{
-					delay = delay + 20;
-					SDL_SetTextureColorMod( r->t->cur_2, 74, 66, 55);
-				}
-				if (e.key.keysym.sym == SDLK_RIGHT && delay > 0)
-				{
+					i++;
 					delay = delay - 20;
-					SDL_SetTextureColorMod( r->t->cur, 74, 66, 55);
+					SDL_SetTextureColorMod( r->t->cur_up, 74, 66, 55);
+					r->f->speedrate = load_font(&(r->rend), (char *)SPEEDARRAY[i], FONT_SIZE_2, white);
+				}
+				if (e.key.keysym.sym == SDLK_DOWN && delay < 80)
+				{
+					i--;
+					delay = delay + 20;
+					SDL_SetTextureColorMod( r->t->cur_down, 74, 66, 55);
+					r->f->speedrate = load_font(&(r->rend), (char *)SPEEDARRAY[i], FONT_SIZE_2, white);
 				}
         	}
 		}
-		//Clear screen
-        SDL_RenderClear(r->rend);
-		//RENDERING TEXTURES
-		draw_bacground(r, rect);
-		draw_fillboard(r, rect);
-		draw_keyboard(r, rect);
-		draw_bar(r, rect);
-		draw_bar_bord(r, rect);
-		draw_msg_quit(r, rect);
-		draw_msg_pause(r, rect);
-        draw_msg_cursor_back(r, rect);
-        draw_msg_cursor_forward(r, rect);
-		draw_player_name(r, rect);
-		draw_player(r, rect);
-		draw_map(r, rect, lst);
-        // Update screen
 		if (lst->next && n % 2 == 0)
 			lst = lst->next;
-        SDL_RenderPresent(r->rend);
+		if (!lst->next && n % 2 == 0)
+		{
+			n++;
+			if (r->blend_p == BLEND_OFF)
+			{
+				r->blend_p = BLEND_ON;
+				r->blend_r = BLEND_OFF;
+			}
+			else
+			{
+				r->blend_p = BLEND_OFF;
+				r->blend_r = BLEND_ON;
+			}
+			lst = fst_lst;
+		}
 		SDL_Delay(delay);
+        SDL_RenderPresent(r->rend);
+		// rect->kek.x = 0 + kk;
+		// rect->kek.y = 0 + kk;
+		// rect->kek.w = 32;
+		// rect->kek.h = 32;
+		// SDL_SetTextureColorMod(r->t->kek, 0, 0, 255);
+		// SDL_RenderCopy(r->rend, r->t->kek, NULL, &(rect->kek));
+		// kk++;
+		// if (rect->kek.x > SCREEN_HEIGHT || rect->kek.y > SCREEN_WIDTH)
+		// 	kk = 0;
+		
     }
     return quit(&win, r);
 }
-
-// SDL_Rect r;
-
-// int x = 0;
-// int y = 0;
-
-// r.x = x;
-// r.y = y;
-
-// while (run) {
-//     while(SDL_PollEvent(&e)) {
-//         if (e.type == SDL_QUIT) {
-//             run = FALSE;
-//         }
-
-//         if (e.type == SDL_KEYDOWN) {
-//             if (e.key.keysym.sym == SDLK_UP) {
-//                 y -= 1;
-//             }
-//             if (e.key.keysym.sym == SDLK_DOWN) {
-//                 y += 1;
-//             }
-//             if (e.key.keysym.sym == SDLK_RIGHT) {
-//                 x += 6;
-//             }
-//             if (e.key.keysym.sym == SDLK_LEFT) {
-//                 x -= 6;
-//             }
-//         }
-//     }
-//     r.x = x;
-//     r.y = y;
-
-//     SDL_FillRect(scr, NULL, SDL_MapRGB(scr->format, 255, 255, 255));
-//     SDL_BlitSurface(bg, NULL, scr, &r);
-//     SDL_UpdateWindowSurface(win);
-// }
 
 // ПОНАДОБИТСЯ ДЛЯ BAR
 // SDL_SetRenderTarget(r, destiny);

@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:37:15 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/25 13:37:28 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/26 20:22:44 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,16 @@ int				quit(SDL_Window **win, t_rend *r)
 {
 	// TEXTURES
 	SDL_DestroyTexture(r->t->bg);
-	SDL_DestroyTexture(r->t->cur);
-	SDL_DestroyTexture(r->t->cur_2);
+	SDL_DestroyTexture(r->t->cur_forward);
+	SDL_DestroyTexture(r->t->cur_back);
+	SDL_DestroyTexture(r->t->cur_up);
+	SDL_DestroyTexture(r->t->cur_down);
 	SDL_DestroyTexture(r->t->m_filler);
 	SDL_DestroyTexture(r->t->m_key);
-	SDL_DestroyTexture(r->t->m_bar);
+	SDL_DestroyTexture(r->t->m_bar_left);
+	SDL_DestroyTexture(r->t->m_bar_right);
+	SDL_DestroyTexture(r->t->m_bar_center);
+	SDL_DestroyTexture(r->t->m_bar_delimiter);
 	SDL_DestroyTexture(r->t->asian);
 	SDL_DestroyTexture(r->t->cv_19);
 	// FONTS
@@ -30,8 +35,9 @@ int				quit(SDL_Window **win, t_rend *r)
 	SDL_DestroyTexture(r->f->k_pause);
 	SDL_DestroyTexture(r->f->pause);
 	SDL_DestroyTexture(r->f->resume);
-	SDL_DestroyTexture(r->f->back);
-	SDL_DestroyTexture(r->f->forward);
+	SDL_DestroyTexture(r->f->back_forward);
+	SDL_DestroyTexture(r->f->speed);
+	SDL_DestroyTexture(r->f->speedrate);
 	SDL_DestroyTexture(r->f->p1);
 	SDL_DestroyTexture(r->f->p2);
 	SDL_DestroyTexture(r->f->p1_);
@@ -55,14 +61,17 @@ void				create_font(t_rend *r)
     r->f->k_pause = load_font(&(r->rend), K_PAUSE, FONT_SIZE, white);
     r->f->pause = load_font(&(r->rend), PAUSE, FONT_SIZE, white);
     r->f->resume = load_font(&(r->rend), RESUME, FONT_SIZE, white);
-    r->f->back = load_font(&(r->rend), F_BACK, FONT_SIZE, white);
-    r->f->forward = load_font(&(r->rend), F_FORWARD, FONT_SIZE, white);
+    r->f->back_forward = load_font(&(r->rend), BACK_FORWARD, FONT_SIZE, white);
+    r->f->speed = load_font(&(r->rend), SPEED, FONT_SIZE, white);
+    r->f->speedrate = load_font(&(r->rend), SPEEDRATE2, FONT_SIZE_2, white);
 	r->f->p1 = load_font(&(r->rend), K_P1_NAME, FONT_SIZE, red);
 	r->f->p2 = load_font(&(r->rend), K_P2_NAME, FONT_SIZE, blue);
 	r->f->p1_ = load_font(&(r->rend), K_P1_NAME_, FONT_SIZE, white);
 	r->f->p2_ = load_font(&(r->rend), K_P2_NAME_, FONT_SIZE, white);
+	r->f->p3_ = load_font(&(r->rend), K_P3_NAME_, FONT_SIZE, white);
     r->f->p1_name = load_font(&(r->rend), r->player->p1, FONT_SIZE, white);
     r->f->p2_name = load_font(&(r->rend), r->player->p2, FONT_SIZE, white);
+    r->f->p3_name = load_font(&(r->rend), "field 20 x 20", FONT_SIZE, white);
 	return ;
 }
 
@@ -70,19 +79,31 @@ int				create_textur(t_rend *r)
 {
     if(!(r->t->bg = load_texture(&(r->rend), "resources/checker.png")))
 		return (1);
-    if(!(r->t->cur = load_texture(&(r->rend), "resources/cursor.png")))
+    if(!(r->t->cur_forward = load_texture(&(r->rend), "resources/cur.png")))
 		return (1);
-    if(!(r->t->cur_2 = load_texture(&(r->rend), "resources/cursor.png")))
+    if(!(r->t->cur_back = load_texture(&(r->rend), "resources/cur.png")))
+		return (1);
+    if(!(r->t->cur_up = load_texture(&(r->rend), "resources/cur.png")))
+		return (1);
+    if(!(r->t->cur_down = load_texture(&(r->rend), "resources/cur.png")))
 		return (1);
     if(!(r->t->m_key = load_texture(&(r->rend), "resources/bg.png")))
 		return (1);
 	if(!(r->t->m_filler = load_texture(&(r->rend), "resources/bg.png")))
 		return (1);
-	if(!(r->t->m_bar = load_texture(&(r->rend), "resources/bg.png")))
+	if(!(r->t->m_bar_left = load_texture(&(r->rend), "resources/bg.png")))
+		return (1);
+	if(!(r->t->m_bar_right = load_texture(&(r->rend), "resources/bg.png")))
+		return (1);
+	if(!(r->t->m_bar_center = load_texture(&(r->rend), "resources/bg.png")))
+		return (1);
+	if(!(r->t->m_bar_delimiter = load_texture(&(r->rend), "resources/bg.png")))
 		return (1);
 	if(!(r->t->asian = load_texture(&(r->rend), "resources/bg.png")))
 		return (1);
 	if(!(r->t->cv_19 = load_texture(&(r->rend), "resources/bg.png")))
+		return (1);
+	if(!(r->t->kek = load_texture(&r->rend, "resources/bg.png")))
 		return (1);
     return (0);
 }
@@ -111,28 +132,39 @@ int				create(SDL_Window **win, t_rend *r, t_player *player)
 
 void			init_t_rend(t_rend *r, t_textur *t, t_font *f, t_rect *rect)
 {
+	// init TEXTURES
+	t->bg = NULL;
+	t->cur_forward = NULL;
+	t->cur_back = NULL;
+	t->cur_up = NULL;
+	t->cur_down = NULL;
+    t->m_key = NULL;
+    t->m_filler = NULL;
+    t->m_bar_left = NULL;
+    t->m_bar_right = NULL;
+    t->m_bar_center = NULL;
+    t->m_bar_delimiter = NULL;
+	t->asian = NULL;
+	t->cv_19 = NULL;
+	// init FONTS
 	f->k_quit = NULL;
 	f->quit = NULL;
 	f->k_pause = NULL;
 	f->pause = NULL;
 	f->resume = NULL;
-	f->back = NULL;
-	f->forward = NULL;
+	f->back_forward = NULL;
+	f->speed = NULL;
 	f->p1 = NULL;
 	f->p2 = NULL;
 	f->p1_ = NULL;
 	f->p2_ = NULL;
+	f->p3_ = NULL;
 	f->p1_name = NULL;
 	f->p2_name = NULL;
-	t->bg = NULL;
-	t->cur = NULL;
-	t->cur_2 = NULL;
-    t->m_key = NULL;
-    t->m_filler = NULL;
-    t->m_bar = NULL;
-	t->asian = NULL;
-	t->cv_19 = NULL;
-	r->flip = SDL_FLIP_HORIZONTAL;
+	f->p3_name = NULL;
+	// init RENDERER
+	r->flip_hor = SDL_FLIP_HORIZONTAL;
+	r->flip_non = SDL_FLIP_NONE;
 	r->blend_p = BLEND_ON;
 	r->blend_r = BLEND_OFF;
 	r->rend = NULL;
