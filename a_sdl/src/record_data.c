@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:48 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/27 19:50:44 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/28 02:53:04 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,10 @@ int			record_piece(t_f *f, char **line)
 		return (1);
 	if (f->p->piece)
 		ft_arrdel((void ***)&f->p->piece);
-	if (!(f->p->piece = (int **)malloc(sizeof(int *) * f->p->height)))
+	if (!(f->p->piece = (int **)malloc(sizeof(int *) * (f->p->height + 1))))
 		return (1);
+	else
+		f->p->piece[f->p->height] = NULL;
 	while (j < f->p->height)
 	{
 		if (!(f->p->piece[j] = (int *)malloc(sizeof(int) * f->p->width)))
@@ -119,8 +121,10 @@ int			record_map(t_f *f, char **line)
 	j = 0;
 	if (get_size(&f->m->height, &f->m->width, &(*line)) == 1)
 		return (1);
-	if (!(f->m->map = (int **)malloc(sizeof(int *) * f->m->height)))
+	if (!(f->m->map = (int **)malloc(sizeof(int *) * (f->m->height + 1))))
 		return (1);
+	else
+		f->m->map[f->m->height] = NULL;
 	while (j < f->m->height)
 	{
 		if (!(f->m->map[j] = (int *)malloc(sizeof(int) * f->m->width)))

@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:37:15 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/27 19:18:39 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/27 21:43:00 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,18 @@ extern int mapsize;
 void				field_rect(t_rend *r, t_rect *rect, t_f *lst)
 {
 	// размеры квадрата ASIANS
-	rect->asian.w = rint(rect->filler.w / lst->m->width);
-	rect->asian.h = rint(rect->filler.h / lst->m->height);
+	rect->asian.w = rect->filler.w / lst->m->width;
+	rect->asian.h = rect->filler.h / lst->m->height;
 
 	// размеры квадрата COVID
-	rect->cv19.w = rint(rect->filler.w / lst->m->width);
-	rect->cv19.h = rint(rect->filler.h / lst->m->height);
+	rect->cv19.w = rect->filler.w / lst->m->width;
+	rect->cv19.h = rect->filler.h / lst->m->height;
 
 	// размеры и координаты земли
-	rect->earth.w = rint(rect->asian.w * lst->m->width);
-	rect->earth.h = rint(rect->asian.h * lst->m->height);
-	rect->earth.x = INDENT + rint(rect->filler.w / 2) - rint(rect->earth.w / 2);
-	rect->earth.y = INDENT + rint(rect->filler.h / 2) - rint(rect->earth.h / 2);
+	rect->earth.w = rect->asian.w * lst->m->width;
+	rect->earth.h = rect->asian.h * lst->m->height;
+	rect->earth.x = INDENT + rect->filler.w / 2 - rect->earth.w / 2;
+	rect->earth.y = INDENT + rect->filler.h / 2 - rect->earth.h / 2;
 	//...
 	// ft_printf("%d\n", rect->earth.w);
 	// ft_printf("%d\n", rect->earth.h);

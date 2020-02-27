@@ -6,14 +6,14 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 01:17:40 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/26 15:23:42 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/28 01:41:46 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/filler.h"
 #include "../include/sdl.h"
 
-void			check_player(t_f *f, t_player *player, char **line)
+void			check_player(t_player *player, char **line)
 {
 	int			i;
 	int			z;
