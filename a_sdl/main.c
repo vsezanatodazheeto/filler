@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 21:05:08 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/26 19:42:03 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/27 18:45:55 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ void        reading_to_struct(t_f *f, t_player *player, char **line)
 	tmp = NULL;
 	while (get_next_line(0, &(*line)))
 	{
-		if (**line == '=')
-			break;
 		if (**line == 'P' && ft_strinstr(*line, NAME_FIELD))
 		{
 			if (record_map(f, &(*line)) == 1)
@@ -56,6 +54,8 @@ void        reading_to_struct(t_f *f, t_player *player, char **line)
 			// }
 			return ;
 		}
+		if (**line == '=')
+			break;
 	}
 	return ;
 }
@@ -69,7 +69,7 @@ void    add_struct(t_f *cur_lst)
         return ;
 }
 
-int main() 
+int		main() 
 { 
     t_f			*cur_lst;
     t_f			*fst_lst;
@@ -78,9 +78,7 @@ int main()
 	t_pos		*pos;
     t_player    player[1];
 	char 		*line;
-	int			i;
 
-	i  = 0;
     line = NULL;
     fst_lst = new_t_filler();
 	cur_lst = fst_lst;
@@ -95,7 +93,6 @@ int main()
 		add_struct(cur_lst);
 		cur_lst = cur_lst->next;
     }
-	write(1, "a\n", 2);
     main_v(fst_lst, player);
     return (0);
 } 

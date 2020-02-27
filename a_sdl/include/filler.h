@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:57 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/26 15:18:28 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/27 17:11:09 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,4 +104,5 @@ t_m 			*new_t_map();
 t_p				*new_t_piece();
 
 void			print_everything(t_f *f); //delete me
+// добавить в либу блять
 #endif

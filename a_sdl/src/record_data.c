@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:48 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/26 17:10:55 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/27 19:50:44 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ int			record_piece(t_f *f, char **line)
 	j = 0;
 	if (get_size(&f->p->height, &f->p->width, &(*line)) == 1)
 		return (1);
+	if (f->p->piece)
+		ft_arrdel((void ***)&f->p->piece);
 	if (!(f->p->piece = (int **)malloc(sizeof(int *) * f->p->height)))
 		return (1);
 	while (j < f->p->height)

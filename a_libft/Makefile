@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yshawn <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/16 22:45:07 by yshawn            #+#    #+#              #
-#    Updated: 2019/09/18 19:59:23 by yshawn           ###   ########.fr        #
+#    Updated: 2020/02/27 17:10:58 by yshawn           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,10 @@ ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c \
 \
 ft_lstnew.c ft_lstdelone.c ft_lstdel.c ft_lstadd.c ft_lstiter.c ft_lstmap.c \
 \
-ft_size_nbrstr.c ft_swap.c ft_range.c ft_sqrt.c ft_iterative_factorial.c
+ft_size_nbrstr.c ft_swap.c ft_range.c ft_sqrt.c ft_iterative_factorial.c \
+\
+ft_numlen.c ft_strnew_size.c
+
 
 HEADER = libft.h
 
@@ -45,6 +48,7 @@ all: $(NAME)
 $(NAME):
 	@gcc -Wall -Wextra -Werror -I $(HEADER) -c $(SRC)
 	@ar rc $(NAME) $(OBJECTS)
+	@rm -rf $(OBJECTS)
 clean:
 	@rm -rf $(OBJECTS)
 fclean: clean

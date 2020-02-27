@@ -6,12 +6,14 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:37:15 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/26 14:58:40 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/27 19:18:39 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/filler.h"
 #include "../include/sdl.h"
+
+extern int mapsize;
 
 void				field_rect(t_rend *r, t_rect *rect, t_f *lst)
 {
@@ -20,8 +22,8 @@ void				field_rect(t_rend *r, t_rect *rect, t_f *lst)
 	rect->asian.h = rint(rect->filler.h / lst->m->height);
 
 	// размеры квадрата COVID
-	rect->cv_19.w = rint(rect->filler.w / lst->m->width);
-	rect->cv_19.h = rint(rect->filler.h / lst->m->height);
+	rect->cv19.w = rint(rect->filler.w / lst->m->width);
+	rect->cv19.h = rint(rect->filler.h / lst->m->height);
 
 	// размеры и координаты земли
 	rect->earth.w = rint(rect->asian.w * lst->m->width);
@@ -34,6 +36,7 @@ void				field_rect(t_rend *r, t_rect *rect, t_f *lst)
 	// ft_printf("%d\n", rect->filler.w);
 	// ft_printf("%d\n", rect->filler.h);
 }
+
 void				word_rect(t_rend *r, t_rect *rect)
 {
 	// CMD + W
@@ -73,11 +76,13 @@ void				word_rect(t_rend *r, t_rect *rect)
 	rect->cur_back.y = BAR_HEIGHT * 2 + INDENT + 10;
 	rect->cur_back.w = 60;
 	rect->cur_back.h = 30;
+	SDL_QueryTexture(r->t->cur_back, NULL, NULL, &(rect->cur_back.w), &(rect->cur_back.h));
 	// -----> CURSOR FORWARD
 	rect->cur_forward.x = rect->filler.w + INDENT + 60;
 	rect->cur_forward.y = rect->cur_back.y;
 	rect->cur_forward.w = 60;
 	rect->cur_forward.h = 30;	
+	SDL_QueryTexture(r->t->cur_forward, NULL, NULL, &(rect->cur_forward.w), &(rect->cur_forward.h));
 	// BACK_FORWARD
 	rect->back_forward.x = rect->cur_forward.x + rect->cur_forward.w + 48;
 	rect->back_forward.y = BAR_HEIGHT * 2 + INDENT + 20;
@@ -108,9 +113,48 @@ void				word_rect(t_rend *r, t_rect *rect)
 	rect->speedrate.h = 1;
 	SDL_QueryTexture(r->f->speedrate, NULL, NULL, &(rect->speedrate.w), &(rect->speedrate.h));
 
+	//NAME OF PLAYER_1 that will play for ASIANS
+	rect->p1_name.x = rect->filler.w + INDENT + 20;
+	rect->p1_name.y = rect->key.h - (INDENT * 5 - 8);
+	rect->p1_name.w = 1;
+	rect->p1_name.h = 1;
+	SDL_QueryTexture(r->f->p1_name, NULL, NULL, &(rect->p1_name.w), &(rect->p1_name.h));
+	//NAME OF PLAYER_2 that will play for COVID
+	rect->p2_name.x = rect->filler.w + INDENT + 20;
+	rect->p2_name.y = rect->key.h - INDENT;
+	rect->p2_name.w = 1;
+	rect->p2_name.h = 1;
+	SDL_QueryTexture(r->f->p2_name, NULL, NULL, &(rect->p2_name.w), &(rect->p2_name.h));
+	//PLAYER_3 that will play for EARTH
+	rect->p3_name.x = rect->filler.w + INDENT + 20;
+	rect->p3_name.y = rect->key.h - (INDENT * 8 + 14);
+	rect->p3_name.w = 1;
+	rect->p3_name.h = 1;
+	SDL_QueryTexture(r->f->p3_name, NULL, NULL, &(rect->p3_name.w), &(rect->p3_name.h));
+
+	//ASIANS :
+	rect->p1_.x = rect->filler.w + INDENT + 20;
+	rect->p1_.y = rect->p1_name.y - INDENT - 20;
+	rect->p1_.w = 1;
+	rect->p1_.h = 1;
+	SDL_QueryTexture(r->f->p1_, NULL, NULL, &(rect->p1_.w), &(rect->p1_.h));
+	// COVID19 :
+	rect->p2_.x = rect->filler.w + INDENT + 20;
+	rect->p2_.y = rect->p2_name.y - INDENT - 20;
+	rect->p2_.w = 1;
+	rect->p2_.h = 1;
+	SDL_QueryTexture(r->f->p2_, NULL, NULL, &(rect->p2_.w), &(rect->p2_.h));
+	// EARTH:
+	rect->p3_.x = rect->filler.w + INDENT + 20;
+	rect->p3_.y = rect->p3_name.y - INDENT - 24;
+	rect->p3_.w = 1;
+	rect->p3_.h = 1;
+	SDL_QueryTexture(r->f->p3_, NULL, NULL, &(rect->p3_.w), &(rect->p3_.h));
+
 	return ;
 }
-void				menu_rect(t_rend *r, t_rect *rect)
+
+void				menu_rect(t_rend *r, t_rect *rect, t_f *lst)
 {
 	// размеры и координаты fillboard
 	rect->filler.x = INDENT;
@@ -162,6 +206,19 @@ void				menu_rect(t_rend *r, t_rect *rect)
 	rect->bar_bord_2.w = 16;
 	rect->bar_bord_2.h = BAR_HEIGHT;
 	SDL_SetTextureColorMod(r->t->m_bar_delimiter, 74, 66, 55);
+
+	// PROGRESS BAR P1
+	rect->bar_center_p1.x = rect->bar_left.w + INDENT;
+	rect->bar_center_p1.y = rect->filler.h + (INDENT * 2);
+	rect->bar_center_p1.w = 1200 * (lst->ally_cnt * 100 / mapsize) / 100;
+	rect->bar_center_p1.h = BAR_HEIGHT;
+	SDL_SetTextureColorMod(r->t->m_bar_center_p1, 194, 1, 20);
+	// PROGRESS BAR P2
+	rect->bar_center_p2.x = 1408 - (1200 * (lst->enemy_cnt * 100 / mapsize) / 100);
+	rect->bar_center_p2.y = rect->filler.h + (INDENT * 2);
+	rect->bar_center_p2.w = 1200 * (lst->enemy_cnt * 100 / mapsize) / 100;
+	rect->bar_center_p2.h = BAR_HEIGHT;
+	SDL_SetTextureColorMod(r->t->m_bar_center_p2, 199, 214, 213);
 
 	// BAR NAMES
 	// asians

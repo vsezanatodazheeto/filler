@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:57 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/26 20:22:18 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/27 19:14:50 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,18 @@
 
 static const SDL_Color white = {255, 255, 255};
 static const SDL_Color red = {194, 1, 20};
+static const SDL_Color lightred = {199, 81, 70};
 static const SDL_Color blue = {199, 214, 213};
+static const SDL_Color lightgreen = {158, 215, 42};
 static const SDL_Color green = {110, 155, 85};
+
+// static SDL_Color r = {221, 115, 115};
+// static SDL_Color lre = {244, 166, 152};
+// static SDL_Color w = {255, 255, 255};
+// static SDL_Color lg = {198, 216, 195};
+// static SDL_Color g = {160, 192, 132};
+
+#define COLORARRAY (SDL_Color [5]) {{221, 115, 115}, {244, 166, 152}, {255, 255, 255}, {198, 216, 195}, {160, 192, 132}}
 
 typedef struct			s_flags
 {
@@ -71,6 +81,8 @@ typedef struct			s_rect
     SDL_Rect			bar_left;
     SDL_Rect			bar_right;
     SDL_Rect			bar_center;
+    SDL_Rect			bar_center_p1;
+    SDL_Rect			bar_center_p2;
     SDL_Rect			bar_bord;
     SDL_Rect			bar_bord_2;
     SDL_Rect			k_quit;
@@ -94,8 +106,12 @@ typedef struct			s_rect
     SDL_Rect			p2_name;
     SDL_Rect			p3_name;
 	SDL_Rect			asian;
-	SDL_Rect			cv_19;
+	SDL_Rect			cv19;
 	SDL_Rect			earth;
+	SDL_Rect			p1_score;
+	SDL_Rect			p2_score;
+	SDL_Rect			p1_percent;
+	SDL_Rect			p2_percent;
 	//
 	SDL_Rect			kek;
 }						t_rect;
@@ -116,6 +132,10 @@ typedef struct			s_font
 	SDL_Texture			*p1;
 	SDL_Texture			*p2;
 	SDL_Texture			*p3;
+	SDL_Texture			*p1_score;
+	SDL_Texture			*p2_score;
+	SDL_Texture			*p1_percent;
+	SDL_Texture			*p2_percent;
 	SDL_Texture			*p1_name;
 	SDL_Texture			*p2_name;
 	SDL_Texture			*p3_name;
@@ -134,9 +154,11 @@ typedef struct			s_textur
     SDL_Texture			*m_bar_left;
     SDL_Texture			*m_bar_right;
     SDL_Texture			*m_bar_center;
+    SDL_Texture			*m_bar_center_p1;
+    SDL_Texture			*m_bar_center_p2;
     SDL_Texture			*m_bar_delimiter;
 	SDL_Texture			*asian;
-	SDL_Texture			*cv_19;
+	SDL_Texture			*cv19;
     //
 	SDL_Texture			*kek;
 }						t_textur;
@@ -165,14 +187,13 @@ int					quit(SDL_Window **win, t_rend *r);
 SDL_Texture			*load_texture(SDL_Renderer **rend, char *path);
 SDL_Texture			*load_font(SDL_Renderer **rend, char *path, int size, SDL_Color clr);
 
-void				menu_rect(t_rend *r, t_rect *rect);
+void				menu_rect(t_rend *r, t_rect *rect, t_f *lst);
 void				word_rect(t_rend *r, t_rect *rect);
 void				field_rect(t_rend *r, t_rect *rect, t_f *lst);
 void				draw_bacground(t_rend *r, t_rect *rect);
-void				draw_menu(t_rend *r, t_rect *rect);
+void				draw_menu(t_rend *r, t_rect *rect, t_f *lst);
 void				draw_message(t_rend *r, t_rect *rect);
-void				draw_player(t_rend *r, t_rect *rect);
-void				draw_player_name(t_rend *r, t_rect *rect);
+void				draw_playername(t_rend *r, t_rect *rect);
 void				draw_map(t_rend *r, t_rect *rect, t_f *curlst);
 
 #endif

@@ -6,16 +6,18 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:37:06 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/26 20:22:35 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/27 19:14:38 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/filler.h"
 #include "../include/sdl.h"
 
-int keker = 0;
+int mix = 0;
 int delay = 40;
-int i = 2;
+int i = 2; //
+int n = 1;
+int mapsize = 0;
 
 int                 main_v (t_f *lst, t_player *player)
 {
@@ -27,8 +29,8 @@ int                 main_v (t_f *lst, t_player *player)
     SDL_Event       e;
 	t_f				*fst_lst;
 	int				run;
-	
-	int n = 1;
+
+	mapsize = lst->m->width * lst->m->height;
 	int kk = 0;
 	run = TRUE;
 
@@ -40,25 +42,16 @@ int                 main_v (t_f *lst, t_player *player)
     if (create(&win, r, player))
         return (1);
 
-	menu_rect(r, rect);
+	menu_rect(r, rect, lst);
 	word_rect(r, rect);
 	field_rect(r, rect, lst);
 	SDL_SetRenderDrawColor(r->rend, 255, 255, 255, 255);
 	fst_lst = lst;
     while (run)
     {
-		//Clear screen
+		//CLEAR SCREEN
         SDL_RenderClear(r->rend);
-		//RENDERING TEXTURES
-		draw_bacground(r, rect);
-		draw_menu(r, rect);
-		draw_message(r, rect);
-		draw_player_name(r, rect);
-		draw_player(r, rect);
-		draw_map(r, rect, lst);
-		SDL_Delay(0);
-        SDL_RenderPresent(r->rend);
-		// checking keyboard events
+		// KEYBOARD EVENTS
 		while (SDL_PollEvent(&e) != 0)
 		{
 			if (e.type == SDL_QUIT)
@@ -84,19 +77,43 @@ int                 main_v (t_f *lst, t_player *player)
 					i++;
 					delay = delay - 20;
 					SDL_SetTextureColorMod( r->t->cur_up, 74, 66, 55);
-					r->f->speedrate = load_font(&(r->rend), (char *)SPEEDARRAY[i], FONT_SIZE_2, white);
+					r->f->speedrate = load_font(&(r->rend), (char *)SPEEDARRAY[i], FONT_SIZE_2, COLORARRAY[i]);
 				}
 				if (e.key.keysym.sym == SDLK_DOWN && delay < 80)
 				{
 					i--;
 					delay = delay + 20;
 					SDL_SetTextureColorMod( r->t->cur_down, 74, 66, 55);
-					r->f->speedrate = load_font(&(r->rend), (char *)SPEEDARRAY[i], FONT_SIZE_2, white);
+					r->f->speedrate = load_font(&(r->rend), (char *)SPEEDARRAY[i], FONT_SIZE_2, COLORARRAY[i]);
 				}
-        	}
+				if (e.key.keysym.sym == SDLK_RIGHT)
+					if (lst->next && n % 2 != 0)
+					{
+						lst = lst->next;
+						SDL_SetTextureColorMod( r->t->cur_forward, 74, 66, 55);
+    					r->f->p1_score = load_font(&(r->rend), ft_itoa(lst->ally_cnt * 100 / mapsize), FONT_SIZE, white);
+    					r->f->p2_score = load_font(&(r->rend), ft_strnew_size(ft_itoa(lst->enemy_cnt * 100 / mapsize), 3), FONT_SIZE, white);
+					}
+			}
+			if (e.type == SDL_KEYUP)
+			{
+				// <----- CURSOR BACK
+				SDL_SetTextureColorMod( r->t->cur_forward, 255, 255, 255);
+				// -----> CURSOR FORWARD
+				SDL_SetTextureColorMod( r->t->cur_back, 255, 255, 255);
+				// /\ CURSOR UP
+				SDL_SetTextureColorMod( r->t->cur_up, 255, 255, 255);
+				// \/ CURSOR DOWN
+				SDL_SetTextureColorMod( r->t->cur_down, 255, 255, 255);
+				ft_printf("je\n");
+			}
 		}
 		if (lst->next && n % 2 == 0)
+		{
 			lst = lst->next;
+    		r->f->p1_score = load_font(&(r->rend), ft_itoa(lst->ally_cnt * 100 / mapsize), FONT_SIZE, white);
+    		r->f->p2_score = load_font(&(r->rend), ft_strnew_size(ft_itoa(lst->enemy_cnt * 100 / mapsize), 3), FONT_SIZE, white);
+		}
 		if (!lst->next && n % 2 == 0)
 		{
 			n++;
@@ -112,18 +129,17 @@ int                 main_v (t_f *lst, t_player *player)
 			}
 			lst = fst_lst;
 		}
-		SDL_Delay(delay);
+		//RENDERING TEXTURES
+		draw_bacground(r, rect);
+		draw_menu(r, rect, lst);
+		draw_message(r, rect);
+		draw_playername(r, rect);
+		draw_map(r, rect, lst);
         SDL_RenderPresent(r->rend);
-		// rect->kek.x = 0 + kk;
-		// rect->kek.y = 0 + kk;
-		// rect->kek.w = 32;
-		// rect->kek.h = 32;
-		// SDL_SetTextureColorMod(r->t->kek, 0, 0, 255);
-		// SDL_RenderCopy(r->rend, r->t->kek, NULL, &(rect->kek));
-		// kk++;
-		// if (rect->kek.x > SCREEN_HEIGHT || rect->kek.y > SCREEN_WIDTH)
-		// 	kk = 0;
-		
+		//DELAY
+		SDL_Delay(delay);
+		// DRAWING
+        SDL_RenderPresent(r->rend);
     }
     return quit(&win, r);
 }

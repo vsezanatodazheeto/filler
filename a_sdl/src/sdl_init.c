@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:37:15 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/26 20:22:44 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/27 17:26:18 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,11 @@ int				quit(SDL_Window **win, t_rend *r)
 	SDL_DestroyTexture(r->t->m_bar_left);
 	SDL_DestroyTexture(r->t->m_bar_right);
 	SDL_DestroyTexture(r->t->m_bar_center);
+	SDL_DestroyTexture(r->t->m_bar_center_p1);
+	SDL_DestroyTexture(r->t->m_bar_center_p2);
 	SDL_DestroyTexture(r->t->m_bar_delimiter);
 	SDL_DestroyTexture(r->t->asian);
-	SDL_DestroyTexture(r->t->cv_19);
+	SDL_DestroyTexture(r->t->cv19);
 	// FONTS
 	SDL_DestroyTexture(r->f->k_quit);
 	SDL_DestroyTexture(r->f->quit);
@@ -42,6 +44,10 @@ int				quit(SDL_Window **win, t_rend *r)
 	SDL_DestroyTexture(r->f->p2);
 	SDL_DestroyTexture(r->f->p1_);
 	SDL_DestroyTexture(r->f->p2_);
+	SDL_DestroyTexture(r->f->p1_score);
+	SDL_DestroyTexture(r->f->p2_score);
+	SDL_DestroyTexture(r->f->p1_percent);
+	SDL_DestroyTexture(r->f->p2_percent);
 	SDL_DestroyTexture(r->f->p1_name);
 	SDL_DestroyTexture(r->f->p2_name);
 	// RENDER
@@ -72,6 +78,10 @@ void				create_font(t_rend *r)
     r->f->p1_name = load_font(&(r->rend), r->player->p1, FONT_SIZE, white);
     r->f->p2_name = load_font(&(r->rend), r->player->p2, FONT_SIZE, white);
     r->f->p3_name = load_font(&(r->rend), "field 20 x 20", FONT_SIZE, white);
+    r->f->p1_score = load_font(&(r->rend), "0", FONT_SIZE, white);
+    r->f->p2_score = load_font(&(r->rend), "  0", FONT_SIZE, white);
+    r->f->p1_percent = load_font(&(r->rend), "%", FONT_SIZE, white);
+    r->f->p2_percent = load_font(&(r->rend), "%", FONT_SIZE, white);
 	return ;
 }
 
@@ -97,11 +107,15 @@ int				create_textur(t_rend *r)
 		return (1);
 	if(!(r->t->m_bar_center = load_texture(&(r->rend), "resources/bg.png")))
 		return (1);
+	if(!(r->t->m_bar_center_p1 = load_texture(&(r->rend), "resources/bg.png")))
+		return (1);
+	if(!(r->t->m_bar_center_p2 = load_texture(&(r->rend), "resources/bg.png")))
+		return (1);
 	if(!(r->t->m_bar_delimiter = load_texture(&(r->rend), "resources/bg.png")))
 		return (1);
 	if(!(r->t->asian = load_texture(&(r->rend), "resources/bg.png")))
 		return (1);
-	if(!(r->t->cv_19 = load_texture(&(r->rend), "resources/bg.png")))
+	if(!(r->t->cv19 = load_texture(&(r->rend), "resources/bg.png")))
 		return (1);
 	if(!(r->t->kek = load_texture(&r->rend, "resources/bg.png")))
 		return (1);
@@ -143,9 +157,11 @@ void			init_t_rend(t_rend *r, t_textur *t, t_font *f, t_rect *rect)
     t->m_bar_left = NULL;
     t->m_bar_right = NULL;
     t->m_bar_center = NULL;
+    t->m_bar_center_p1 = NULL;
+    t->m_bar_center_p2 = NULL;
     t->m_bar_delimiter = NULL;
 	t->asian = NULL;
-	t->cv_19 = NULL;
+	t->cv19 = NULL;
 	// init FONTS
 	f->k_quit = NULL;
 	f->quit = NULL;
@@ -159,6 +175,11 @@ void			init_t_rend(t_rend *r, t_textur *t, t_font *f, t_rect *rect)
 	f->p1_ = NULL;
 	f->p2_ = NULL;
 	f->p3_ = NULL;
+	f->p3_ = NULL;
+	f->p1_score = NULL;
+	f->p2_score = NULL;
+	f->p1_percent = NULL;
+	f->p2_percent = NULL;
 	f->p1_name = NULL;
 	f->p2_name = NULL;
 	f->p3_name = NULL;
