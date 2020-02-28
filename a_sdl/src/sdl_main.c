@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sdl_main.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcomic <pcomic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:37:06 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/28 06:34:16 by pcomic           ###   ########.fr       */
+/*   Updated: 2020/02/28 09:08:20 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 #include "../include/sdl.h"
 
 int mix = 0;
-int delay = 40;
-int i = 2; //
-int n = 1;
-int mapsize = 0;
+int mapsize = 0; 
+int delay = 40; // delay
+int i = 2; // 2 - white, elementary color
+int pause_t = 1; // 1 - go 2 - pause_t
+int side = 1; // 0 - list->next 1 - list->prev
 
 int                 main_v (t_f *lst, t_player *player)
 {
@@ -60,7 +61,7 @@ int                 main_v (t_f *lst, t_player *player)
             {
                 if (e.key.keysym.sym == SDLK_SPACE)
                 {
-					n++;
+					pause_t++;
 					if (r->blend_p == BLEND_OFF)
 					{
 						r->blend_p = BLEND_ON;
@@ -87,21 +88,30 @@ int                 main_v (t_f *lst, t_player *player)
 					r->f->speedrate = load_font(&(r->rend), (char *)SPEEDARRAY[i], FONT_SIZE_2, COLORARRAY[i]);
 				}
 				if (e.key.keysym.sym == SDLK_RIGHT)
-					if (lst->next && n % 2 != 0)
+					if (lst->next && pause_t % 2 != 0)
 					{
 						lst = lst->next;
 						SDL_SetTextureColorMod( r->t->cur_forward, 74, 66, 55);
     					r->f->p1_score = load_font(&(r->rend), ft_itoa(lst->ally_cnt * 100 / mapsize), FONT_SIZE, white);
     					r->f->p2_score = load_font(&(r->rend), ft_strnew_size(ft_itoa(lst->enemy_cnt * 100 / mapsize), 3), FONT_SIZE, white);
 					}
+					if ((lst->next || lst->prev) && pause_t % 2 == 0)
+					{
+						side++;
+					}
 				if (e.key.keysym.sym == SDLK_LEFT)
-					if (lst->prev && n % 2 != 0)
+					if (lst->prev && pause_t % 2 != 0)
 					{
 						lst = lst->prev;
 						SDL_SetTextureColorMod( r->t->cur_back, 74, 66, 55);
     					r->f->p1_score = load_font(&(r->rend), ft_itoa(lst->ally_cnt * 100 / mapsize), FONT_SIZE, white);
     					r->f->p2_score = load_font(&(r->rend), ft_strnew_size(ft_itoa(lst->enemy_cnt * 100 / mapsize), 3), FONT_SIZE, white);
 					}
+				if (e.key.keysym.sym == SDLK_r)
+				{
+					lst = fst_lst;
+					pause_t++;
+				}
 			}
 			if (e.type == SDL_KEYUP)
 			{
@@ -116,15 +126,18 @@ int                 main_v (t_f *lst, t_player *player)
 				// ft_printf("je\n");
 			}
 		}
-		if (lst->next && n % 2 == 0)
+		if ((lst->next || lst->prev) && pause_t % 2 == 0)
 		{
-			lst = lst->next;
+			if (lst->next && side % 2 == 0)
+				lst = lst->next;
+			else if (lst->prev && side % 2 != 0)
+				lst = lst->prev;
     		r->f->p1_score = load_font(&(r->rend), ft_itoa(lst->ally_cnt * 100 / mapsize), FONT_SIZE, white);
     		r->f->p2_score = load_font(&(r->rend), ft_strnew_size(ft_itoa(lst->enemy_cnt * 100 / mapsize), 3), FONT_SIZE, white);
 		}
-		if (!lst->next && n % 2 == 0)
+		if (!lst->next && pause_t % 2 == 0)
 		{
-			n++;
+			pause_t++;
 			if (r->blend_p == BLEND_OFF)
 			{
 				r->blend_p = BLEND_ON;
@@ -135,7 +148,6 @@ int                 main_v (t_f *lst, t_player *player)
 				r->blend_p = BLEND_OFF;
 				r->blend_r = BLEND_ON;
 			}
-			lst = fst_lst;
 		}
 		//RENDERING TEXTURES
 		draw_bacground(r, rect);

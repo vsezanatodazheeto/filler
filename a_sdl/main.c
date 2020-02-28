@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcomic <pcomic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 21:05:08 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/28 06:17:24 by pcomic           ###   ########.fr       */
+/*   Updated: 2020/02/28 08:52:29 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,12 @@ int		main()
     init_struct_player(player);
 	check_player(player, &line);
 	fst_lst = reading_to_struct(&f, player, &line);
-	// fst_lst = f;
-	// while (fst_lst->prev)
+	// while (fst_lst->next)
 	// {
 	// 	ft_printf("here: %d\n", fst_lst->ally_cnt);
 	// 	ft_printf("here: %d\n", fst_lst->enemy_cnt);
 	// 	ft_printf("here: %d\n", fst_lst->field_cnt);
-	// 	fst_lst = fst_lst->prev;
+	// 	fst_lst = fst_lst->next;
 	// }
     main_v(fst_lst, player);
     return (0);
