@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pcomic <pcomic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 21:05:08 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/28 02:53:53 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/28 06:17:24 by pcomic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void    add_struct(t_f **cur_lst)
 		{
         	ptr = new_t_filler();
         	(*cur_lst)->next = ptr;
+			ptr->prev = *cur_lst;
 			*cur_lst = (*cur_lst)->next;
 		}
         return ;
@@ -90,12 +91,13 @@ int		main()
     init_struct_player(player);
 	check_player(player, &line);
 	fst_lst = reading_to_struct(&f, player, &line);
-	// while (fst_lst->next)
+	// fst_lst = f;
+	// while (fst_lst->prev)
 	// {
 	// 	ft_printf("here: %d\n", fst_lst->ally_cnt);
 	// 	ft_printf("here: %d\n", fst_lst->enemy_cnt);
 	// 	ft_printf("here: %d\n", fst_lst->field_cnt);
-	// 	fst_lst = fst_lst->next;
+	// 	fst_lst = fst_lst->prev;
 	// }
     main_v(fst_lst, player);
     return (0);

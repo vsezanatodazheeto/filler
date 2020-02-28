@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sdl_main.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pcomic <pcomic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:37:06 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/27 19:14:38 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/28 06:34:16 by pcomic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,14 @@ int                 main_v (t_f *lst, t_player *player)
     					r->f->p1_score = load_font(&(r->rend), ft_itoa(lst->ally_cnt * 100 / mapsize), FONT_SIZE, white);
     					r->f->p2_score = load_font(&(r->rend), ft_strnew_size(ft_itoa(lst->enemy_cnt * 100 / mapsize), 3), FONT_SIZE, white);
 					}
+				if (e.key.keysym.sym == SDLK_LEFT)
+					if (lst->prev && n % 2 != 0)
+					{
+						lst = lst->prev;
+						SDL_SetTextureColorMod( r->t->cur_back, 74, 66, 55);
+    					r->f->p1_score = load_font(&(r->rend), ft_itoa(lst->ally_cnt * 100 / mapsize), FONT_SIZE, white);
+    					r->f->p2_score = load_font(&(r->rend), ft_strnew_size(ft_itoa(lst->enemy_cnt * 100 / mapsize), 3), FONT_SIZE, white);
+					}
 			}
 			if (e.type == SDL_KEYUP)
 			{
@@ -105,7 +113,7 @@ int                 main_v (t_f *lst, t_player *player)
 				SDL_SetTextureColorMod( r->t->cur_up, 255, 255, 255);
 				// \/ CURSOR DOWN
 				SDL_SetTextureColorMod( r->t->cur_down, 255, 255, 255);
-				ft_printf("je\n");
+				// ft_printf("je\n");
 			}
 		}
 		if (lst->next && n % 2 == 0)

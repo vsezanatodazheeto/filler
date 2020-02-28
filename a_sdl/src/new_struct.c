@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_struct.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pcomic <pcomic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 12:56:52 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/22 22:32:08 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/28 06:14:10 by pcomic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,6 @@ t_f  *new_t_filler()
         if (!(ptr = malloc(sizeof(t_f))))
 			return (NULL);
         ptr->next = NULL;
+        ptr->prev = NULL;
         return (ptr);
 }
