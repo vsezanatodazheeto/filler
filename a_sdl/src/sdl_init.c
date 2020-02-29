@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:37:15 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/27 17:26:18 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/29 20:13:30 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int				quit(SDL_Window **win, t_rend *r)
 	SDL_DestroyTexture(r->t->cur_up);
 	SDL_DestroyTexture(r->t->cur_down);
 	SDL_DestroyTexture(r->t->m_filler);
+	SDL_DestroyTexture(r->t->m_figure);
 	SDL_DestroyTexture(r->t->m_key);
 	SDL_DestroyTexture(r->t->m_bar_left);
 	SDL_DestroyTexture(r->t->m_bar_right);
@@ -31,6 +32,10 @@ int				quit(SDL_Window **win, t_rend *r)
 	SDL_DestroyTexture(r->t->m_bar_delimiter);
 	SDL_DestroyTexture(r->t->asian);
 	SDL_DestroyTexture(r->t->cv19);
+	SDL_DestroyTexture(r->t->earth);
+	SDL_DestroyTexture(r->t->earth_grid);
+	SDL_DestroyTexture(r->t->figure);
+	SDL_DestroyTexture(r->t->figure_grid);
 	// FONTS
 	SDL_DestroyTexture(r->f->k_quit);
 	SDL_DestroyTexture(r->f->quit);
@@ -77,7 +82,7 @@ void				create_font(t_rend *r)
 	r->f->p3_ = load_font(&(r->rend), K_P3_NAME_, FONT_SIZE, white);
     r->f->p1_name = load_font(&(r->rend), r->player->p1, FONT_SIZE, white);
     r->f->p2_name = load_font(&(r->rend), r->player->p2, FONT_SIZE, white);
-    r->f->p3_name = load_font(&(r->rend), "field 20 x 20", FONT_SIZE, white);
+    r->f->p3_name = load_font(&(r->rend), r->player->field, FONT_SIZE, white);
     r->f->p1_score = load_font(&(r->rend), "0", FONT_SIZE, white);
     r->f->p2_score = load_font(&(r->rend), "  0", FONT_SIZE, white);
     r->f->p1_percent = load_font(&(r->rend), "%", FONT_SIZE, white);
@@ -85,7 +90,7 @@ void				create_font(t_rend *r)
 	return ;
 }
 
-int				create_textur(t_rend *r)
+int				create_texture(t_rend *r)
 {
     if(!(r->t->bg = load_texture(&(r->rend), "resources/checker.png")))
 		return (1);
@@ -98,6 +103,8 @@ int				create_textur(t_rend *r)
     if(!(r->t->cur_down = load_texture(&(r->rend), "resources/cur.png")))
 		return (1);
     if(!(r->t->m_key = load_texture(&(r->rend), "resources/bg.png")))
+		return (1);
+    if(!(r->t->m_figure = load_texture(&(r->rend), "resources/bg.png")))
 		return (1);
 	if(!(r->t->m_filler = load_texture(&(r->rend), "resources/bg.png")))
 		return (1);
@@ -117,7 +124,13 @@ int				create_textur(t_rend *r)
 		return (1);
 	if(!(r->t->cv19 = load_texture(&(r->rend), "resources/bg.png")))
 		return (1);
-	if(!(r->t->kek = load_texture(&r->rend, "resources/bg.png")))
+	if(!(r->t->earth = load_texture(&r->rend, "resources/bg.png")))
+		return (1);
+	if(!(r->t->earth_grid = load_texture(&r->rend, "resources/bg.png")))
+		return (1);
+	if(!(r->t->figure = load_texture(&r->rend, "resources/bg.png")))
+		return (1);
+	if(!(r->t->figure_grid = load_texture(&r->rend, "resources/bg.png")))
 		return (1);
     return (0);
 }
@@ -140,7 +153,7 @@ int				create(SDL_Window **win, t_rend *r, t_player *player)
 	// CREATE RENDER DATA
 	r->player = player;
 	create_font(r);
-	create_textur(r);
+	create_texture(r);
     return (0);
 }
 

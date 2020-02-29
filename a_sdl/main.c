@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 21:05:08 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/28 08:52:29 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/29 12:41:19 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void    add_struct(t_f **cur_lst)
         return ;
 }
 
-t_f        *reading_to_struct(t_f **f, t_player *player, char **line)
+t_f        *reading_to_struct(t_f **lst, t_player *player, char **line)
 {
 	int			i;
 	t_p			*p;
@@ -46,33 +46,33 @@ t_f        *reading_to_struct(t_f **f, t_player *player, char **line)
 			break;
 		if (**line == 'P' && ft_strinstr(*line, NAME_FIELD))
 		{
-			add_struct(f);
-        	init_structs(*f, p, m, pos);
+			add_struct(lst);
+        	init_structs(*lst, p, m, pos);
 		}
 		if (**line == 'P' && ft_strinstr(*line, NAME_FIELD))
 		{
-			if (record_map(*f, &(*line)) == 1)
+			if (record_map(*lst, &(*line)) == 1)
 				break ;
 			if (!(get_next_line(0, &(*line))))
 				break ;
-			record_map_positions(*f, player, &(*line));
+			record_map_positions(*lst, player, &(*line));
 			if (!(get_next_line(0, &(*line))))
 				break ;
 		}
 		if (**line == 'P' && ft_strinstr(*line, NAME_PIECE))
 		{
-			if (record_piece(*f, &(*line)) == 1)
+			if (record_piece(*lst, &(*line)) == 1)
 				break ;
-			record_piece_positions(*f, &(*line));
+			record_piece_positions(*lst, &(*line));
 			if (!(get_next_line(0, &(*line))))
 				break ;
 		}
 		if (**line == '<' && ft_strinstr(*line, NAME_GOT))
-			record_got_pos(*f, &(*line));
-		if (i == 0 && *f)
+			record_got_pos(*lst, &(*line));
+		if (i == 0 && *lst)
 		{
 			i++;
-			fst = *f;
+			fst = *lst;
 		}
 	}
 	return (fst);
@@ -99,8 +99,13 @@ int		main()
 	// 	fst_lst = fst_lst->next;
 	// }
     main_v(fst_lst, player);
+	// ft_printf("%s\n", player->field);
+	// printf("%s\n", player->field);
+
     return (0);
 } 
 
+// пофришить
+// листы
 // переписать got_pos
 // переписать check_player

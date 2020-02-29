@@ -1,34 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   kek.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/06 16:53:30 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/29 04:36:25 by yshawn           ###   ########.fr       */
+/*   Created: 2020/02/08 21:05:08 by yshawn            #+#    #+#             */
+/*   Updated: 2020/02/29 12:19:25 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdio.h>
+#include "../a_libft/libft.h"
 
-char	*ft_strdup(const char *s)
+typedef struct	s_k
 {
-	size_t	i;
-	size_t	strlen;
-	char	*tmp;
+	char *k;
+}				t_k;
 
-	i = 0;
-	strlen = ft_strlen(s);
-	tmp = NULL;
-	tmp = (char *)malloc(sizeof(char) * (strlen + 1));
-	if (tmp == NULL)
-		return (NULL);
-	while (i < strlen)
-	{
-		tmp[i] = s[i];
-		i++;
-	}
-	tmp[i] = '\0';
-	return (tmp);
+void	test1(t_k *k)
+{
+	k->k = ft_itoa(500);
+	return ;
+}
+
+void	test(t_k *k)
+{
+	test1(k);
+	return ;
+}
+
+int		main() 
+{ 
+	t_k k[1];
+	test(k);
+	printf("%s\n", k->k);
+	return (0);
 }

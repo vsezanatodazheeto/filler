@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_arrdel.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/06 16:53:30 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/29 04:36:25 by yshawn           ###   ########.fr       */
+/*   Created: 2019/09/13 19:28:43 by yshawn            #+#    #+#             */
+/*   Updated: 2020/02/29 04:48:20 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *s)
+void		ft_arrdel(void ***arr)
 {
-	size_t	i;
-	size_t	strlen;
-	char	*tmp;
-
-	i = 0;
-	strlen = ft_strlen(s);
-	tmp = NULL;
-	tmp = (char *)malloc(sizeof(char) * (strlen + 1));
-	if (tmp == NULL)
-		return (NULL);
-	while (i < strlen)
+	void	**first;
+	if (!(**arr) || !(*arr))
+		return ;
+	first = *arr;
+	while (**arr)
 	{
-		tmp[i] = s[i];
-		i++;
+		free(**arr);
+		(*arr)++;
 	}
-	tmp[i] = '\0';
-	return (tmp);
+	free(first);
+	first = NULL;
+	return ;
 }

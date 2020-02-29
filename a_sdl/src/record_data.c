@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:48 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/28 02:53:04 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/29 12:23:29 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void			record_got_pos(t_f *f, char **line)
 	else
 		f->pos->turn = 'X';
 	tmp = ft_strsplit(*line, ' ');
-	f->pos->i = ft_atoi(&(tmp[2][1]));
-	f->pos->j = ft_atoi(&(tmp[3][0]));
-	ft_memdel((void **)tmp);
+	f->pos->i = ft_atoi(&tmp[2][1]);
+	f->pos->j = ft_atoi(&tmp[3][0]);
+	ft_arrdel((void ***)&tmp);
 	return ;
 }
 
@@ -68,7 +68,7 @@ int			record_piece(t_f *f, char **line)
 	{
 		if (!(f->p->piece[j] = (int *)malloc(sizeof(int) * f->p->width)))
 		{
-			f->p->piece[j] = NULL;
+			f->p->piece[j - 1] = NULL;
 			ft_arrdel((void ***)&f->p->piece);
 			return (1);
 		}
@@ -77,15 +77,18 @@ int			record_piece(t_f *f, char **line)
 	return (0);
 }
 
-void		record_map_positions(t_f *f, t_player * player, char **line)
+void		record_map_positions(t_f *f, t_player *player, char **line)
 {
 	int		i;
 	int		j;
 
 	i = 0;
 	j = 0;
-	// if (!player->field)
-		// player->field = ft_namefield(f->m->height, f->m->width);
+	if (!player->field)
+	{
+		ft_printf("here\n");
+		(player)->field = ft_namefield(f->m->height, f->m->width);
+	}
 	while (i < f->m->height && get_next_line(0, &(*line)))
 	{
 		j = 0;

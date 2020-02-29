@@ -6,7 +6,7 @@
 #    By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/16 22:45:07 by yshawn            #+#    #+#              #
-#    Updated: 2020/02/27 17:10:58 by yshawn           ###   ########.fr        #
+#    Updated: 2020/02/29 04:49:39 by yshawn           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ ft_lstnew.c ft_lstdelone.c ft_lstdel.c ft_lstadd.c ft_lstiter.c ft_lstmap.c \
 \
 ft_size_nbrstr.c ft_swap.c ft_range.c ft_sqrt.c ft_iterative_factorial.c \
 \
-ft_numlen.c ft_strnew_size.c
+ft_numlen.c ft_strnew_size.c ft_arrdel.c
 
 
 HEADER = libft.h

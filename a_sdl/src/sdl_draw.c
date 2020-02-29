@@ -13,18 +13,41 @@
 #include "../include/filler.h"
 #include "../include/sdl.h"
 
-extern int mix;
-extern int delay;
-extern int mapsize;
+extern int e_shift; // 1 pixel e_shift fot background
+extern int mapsize; // width * height for filler field
 
+void			draw_figure(t_rend *r, t_rect *rect, t_f *lst)
+{
+	int			i;
+	int			j;
+	
+	SDL_RenderCopy(r->rend, r->t->m_figure, NULL, &(rect->m_figure));
+	i = 0;
+	while (i < lst->p->height)
+	{
+		j = 0;
+		while (j < lst->p->width)
+		{
+			if (lst->p->piece[i][j] == 1)
+			{
+				rect->figure.x = (rect->figure.w * j) + rect->m_figure.x;
+				rect->figure.y = (rect->figure.h * i) + rect->m_figure.y;
+				SDL_SetTextureColorMod(r->t->figure, 194, 1, 20);
+				SDL_RenderCopy(r->rend, r->t->figure, NULL, &(rect->figure));
+			}	
+			j++;
+		}
+		i++;
+	}
+	return ;
+}
 void			draw_map(t_rend *r, t_rect *rect, t_f *lst)
 {
 	int 		i;
 	int 		j;
 
 	//EARTH
-	SDL_SetTextureColorMod(r->t->cv19, 110, 155, 85);
-	SDL_RenderCopy(r->rend, r->t->cv19, NULL, &(rect->earth));
+	SDL_RenderCopy(r->rend, r->t->earth, NULL, &(rect->earth));
 	//ASIANS AND COVID19
 	i = 0;
 	while (i < lst->m->height)
@@ -50,10 +73,31 @@ void			draw_map(t_rend *r, t_rect *rect, t_f *lst)
 		}
 		i++;
 	}
+	// EARTH GRID
+	i = 1;
+	while (i <= rect->earth.h / rect->asian.h - 1)
+	{
+		j = 1;
+		while (j <= rect->earth.w / rect->asian.w - 1)
+		{
+			rect->earth_grid.w = 1;
+			rect->earth_grid.h = rect->earth.h;
+			rect->earth_grid.x = rect->earth.x + j * rect->asian.w;
+			rect->earth_grid.y = rect->earth.y;
+			SDL_RenderCopy(r->rend, r->t->earth_grid, NULL, &(rect->earth_grid));
+			rect->earth_grid.w = rect->earth.w;
+			rect->earth_grid.h = 1;
+			rect->earth_grid.x = rect->earth.x;
+			rect->earth_grid.y = rect->earth.y + i * rect->asian.h;
+			SDL_RenderCopy(r->rend, r->t->earth_grid, NULL, &(rect->earth_grid));
+			j++;
+		}
+		i++;
+	}
 	// ft_printf("ally: %d\n", lst->ally_cnt);
 	// ft_printf("enemy: %d\n", lst->enemy_cnt);
 	// ft_printf("map:: %d\n", lst->field_cnt);
-	return;
+	return ;
 }
 
 void			draw_playername(t_rend *r, t_rect *rect)
@@ -156,15 +200,15 @@ void			draw_bacground(t_rend *r, t_rect *rect)
 	while (i < SCREEN_WIDTH * SCREEN_HEIGHT + 2 * SCREEN_HEIGHT + 2 * SCREEN_WIDTH)
 	{
 		if (rect->bg.x >= SCREEN_WIDTH)
-			mix = 0;
-		rect->bg.x = (i % (SCREEN_WIDTH + 32) - INDENT) + mix;
-		rect->bg.y = (i / (SCREEN_WIDTH + 32)) * 32 - INDENT+ mix;
+			e_shift = 0;
+		rect->bg.x = (i % (SCREEN_WIDTH + 32) - INDENT) + e_shift;
+		rect->bg.y = (i / (SCREEN_WIDTH + 32)) * 32 - INDENT+ e_shift;
 		rect->bg.w = 32;
 		rect->bg.h = 32;
 		SDL_SetTextureColorMod( r->t->bg, 75, 66, 55);
 		SDL_RenderCopy(r->rend, r->t->bg, NULL, &(rect->bg));
 		i = i + INDENT;
 	}
-	mix++;
+	e_shift++;
 	return ;
 }

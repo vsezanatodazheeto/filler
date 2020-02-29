@@ -6,14 +6,12 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 22:53:36 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/27 16:47:45 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/29 01:40:03 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/filler.h"
 #include "../include/sdl.h"
-
-extern int delay;
 
 void				change_blend(SDL_BlendMode b1, SDL_BlendMode b2)
 {

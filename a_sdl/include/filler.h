@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:57 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/28 01:55:17 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/29 12:40:00 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #define NAME_FIELD "Plateau"
 #define NAME_PIECE "Piece"
 #define NAME_GOT "got"
+#define FIELD "field"
 #define HGT 4
 #define TRUE 1
 #define FALSE 0
@@ -96,7 +97,6 @@ int				ft_isupch(char ch_1, char ch_2, char ch_3);
 int				ft_isupch_2(char str_ch_1, char str_ch_2, char ch_1, char ch_2);
 int				get_size(int *height, int *width, char **line);
 int				ft_strinstr(char *str_dad, char *str_son);
-void			ft_arrdel(void ***arr);
 // void    		add_struct(t_f *curlst);
 t_f 			*new_t_filler();
 t_pos  			*new_t_pos();
@@ -104,5 +104,6 @@ t_m 			*new_t_map();
 t_p				*new_t_piece();
 
 void			print_everything(t_f *f); //delete me
+char 			*ft_namefield(int height, int width);
 // добавить в либу блять
 #endif

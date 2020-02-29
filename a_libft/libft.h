@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 00:09:08 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/27 17:14:56 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/29 04:48:33 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,6 @@ int					ft_iterative_factorial(int nb);
 
 // novie funkcii
 int					ft_numlen(u_int64_t num, int base);
-char				*ft_strnew_size(char *str, int size);
+char				*ft_strnew_size(char **str, int size);
+void				ft_arrdel(void ***arr);
 #endif

@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:57 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/27 19:14:50 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/29 20:29:33 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ static const SDL_Color lightred = {199, 81, 70};
 static const SDL_Color blue = {199, 214, 213};
 static const SDL_Color lightgreen = {158, 215, 42};
 static const SDL_Color green = {110, 155, 85};
+static const SDL_Color brown = {74, 66, 55};
 
 // static SDL_Color r = {221, 115, 115};
 // static SDL_Color lre = {244, 166, 152};
@@ -108,10 +109,13 @@ typedef struct			s_rect
 	SDL_Rect			asian;
 	SDL_Rect			cv19;
 	SDL_Rect			earth;
+	SDL_Rect			earth_grid;
 	SDL_Rect			p1_score;
 	SDL_Rect			p2_score;
 	SDL_Rect			p1_percent;
-	SDL_Rect			p2_percent;
+	SDL_Rect			m_figure;
+	SDL_Rect			figure;
+	SDL_Rect			figure_grid;
 	//
 	SDL_Rect			kek;
 }						t_rect;
@@ -151,6 +155,7 @@ typedef struct			s_textur
     SDL_Texture			*cur_down;
     SDL_Texture			*m_key;
     SDL_Texture			*m_filler;
+    SDL_Texture			*m_figure;
     SDL_Texture			*m_bar_left;
     SDL_Texture			*m_bar_right;
     SDL_Texture			*m_bar_center;
@@ -159,6 +164,10 @@ typedef struct			s_textur
     SDL_Texture			*m_bar_delimiter;
 	SDL_Texture			*asian;
 	SDL_Texture			*cv19;
+	SDL_Texture			*earth;
+	SDL_Texture			*earth_grid;
+	SDL_Texture			*figure;
+	SDL_Texture			*figure_grid;
     //
 	SDL_Texture			*kek;
 }						t_textur;
@@ -180,7 +189,7 @@ int					main_v(t_f *f, t_player *player);
 int					init_lib();
 void				init_t_rend(t_rend *r, t_textur *t, t_font *f, t_rect *rect);
 int					create(SDL_Window **win, t_rend *r, t_player *player);
-int					create_textur(t_rend *r);
+int					create_texture(t_rend *r);
 void				create_font(t_rend *r);
 int					quit(SDL_Window **win, t_rend *r);
 
@@ -195,5 +204,6 @@ void				draw_menu(t_rend *r, t_rect *rect, t_f *lst);
 void				draw_message(t_rend *r, t_rect *rect);
 void				draw_playername(t_rend *r, t_rect *rect);
 void				draw_map(t_rend *r, t_rect *rect, t_f *curlst);
+void				draw_figure(t_rend *r, t_rect *rect, t_f *lst);
 
 #endif

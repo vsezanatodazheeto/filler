@@ -6,14 +6,14 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:37:15 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/27 21:43:00 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/02/29 20:38:16 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/filler.h"
 #include "../include/sdl.h"
 
-extern int mapsize;
+extern int mapsize; // width * height for filler field
 
 void				field_rect(t_rend *r, t_rect *rect, t_f *lst)
 {
@@ -25,16 +25,37 @@ void				field_rect(t_rend *r, t_rect *rect, t_f *lst)
 	rect->cv19.w = rect->filler.w / lst->m->width;
 	rect->cv19.h = rect->filler.h / lst->m->height;
 
-	// размеры и координаты земли
+	// размеры и координаты земли EARTH
 	rect->earth.w = rect->asian.w * lst->m->width;
 	rect->earth.h = rect->asian.h * lst->m->height;
 	rect->earth.x = INDENT + rect->filler.w / 2 - rect->earth.w / 2;
 	rect->earth.y = INDENT + rect->filler.h / 2 - rect->earth.h / 2;
+	SDL_SetTextureColorMod(r->t->earth, 110, 155, 85);
+	SDL_SetTextureAlphaMod(r->t->earth, 255);
+	// размеры и координаты сетки  GRID
+	rect->earth_grid.w = 2;
+	rect->earth_grid.h = 2;
+	rect->earth_grid.x = INDENT + rect->filler.w / 2 - rect->earth.w / 2;
+	rect->earth_grid.y = INDENT + rect->filler.h / 2 - rect->earth.h / 2;
+	SDL_SetTextureColorMod(r->t->earth_grid, 44, 36, 25);
+	SDL_SetTextureAlphaMod(r->t->earth_grid, 255);
 	//...
 	// ft_printf("%d\n", rect->earth.w);
 	// ft_printf("%d\n", rect->earth.h);
 	// ft_printf("%d\n", rect->filler.w);
 	// ft_printf("%d\n", rect->filler.h);
+
+	// размеры и координаты M_FIGURE
+	rect->m_figure.x = rect->filler.w + INDENT;
+	rect->m_figure.y = SCREEN_WIDTH - rect->filler.w - (INDENT * 4);
+	rect->m_figure.w = rect->key.w / lst->p->width;
+	rect->m_figure.h = INDENT * 8 / lst->p->height;
+	SDL_SetTextureColorMod(r->t->m_figure, 255, 255, 255);
+	SDL_SetTextureAlphaMod(r->t->m_figure, 255);
+	SDL_RenderCopy(r->rend, r->t->m_figure, NULL, &(rect->m_figure));
+	// размеры и координаты FIGURE
+	rect->figure.w = rect->m_figure.w / lst->p->width;
+	rect->figure.h = rect->m_figure.h / lst->p->height;
 }
 
 void				word_rect(t_rend *r, t_rect *rect)
@@ -150,7 +171,6 @@ void				word_rect(t_rend *r, t_rect *rect)
 	rect->p3_.w = 1;
 	rect->p3_.h = 1;
 	SDL_QueryTexture(r->f->p3_, NULL, NULL, &(rect->p3_.w), &(rect->p3_.h));
-
 	return ;
 }
 
@@ -161,8 +181,8 @@ void				menu_rect(t_rend *r, t_rect *rect, t_f *lst)
 	rect->filler.y = INDENT;
 	rect->filler.w = (SCREEN_WIDTH / 1.30) - (INDENT * 4);
 	rect->filler.h = SCREEN_HEIGHT - (BAR_HEIGHT) - (INDENT * 3);
-	SDL_SetTextureColorMod( r->t->m_filler, 110, 155, 85);
-	SDL_SetTextureAlphaMod(r->t->m_filler, 60);
+	SDL_SetTextureColorMod( r->t->m_filler, 74, 66, 55);
+	SDL_SetTextureAlphaMod(r->t->m_filler, 150);
 
 	// размеры и координаты KEYS MENU
 	rect->key.x = rect->filler.w + INDENT;
@@ -179,14 +199,12 @@ void				menu_rect(t_rend *r, t_rect *rect, t_f *lst)
 	rect->bar_left.w = INDENT + 128;
 	rect->bar_left.h = BAR_HEIGHT;
 	SDL_SetTextureColorMod(r->t->m_bar_left, 44, 36, 25);
-	SDL_SetTextureAlphaMod(r->t->m_bar_left, 255);
 	// right
 	rect->bar_right.x = 1408;
 	rect->bar_right.y = rect->filler.h + (INDENT * 2);
 	rect->bar_right.w = INDENT + 128;
 	rect->bar_right.h = BAR_HEIGHT;
 	SDL_SetTextureColorMod(r->t->m_bar_right, 44, 36, 25);
-	SDL_SetTextureAlphaMod(r->t->m_bar_right, 255);
 	// center
 	rect->bar_center.x = rect->bar_left.w + INDENT;
 	rect->bar_center.y = rect->filler.h + (INDENT * 2);
