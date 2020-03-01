@@ -16,31 +16,6 @@
 extern int e_shift; // 1 pixel e_shift fot background
 extern int mapsize; // width * height for filler field
 
-void			draw_figure(t_rend *r, t_rect *rect, t_f *lst)
-{
-	int			i;
-	int			j;
-	
-	SDL_RenderCopy(r->rend, r->t->m_figure, NULL, &(rect->m_figure));
-	i = 0;
-	while (i < lst->p->height)
-	{
-		j = 0;
-		while (j < lst->p->width)
-		{
-			if (lst->p->piece[i][j] == 1)
-			{
-				rect->figure.x = (rect->figure.w * j) + rect->m_figure.x;
-				rect->figure.y = (rect->figure.h * i) + rect->m_figure.y;
-				SDL_SetTextureColorMod(r->t->figure, 194, 1, 20);
-				SDL_RenderCopy(r->rend, r->t->figure, NULL, &(rect->figure));
-			}	
-			j++;
-		}
-		i++;
-	}
-	return ;
-}
 void			draw_map(t_rend *r, t_rect *rect, t_f *lst)
 {
 	int 		i;
@@ -66,12 +41,39 @@ void			draw_map(t_rend *r, t_rect *rect, t_f *lst)
 			{
 				rect->cv19.x = (rect->asian.w * j) + rect->earth.x;
 				rect->cv19.y = (rect->asian.h * i) + rect->earth.y;
-				SDL_SetTextureColorMod(r->t->cv19, 199, 214, 213);
+				SDL_SetTextureColorMod(r->t->cv19, 255, 220, 55);
 				SDL_RenderCopy(r->rend, r->t->cv19, NULL, &(rect->cv19));
 			}
 			j++;
 		}
 		i++;
+	}
+	if (lst->prev)
+	{
+		lst = lst->prev;
+		i = 0;
+		while (i < lst->p->height)
+		{
+			j = 0;
+			while (j < lst->p->width)
+			{
+				if (lst->p->piece[i][j] == 1)
+				{
+					rect->figure.x = rect->asian.w * (j + lst->pos->j) + rect->earth.x;
+					rect->figure.y = rect->asian.h * (i + lst->pos->i) + rect->earth.y;
+					rect->figure.w = rect->asian.w;
+					rect->figure.h = rect->asian.h;
+					if (lst->pos->turn == 'O')
+						SDL_SetTextureColorMod(r->t->figure, 0, 0, 0);
+					else
+						SDL_SetTextureColorMod(r->t->figure, 255, 255, 255);
+					SDL_RenderCopy(r->rend, r->t->figure, NULL, &(rect->figure));
+				}
+				j++;
+			}
+			i++;
+		}
+		lst = lst->next;
 	}
 	// EARTH GRID
 	i = 1;
@@ -205,7 +207,7 @@ void			draw_bacground(t_rend *r, t_rect *rect)
 		rect->bg.y = (i / (SCREEN_WIDTH + 32)) * 32 - INDENT+ e_shift;
 		rect->bg.w = 32;
 		rect->bg.h = 32;
-		SDL_SetTextureColorMod( r->t->bg, 75, 66, 55);
+		SDL_SetTextureColorMod( r->t->bg, 115, 115, 115);
 		SDL_RenderCopy(r->rend, r->t->bg, NULL, &(rect->bg));
 		i = i + INDENT;
 	}

@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:37:06 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/29 20:10:26 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/01 22:37:33 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int                 main_v (t_f *lst, t_player *player)
 		{
 			if (e.type == SDL_QUIT)
 			{
-				r->f->k_quit = load_font(&(r->rend), K_QUIT, FONT_SIZE ,brown);
+				r->f->k_quit = load_font(&(r->rend), K_QUIT, FONT_SIZE , grey);
 				e_run = FALSE;
 			}
             if (e.type == SDL_KEYDOWN)
@@ -71,6 +71,12 @@ int                 main_v (t_f *lst, t_player *player)
 				if (e.key.keysym.sym == SDLK_r)						// R
 				{
 					lst = fst_lst;
+					str_score = ft_itoa(lst->ally_cnt * 100 / mapsize);
+					r->f->p1_score = load_font(&(r->rend), str_score, FONT_SIZE, white);
+					ft_strdel(&str_score);
+					str_score = ft_itoa(lst->enemy_cnt * 100 / mapsize);
+					r->f->p2_score = load_font(&(r->rend), ft_strnew_size(&str_score, 3), FONT_SIZE, white);
+					ft_strdel(&str_score);
 					e_pause++;
 					if (r->blend_p == BLEND_OFF)
 					{
@@ -86,7 +92,7 @@ int                 main_v (t_f *lst, t_player *player)
                 if (e.key.keysym.sym == SDLK_SPACE)					// SPACE
                 {
 					if (lst->next)
-						r->f->k_pause = load_font(&(r->rend), K_PAUSE, FONT_SIZE ,brown);
+						r->f->k_pause = load_font(&(r->rend), K_PAUSE, FONT_SIZE , grey);
 					e_pause++;
 					if (r->blend_p == BLEND_OFF)
 					{
@@ -191,7 +197,6 @@ int                 main_v (t_f *lst, t_player *player)
 		draw_message(r, rect);
 		draw_playername(r, rect);
 		draw_map(r, rect, lst);
-		draw_figure(r, rect, lst);
 		//DELAY
 		SDL_Delay(e_delay);
 		// DRAWING

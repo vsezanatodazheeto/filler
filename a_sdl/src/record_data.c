@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:48 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/29 12:23:29 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/01 20:16:30 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,7 @@ void		record_map_positions(t_f *f, t_player *player, char **line)
 	i = 0;
 	j = 0;
 	if (!player->field)
-	{
-		ft_printf("here\n");
-		(player)->field = ft_namefield(f->m->height, f->m->width);
-	}
+		player->field = ft_namefield(f->m->height, f->m->width);
 	while (i < f->m->height && get_next_line(0, &(*line)))
 	{
 		j = 0;

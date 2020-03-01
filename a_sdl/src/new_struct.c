@@ -3,15 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   new_struct.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcomic <pcomic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 12:56:52 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/28 06:14:10 by pcomic           ###   ########.fr       */
+/*   Updated: 2020/03/01 15:20:05 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/filler.h"
 #include "../include/sdl.h"
+
+void    add_struct(t_f **cur_lst)
+{
+        t_f  *ptr;
+
+		if (*cur_lst == NULL)
+        	*cur_lst = new_t_filler();
+		else
+		{
+        	ptr = new_t_filler();
+        	(*cur_lst)->next = ptr;
+			ptr->prev = *cur_lst;
+			*cur_lst = (*cur_lst)->next;
+		}
+        return ;
+}
 
 t_p*	new_t_piece()
 {

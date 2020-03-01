@@ -6,28 +6,12 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 21:05:08 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/29 12:41:19 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/01 17:17:37 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/filler.h"
 #include "include/sdl.h"
-
-void    add_struct(t_f **cur_lst)
-{
-        t_f  *ptr;
-
-		if (*cur_lst == NULL)
-        	*cur_lst = new_t_filler();
-		else
-		{
-        	ptr = new_t_filler();
-        	(*cur_lst)->next = ptr;
-			ptr->prev = *cur_lst;
-			*cur_lst = (*cur_lst)->next;
-		}
-        return ;
-}
 
 t_f        *reading_to_struct(t_f **lst, t_player *player, char **line)
 {
@@ -77,17 +61,51 @@ t_f        *reading_to_struct(t_f **lst, t_player *player, char **line)
 	}
 	return (fst);
 }
+void		ft_free_player(t_player *player)
+{
+	ft_memdel((void **)&player->p1);
+	ft_memdel((void **)&player->p2);
+	ft_memdel((void **)&player->field);
+	return ;
+}
+void		ft_free_lst(t_f **lst)
+{
+	t_f *cur_lst;
 
-int		main() 
+	while ((*lst)->next)
+	{
+		cur_lst = *lst;
+		// for piece
+		ft_arrdel((void ***)&cur_lst->p->piece);
+		free(cur_lst->p);
+		// for map
+		ft_arrdel((void ***)&cur_lst->m->map);
+		free(cur_lst->m);
+		// for pos
+		free(cur_lst->pos);
+		*lst = (*lst)->next;
+		free(cur_lst);
+	}
+	ft_arrdel((void ***)&(*lst)->p->piece);
+	free((*lst)->p);
+	ft_arrdel((void ***)&(*lst)->m->map);
+	free((*lst)->m);
+	free((*lst)->pos);
+	free(*lst);
+	lst = NULL;
+	return ;
+}
+
+int			main() 
 { 
     t_f			*f;
     t_f			*fst_lst;
     t_player    player[1];
 	char 		*line;
 
-    line = NULL;
     f = NULL;
 	fst_lst = NULL;
+    line = NULL;
     init_struct_player(player);
 	check_player(player, &line);
 	fst_lst = reading_to_struct(&f, player, &line);
@@ -99,13 +117,10 @@ int		main()
 	// 	fst_lst = fst_lst->next;
 	// }
     main_v(fst_lst, player);
-	// ft_printf("%s\n", player->field);
-	// printf("%s\n", player->field);
-
+	ft_free_lst(&fst_lst);
+	ft_free_player(player);
     return (0);
 } 
 
-// пофришить
-// листы
 // переписать got_pos
 // переписать check_player

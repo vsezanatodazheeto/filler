@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:57 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/29 20:29:33 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/01 22:17:27 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,8 @@
 
 static const SDL_Color white = {255, 255, 255};
 static const SDL_Color red = {194, 1, 20};
-static const SDL_Color lightred = {199, 81, 70};
-static const SDL_Color blue = {199, 214, 213};
-static const SDL_Color lightgreen = {158, 215, 42};
-static const SDL_Color green = {110, 155, 85};
-static const SDL_Color brown = {74, 66, 55};
+static const SDL_Color yellow = {255, 220, 55};
+static const SDL_Color grey = {115, 115, 115};
 
 // static SDL_Color r = {221, 115, 115};
 // static SDL_Color lre = {244, 166, 152};
@@ -204,6 +201,5 @@ void				draw_menu(t_rend *r, t_rect *rect, t_f *lst);
 void				draw_message(t_rend *r, t_rect *rect);
 void				draw_playername(t_rend *r, t_rect *rect);
 void				draw_map(t_rend *r, t_rect *rect, t_f *curlst);
-void				draw_figure(t_rend *r, t_rect *rect, t_f *lst);
 
 #endif

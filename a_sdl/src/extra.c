@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 01:17:40 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/29 12:43:12 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/01 20:17:01 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char 		*ft_namefield(int height, int width)
 	len2 = ft_strlen(num2);
 	strlen = len1 + len2 + ft_strlen(FIELD) + 1 + 1;
 
-	if(!(tmp = (char *)malloc(sizeof(char) * (strlen))))
+	if(!(tmp = (char *)malloc(sizeof(char) * (strlen + 1))))
 		return (NULL);
 	tmp[strlen--] = '\0';
 	while (--len1 >= 0)
@@ -86,8 +86,8 @@ char 		*ft_namefield(int height, int width)
 		tmp[strlen] = FIELD[strlen];
 		strlen--;
 	}
-	ft_strdel(&num1);
-	ft_strdel(&num2);
+	ft_memdel((void **)&num1);
+	ft_memdel((void **)&num2);
 	return (tmp);
 }
 

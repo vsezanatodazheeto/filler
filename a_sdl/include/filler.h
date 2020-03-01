@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:57 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/29 12:40:00 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/01 15:38:34 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char			**ft_strsplit(char const *str, char ch);
 void			check_player(t_player *player, char **line);
 void			init_struct_player(t_player *player);
 void    		init_structs(t_f *f, t_p *p, t_m *m, t_pos *pos);
-// void			reading_to_struct(t_f *f, t_player *player, char **line);
+t_f				*reading_to_struct(t_f **lst, t_player *player, char **line);
 void 			record_player(t_player *player, int i);
 int				record_map(t_f *f, char **line);
 void			record_map_positions(t_f *f, t_player *players, char **line);
@@ -97,11 +97,13 @@ int				ft_isupch(char ch_1, char ch_2, char ch_3);
 int				ft_isupch_2(char str_ch_1, char str_ch_2, char ch_1, char ch_2);
 int				get_size(int *height, int *width, char **line);
 int				ft_strinstr(char *str_dad, char *str_son);
-// void    		add_struct(t_f *curlst);
+void    		add_struct(t_f **cur_lst);
 t_f 			*new_t_filler();
 t_pos  			*new_t_pos();
 t_m 			*new_t_map();
 t_p				*new_t_piece();
+void			ft_free_lst(t_f **lst);
+void		ft_free_player(t_player *player);
 
 void			print_everything(t_f *f); //delete me
 char 			*ft_namefield(int height, int width);

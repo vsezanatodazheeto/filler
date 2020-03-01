@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:37:15 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/29 20:13:30 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/01 22:09:44 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void				create_font(t_rend *r)
     r->f->speed = load_font(&(r->rend), SPEED, FONT_SIZE, white);
     r->f->speedrate = load_font(&(r->rend), SPEEDRATE2, FONT_SIZE_2, white);
 	r->f->p1 = load_font(&(r->rend), K_P1_NAME, FONT_SIZE, red);
-	r->f->p2 = load_font(&(r->rend), K_P2_NAME, FONT_SIZE, blue);
+	r->f->p2 = load_font(&(r->rend), K_P2_NAME, FONT_SIZE, yellow);
 	r->f->p1_ = load_font(&(r->rend), K_P1_NAME_, FONT_SIZE, white);
 	r->f->p2_ = load_font(&(r->rend), K_P2_NAME_, FONT_SIZE, white);
 	r->f->p3_ = load_font(&(r->rend), K_P3_NAME_, FONT_SIZE, white);
