@@ -20,7 +20,7 @@ DIR_S_4 = ../a_libft/
 DIR_S_5 = ../a_gnl/
 
 SOURCES_1 = main.c
-SOURCES_2 = extra.c extra_2.c record_data.c new_struct.c sdl_init.c sdl_main.c sdl_extra.c sdl_draw.c sdl_rect.c govno_ydalit.c
+SOURCES_2 = extra.c extra_2.c record_data.c new_struct.c sdl_init.c sdl_main.c sdl_extra.c sdl_draw.c sdl_rect.c sdl_key.c
 SOURCES_3 = libftprintf.a
 SOURCES_4 = libft.a
 SOURCES_5 = get_next_line.c
