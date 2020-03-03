@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 21:05:08 by yshawn            #+#    #+#             */
-/*   Updated: 2020/03/03 20:27:05 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/03 21:55:46 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,14 @@ t_f				*reading_to_struct(t_f **lst, t_player *player, char **line)
 	return (fst);
 }
 
-int				main() 
+int				main(int ac, char **av) 
 { 
     t_f			*f;
     t_f			*fst_lst;
     t_player    player[1];
 	char 		*line;
 
+	fd = open(av[1], O_RDONLY);
     f = NULL;
 	fst_lst = NULL;
     line = NULL;
