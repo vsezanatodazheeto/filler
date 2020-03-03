@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:37:06 by yshawn            #+#    #+#             */
-/*   Updated: 2020/03/03 23:57:51 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/04 00:05:46 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void				sdl_main(t_f *lst, t_player *player)
 	t_music			music[1];
 	t_f				*fst_lst;
 
-	Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
 	win = NULL;
 	fst_lst = lst;
 	if (init_lib() != 0)
