@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:37:15 by yshawn            #+#    #+#             */
-/*   Updated: 2020/03/03 18:07:13 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/03 21:50:16 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@ void				rect_field(t_rend *r, t_rect *rect, t_f *lst)
 	// размеры квадрата ASIANS
 	rect->asian.w = rect->fillboard.w / lst->m->width;
 	rect->asian.h = rect->fillboard.h / lst->m->height;
+	(rect->asian.w > rect->asian.h) ? (rect->asian.w = rect->asian.h) : (rect->asian.h = rect->asian.w);
 	SDL_SetTextureColorMod(r->t->asian, 194, 1, 20);
 	// размеры квадрата COVID
-	rect->cv19.w = rect->fillboard.w / lst->m->width;
-	rect->cv19.h = rect->fillboard.h / lst->m->height;
+	rect->cv19.w = rect->asian.w;
+	rect->cv19.h = rect->asian.h;
 	SDL_SetTextureColorMod(r->t->cv19, 255, 220, 55);
 	// размеры и координаты земли FIGURE
 	rect->figure.w = rect->asian.w;
@@ -33,12 +34,8 @@ void				rect_field(t_rend *r, t_rect *rect, t_f *lst)
 	rect->earth.y = INDENT + rect->fillboard.h / 2 - rect->earth.h / 2;
 	SDL_SetTextureColorMod(r->t->earth, 100, 200, 200);
 	SDL_SetTextureAlphaMod(r->t->earth, 255);
-	// размеры и координаты сетки  GRID
-	// rect->earth_grid.x = INDENT; // можно удалить
-	// rect->earth_grid.y = INDENT; // можно удалить
-	// rect->earth_grid.w = 1; // можно удалить наверное
-	// rect->earth_grid.h = 1; // можно удалить наверное, все еще ищем сегу
-	SDL_SetTextureColorMod(r->t->earth_grid, 44, 36, 25);
+	// размеры и координаты сетки  GRID в отрисовке
+	SDL_SetTextureColorMod(r->t->earth_grid, 40, 40, 40);
 	SDL_SetTextureAlphaMod(r->t->earth_grid, 255);
 }
 
@@ -76,9 +73,22 @@ void				rect_message(t_rend *r, t_rect *rect)
 	rect->resume.h = 1;
 	SDL_QueryTexture(r->f->resume, NULL, NULL, &(rect->resume.w), &(rect->resume.h));
 
+	//R
+	rect->re.x = rect->fillboard.w + INDENT + 20;
+	rect->re.y = rect->space.y + INDENT * 2;
+	rect->re.w = 1;
+	rect->re.h = 1;
+	SDL_QueryTexture(r->f->re, NULL, NULL, &(rect->re.w), &(rect->re.h));
+	//REPLAY
+	rect->replay.x = rect->re.x + rect->re.w + INDENT * 8.2;
+	rect->replay.y = rect->space.y + INDENT * 2;
+	rect->replay.w = 1;
+	rect->replay.h = 1;
+	SDL_QueryTexture(r->f->replay, NULL, NULL, &(rect->replay.w), &(rect->replay.h));
+
 	// <----- CURSOR BACK
 	rect->cur_back.x = rect->fillboard.w + INDENT + 8;
-	rect->cur_back.y = BAR_HEIGHT * 2 + INDENT + 10;
+	rect->cur_back.y = rect->re.y + INDENT * 1.8;
 	rect->cur_back.w = 60;
 	rect->cur_back.h = 30;
 	SDL_QueryTexture(r->t->cur_back, NULL, NULL, &(rect->cur_back.w), &(rect->cur_back.h));
@@ -89,33 +99,33 @@ void				rect_message(t_rend *r, t_rect *rect)
 	rect->cur_forward.h = 30;	
 	SDL_QueryTexture(r->t->cur_forward, NULL, NULL, &(rect->cur_forward.w), &(rect->cur_forward.h));
 	// BACK_FORWARD
-	rect->back_forward.x = rect->cur_forward.x + rect->cur_forward.w + 48;
-	rect->back_forward.y = BAR_HEIGHT * 2 + INDENT + 20;
+	rect->back_forward.x = rect->cur_forward.x + rect->cur_forward.w + 42;
+	rect->back_forward.y = rect->cur_back.y + INDENT / 2.6;
 	rect->back_forward.w = 1;
 	rect->back_forward.h = 1;
 	SDL_QueryTexture(r->f->back_forward, NULL, NULL, &(rect->back_forward.w), &(rect->back_forward.h));
 
 	// /\ CURSOR UP
 	rect->cur_up.x = rect->fillboard.w + INDENT + 14;
-	rect->cur_up.y = BAR_HEIGHT * 2 + (INDENT * 3) + 10;
+	rect->cur_up.y = rect->cur_back.y + INDENT * 2.2;
 	rect->cur_up.w = 60;
 	rect->cur_up.h = 30;
 	SDL_QueryTexture(r->t->cur_up, NULL, NULL, &(rect->cur_up.w), &(rect->cur_up.h));
 	// \/ CURSOR DOWN
 	rect->cur_down.x = rect->cur_up.x + 40;
-	rect->cur_down.y = BAR_HEIGHT * 2 + INDENT * 3 + 10;
+	rect->cur_down.y = rect->cur_up.y;
 	rect->cur_down.w = 60;
 	rect->cur_down.h = 30;
 	SDL_QueryTexture(r->t->cur_down, NULL, NULL, &(rect->cur_down.w), &(rect->cur_down.h));
 	// SPEED
 	rect->speed.x = rect->cur_down. x + 190;
-	rect->speed.y = BAR_HEIGHT * 3 + INDENT + 20;
+	rect->speed.y = rect->cur_down.y + INDENT / 4;
 	rect->speed.w = 1;
 	rect->speed.h = 1;
 	SDL_QueryTexture(r->f->speed, NULL, NULL, &(rect->speed.w), &(rect->speed.h));
 	// SPEEDRATE
-	rect->speedrate.x = rect->cur_down. x + 308;
-	rect->speedrate.y = BAR_HEIGHT * 3 + INDENT + 26;
+	rect->speedrate.x = rect->cur_down.x + 306;
+	rect->speedrate.y = rect->cur_down.y + INDENT / 2.2;
 	rect->speedrate.w = 1;
 	rect->speedrate.h = 1;
 	SDL_QueryTexture(r->f->speedrate, NULL, NULL, &(rect->speedrate.w), &(rect->speedrate.h));

@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 22:53:36 by yshawn            #+#    #+#             */
-/*   Updated: 2020/03/03 19:10:27 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/03 21:36:31 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void		key_event(SDL_Event e, t_rend *r, t_rect *rect, t_f **lst, t_f **fst_lst)
 			if (e.key.keysym.sym == SDLK_r) // R
 			{
 				*lst = *fst_lst;
+				SDL_DestroyTexture(r->f->re);
+				r->f->re = load_font(&(r->rend), R, FONT_SIZE, grey);
 				if (score_recount(r, *lst) != 0)
 				{
 					ft_printf("here\n");
@@ -89,6 +91,9 @@ void		key_event(SDL_Event e, t_rend *r, t_rect *rect, t_f **lst, t_f **fst_lst)
 		}
 		if (e.type == SDL_KEYUP)
 		{
+			// R
+			SDL_DestroyTexture(r->f->re);
+			r->f->re = load_font(&(r->rend), R, FONT_SIZE, white);
 			// SPACE
 			SDL_DestroyTexture(r->f->space);
 			r->f->space = load_font(&(r->rend), SPACE, FONT_SIZE, white);

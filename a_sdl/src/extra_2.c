@@ -6,12 +6,19 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 01:17:40 by yshawn            #+#    #+#             */
-/*   Updated: 2020/03/03 19:54:32 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/03 20:24:29 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/filler.h"
 #include "../include/sdl.h"
+
+t_f				*leave(t_f **fst, t_player *player)
+{
+	ft_free_lst(&(*fst));
+	ft_free_player(player);
+	return (NULL);
+}
 
 int				ft_isupch(char ch_1, char ch_2, char ch_3)
 {

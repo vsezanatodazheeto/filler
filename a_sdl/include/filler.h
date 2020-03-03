@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:57 by yshawn            #+#    #+#             */
-/*   Updated: 2020/03/01 15:38:34 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/03 20:22:56 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,9 @@ t_f 			*new_t_filler();
 t_pos  			*new_t_pos();
 t_m 			*new_t_map();
 t_p				*new_t_piece();
+t_f				*leave(t_f **fst_lst, t_player *player);
 void			ft_free_lst(t_f **lst);
-void		ft_free_player(t_player *player);
+void			ft_free_player(t_player *player);
 
 void			print_everything(t_f *f); //delete me
 char 			*ft_namefield(int height, int width);

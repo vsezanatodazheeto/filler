@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:37:15 by yshawn            #+#    #+#             */
-/*   Updated: 2020/03/03 18:06:20 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/03 21:07:32 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void				quit(SDL_Window **win, t_rend *r)
 	SDL_DestroyTexture(r->f->space);
 	SDL_DestroyTexture(r->f->pause);
 	SDL_DestroyTexture(r->f->resume);
+	SDL_DestroyTexture(r->f->re);
+	SDL_DestroyTexture(r->f->replay);
 	SDL_DestroyTexture(r->f->back_forward);
 	SDL_DestroyTexture(r->f->speed);
 	SDL_DestroyTexture(r->f->speedrate);
@@ -77,6 +79,10 @@ int					create_font(t_rend *r)
     if(!(r->f->pause = load_font(&(r->rend), PAUSE, FONT_SIZE, white)))
 		return (1);
     if(!(r->f->resume = load_font(&(r->rend), RESUME, FONT_SIZE, white)))
+		return (1);
+    if(!(r->f->re = load_font(&(r->rend), R, FONT_SIZE, white)))
+		return (1);
+    if(!(r->f->replay = load_font(&(r->rend), REPLAY, FONT_SIZE, white)))
 		return (1);
     if(!(r->f->back_forward = load_font(&(r->rend), BACK_FORWARD, FONT_SIZE, white)))
 		return (1);
@@ -200,6 +206,8 @@ void				init_t_rend(t_rend *r, t_textur *t, t_font *f, t_rect *rect, t_event *ev
 	f->space = NULL;
 	f->pause = NULL;
 	f->resume = NULL;
+	f->re = NULL;
+	f->replay = NULL;
 	f->back_forward = NULL;
 	f->speed = NULL;
 	f->p1_bar = NULL;

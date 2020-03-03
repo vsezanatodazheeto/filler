@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:57 by yshawn            #+#    #+#             */
-/*   Updated: 2020/03/03 19:10:57 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/03 21:07:03 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@
 #define SPACE "SPACE"
 #define PAUSE "pause"
 #define RESUME "resume"
+#define R "R"
+#define REPLAY "replay"
 #define BACK_FORWARD "back/forward"
 #define SPEED "speed:"
 #define SPEEDRATE0 "0.25"
@@ -57,12 +59,6 @@ static const SDL_Color white = {255, 255, 255};
 static const SDL_Color red = {194, 1, 20};
 static const SDL_Color yellow = {255, 220, 55};
 static const SDL_Color grey = {115, 115, 115};
-
-// static SDL_Color r = {221, 115, 115};
-// static SDL_Color lre = {244, 166, 152};
-// static SDL_Color w = {255, 255, 255};
-// static SDL_Color lg = {198, 216, 195};
-// static SDL_Color g = {160, 192, 132};
 
 #define COLORARRAY (SDL_Color [5]) {{221, 115, 115}, {244, 166, 152}, {255, 255, 255}, {198, 216, 195}, {160, 192, 132}}
 
@@ -96,6 +92,8 @@ typedef struct			s_rect
     SDL_Rect			space;
     SDL_Rect			pause; // pause resume можно объединить наверное:w
     SDL_Rect			resume;
+    SDL_Rect			re;
+    SDL_Rect			replay;
     SDL_Rect			cur_forward;
     SDL_Rect			cur_back;
     SDL_Rect			cur_up;
@@ -127,6 +125,8 @@ typedef struct			s_font
 	SDL_Texture			*space;
 	SDL_Texture			*pause;
 	SDL_Texture			*resume;
+	SDL_Texture			*re;
+	SDL_Texture			*replay;
 	SDL_Texture			*back_forward;
 	SDL_Texture			*speed;
 	SDL_Texture			*speedrate;

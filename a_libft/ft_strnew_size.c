@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 17:07:54 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/29 02:42:49 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/03 21:01:28 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char		*ft_strnew_size(char **str, int size)
 {
-	int 	strlen;
+	int		strlen;
 	char	*tmp;
 
 	strlen = ft_strlen(*str);
@@ -23,7 +23,6 @@ char		*ft_strnew_size(char **str, int size)
 		return (*str);
 	if (!(tmp = (char *)malloc(sizeof(char) * (size + 1))))
 		return (*str);
-
 	tmp[size--] = '\0';
 	while (--strlen >= 0)
 	{

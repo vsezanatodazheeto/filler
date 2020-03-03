@@ -132,6 +132,10 @@ void			draw_message(t_rend *r, t_rect *rect)
 	// RESUME
 	SDL_SetTextureBlendMode(r->f->resume, r->blend_r);
 	SDL_RenderCopy(r->rend, r->f->resume, NULL, &(rect->resume));
+	// R
+	SDL_RenderCopy(r->rend, r->f->re, NULL, &(rect->re));
+	// REPLAY
+	SDL_RenderCopy(r->rend, r->f->replay, NULL, &(rect->replay));
 	// <----- CURSOR BACK
 	SDL_RenderCopy(r->rend, r->t->cur_back, NULL, &(rect->cur_back));
 	// -----> CURSOR FORWARD

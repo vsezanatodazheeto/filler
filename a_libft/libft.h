@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 00:09:08 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/29 04:48:33 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/03 21:01:14 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,9 @@ int					ft_sqrt(int nb);
 int					*ft_range(int min, int max);
 int					ft_iterative_factorial(int nb);
 
-// novie funkcii
+/*
+** novoe govno
+*/
 int					ft_numlen(u_int64_t num, int base);
 char				*ft_strnew_size(char **str, int size);
 void				ft_arrdel(void ***arr);

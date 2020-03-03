@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 01:17:40 by yshawn            #+#    #+#             */
-/*   Updated: 2020/03/03 19:53:58 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/03 20:56:53 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ void			check_player(t_player *player, char **line)
 {
 	char		**player_name;
 	int			i;
+	int 		n;
 
 	i = 0;
+	n = 0;
 	player_name = NULL;
 	while (get_next_line(fd, &(*line)))
 	{
@@ -28,14 +30,20 @@ void			check_player(t_player *player, char **line)
 		{
 			if (!player_name)
 			{
+				n = 0;
 				player_name = ft_strsplit(*line, '/');
-				player->p1 = ft_strdup(player_name[1]);
+				while(player_name[n])
+					n++;
+				player->p1 = ft_strdup(player_name[n - 1]);
 				ft_arrdel((void ***)&player_name);
 			}
 			else
 			{
+				n = 0;
 				player_name = ft_strsplit(*line, '/');
-				player->p2 = ft_strdup(player_name[1]);
+				while(player_name[n])
+					n++;
+				player->p2 = ft_strdup(player_name[n - 1]);
 				ft_arrdel((void ***)&player_name);
 				break ;
 			}

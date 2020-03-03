@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 19:28:43 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/29 04:48:20 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/03 20:59:30 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void		ft_arrdel(void ***arr)
 {
 	void	**first;
+
 	if (!(**arr) || !(*arr))
 		return ;
 	first = *arr;

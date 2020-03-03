@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 21:05:08 by yshawn            #+#    #+#             */
-/*   Updated: 2020/03/03 19:55:15 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/03 20:27:05 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,20 @@ t_f				*reading_to_struct(t_f **lst, t_player *player, char **line)
 		if (**line == 'P' && ft_strinstr(*line, NAME_FIELD))
 		{
 			if (record_map(*lst, &(*line)) == 1)
-				break ;
+				return (leave(&fst, player));
 			if (!(get_next_line(fd, &(*line))))
-				break ;
+				return (leave(&fst, player));
 			record_map_positions(*lst, player, &(*line));
 			if (!(get_next_line(fd, &(*line))))
-				break ;
+				return (leave(&fst, player));
 		}
 		if (**line == 'P' && ft_strinstr(*line, NAME_PIECE))
 		{
 			if (record_piece(*lst, &(*line)) == 1)
-				break ;
+				return (leave(&fst, player));
 			record_piece_positions(*lst, &(*line));
 			if (!(get_next_line(fd, &(*line))))
-				break ;
+				return (leave(&fst, player));
 		}
 		if (**line == '<' && ft_strinstr(*line, NAME_GOT))
 			record_got_pos(*lst, &(*line));
@@ -77,10 +77,14 @@ int				main()
     line = NULL;
     init_struct_player(player);
 	check_player(player, &line);
-	fst_lst = reading_to_struct(&f, player, &line);
-    sdl_main(fst_lst, player);
-	ft_free_lst(&fst_lst);
-	ft_free_player(player);
+	if (!(fst_lst = reading_to_struct(&f, player, &line)))
+		return (1);
+	else
+	{
+		sdl_main(fst_lst, player);
+		ft_free_lst(&fst_lst);
+		ft_free_player(player);
+	}
     return (0);
 } 
 
