@@ -13,8 +13,6 @@
 #include "../include/filler.h"
 #include "../include/sdl.h"
 
-extern int mapsize; // width * height for filler field
-
 void			draw_map_grid(t_rend *r, t_rect *rect, t_f *lst)
 {
 	int i;
@@ -166,11 +164,11 @@ void			draw_menu(t_rend *r, t_rect *rect, t_f *lst)
 	// CENTER BAR
 	SDL_RenderCopy(r->rend, r->t->bar_center, NULL, &(rect->bar_center));
 	// PROGRESS BAR P1
-	rect->bar_center_p1.w = 1200 * (lst->ally_cnt * 100 / mapsize) / 100;
+	rect->bar_center_p1.w = 1200 * (lst->ally_cnt * 100 / r->event->mapsize) / 100;
 	SDL_RenderCopy(r->rend, r->t->bar_center_p1, NULL, &(rect->bar_center_p1));
 	// PROGRESS BAR P2
-	rect->bar_center_p2.x = 1408 - (1200 * (lst->enemy_cnt * 100 / mapsize) / 100);
-	rect->bar_center_p2.w = 1200 * (lst->enemy_cnt * 100 / mapsize) / 100;
+	rect->bar_center_p2.x = 1408 - (1200 * (lst->enemy_cnt * 100 / r->event->mapsize) / 100);
+	rect->bar_center_p2.w = 1200 * (lst->enemy_cnt * 100 / r->event->mapsize) / 100;
 	SDL_RenderCopy(r->rend, r->t->bar_center_p2, NULL, &(rect->bar_center_p2));
 
 	// DELIMITER BAR

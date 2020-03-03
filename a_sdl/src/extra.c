@@ -6,12 +6,14 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 01:17:40 by yshawn            #+#    #+#             */
-/*   Updated: 2020/03/01 20:17:01 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/03 18:59:52 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/filler.h"
 #include "../include/sdl.h"
+
+extern int tt;
 
 void			check_player(t_player *player, char **line)
 {
@@ -20,7 +22,7 @@ void			check_player(t_player *player, char **line)
 
 	i = 0;
 	player_name = NULL;
-	while (get_next_line(0, &(*line)))
+	while (get_next_line(tt, &(*line)))
 	{
 		if (**line == 'l')
 		{

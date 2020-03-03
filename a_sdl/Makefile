@@ -35,7 +35,7 @@ all: $(NAME)
 $(NAME):
 	@make -C $(LIB)
 	@make -C $(PRINTLIB)
-	@$(CC) $(SRCS_1) $(SRCS_2) $(SRCS_3) $(SRCS_4) $(SRCS_5) -I $(HEADER) $(SDL_INCS) $(FRAMEWORKS) -o $(NAME)
+	@$(CC) -g $(SRCS_1) $(SRCS_2) $(SRCS_3) $(SRCS_4) $(SRCS_5) -I $(HEADER) $(SDL_INCS) $(FRAMEWORKS) -o $(NAME)
 clean:
 	@make clean -C $(LIB)
 	@make clean -C $(PRINTLIB)

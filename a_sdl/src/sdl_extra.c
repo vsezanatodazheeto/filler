@@ -6,17 +6,47 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 22:53:36 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/29 01:40:03 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/03 19:44:05 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/filler.h"
 #include "../include/sdl.h"
 
-void				change_blend(SDL_BlendMode b1, SDL_BlendMode b2)
+int					score_recount(t_rend *r, t_f *lst)
 {
-	b1 = BLEND_ON;
-	b2 = BLEND_OFF;
+	r->event->str_score = ft_itoa(lst->ally_cnt * 100 / r->event->mapsize);
+	SDL_DestroyTexture(r->f->p1_score);
+	if (!(r->f->p1_score = load_font(&(r->rend), r->event->str_score , FONT_SIZE, white)))
+	{
+		ft_memdel((void **)&r->event->str_score);
+		return (1);
+	}
+	ft_memdel((void **)&r->event->str_score);
+	r->event->str_score = ft_itoa(lst->enemy_cnt * 100 / r->event->mapsize);
+	r->event->str_score = ft_strnew_size(&r->event->str_score, 3);
+	SDL_DestroyTexture(r->f->p2_score);
+	if (!(r->f->p2_score = load_font(&(r->rend), r->event->str_score, FONT_SIZE, white)))
+	{
+		ft_memdel((void **)&r->event->str_score);
+		return (1);
+	}
+	ft_memdel((void **)&r->event->str_score);
+	return (0);
+}
+
+void				blendmode_swap(t_rend *r)
+{
+	if (r->blend_p == BLEND_OFF)
+	{
+		r->blend_p = BLEND_ON;
+		r->blend_r = BLEND_OFF;
+	}
+	else
+	{
+		r->blend_p = BLEND_OFF;
+		r->blend_r = BLEND_ON;
+	}
 	return ;
 }
 
@@ -48,6 +78,7 @@ SDL_Texture			*load_font(SDL_Renderer **rend, char *path, int size, SDL_Color cl
 	}
 	else
 		new_textur = SDL_CreateTextureFromSurface(*rend, loaded_scr);
+	TTF_CloseFont(sans);
 	SDL_FreeSurface(loaded_scr);
 	return (new_textur);
 }

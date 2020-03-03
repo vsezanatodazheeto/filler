@@ -6,77 +6,49 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 21:05:08 by yshawn            #+#    #+#             */
-/*   Updated: 2020/03/01 15:35:43 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/03 19:40:30 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "../a_libft/libft.h"
 
-typedef struct		s_t
+char		*ft_strnew_size1(char **str, int size)
 {
-	char			*k;
-}					t_t;
+	int 	strlen;
+	char	*tmp;
 
-typedef struct		s_k
-{
-	char			*k;
-	t_t				*t;
-	struct s_k		*next;
-}					t_k;
+	strlen = ft_strlen(*str);
+	tmp = NULL;
+	printf("len is: %d\n", strlen);
+	if (strlen >= size || strlen == 0)
+		return (*str);
+	if (!(tmp = (char *)malloc(sizeof(char) * (size + 1))))
+		return (*str);
 
-t_k  *new_t_filler()
-{
-        t_k  *ptr;
-
-        if (!(ptr = malloc(sizeof(t_k))))
-			return (NULL);
-        ptr->next = NULL;
-        return (ptr);
-}
-
-void    add_struct(t_k **lst)
-{
-        t_k  *ptr;
-
-		ptr = new_t_filler();
-		(*lst)->next = ptr;
-		*lst = (*lst)->next;
-		return ;
-}
-
-void	freestruct(t_k **lst)
-{
-	t_k *cur;
-
-	while ((*lst)->next)
+	tmp[size--] = '\0';
+	while (--strlen >= 0)
 	{
-		cur = *lst;
-		ft_strdel(&cur->k);
-		*lst = (*lst)->next;
-		free(cur);
+		tmp[size] = (*str)[strlen];
+		size--;
 	}
-	ft_strdel(&(*lst)->k);
-	free(*lst);
-	lst= NULL;
-	return ;
+	while (size >= 0)
+	{
+		tmp[size] = ' ';
+		size--;
+	}
+	ft_strdel(&(*str));
+	return (tmp);
 }
 
 int		main() 
 { 
-	t_k *k;
-	t_k *fst;
-	t_k *fst_l;
+	char *tmp;	
 
-	k = new_t_filler();
-	fst = k;
-	fst_l = k;
-
-	k->k = ft_itoa(555);
-	add_struct(&k);
-	k->k = ft_itoa(666);
-	add_struct(&k);
-	k->k = ft_itoa(777);
-	// freestruct(&fst_l);
+	tmp = ft_itoa(50);
+	printf("%s\n", tmp);
+	tmp = ft_strnew_size1(&tmp, 3);
+	tmp = ft_strnew_size1(&tmp, 3);
+	printf("%s\n", tmp);
 	return (0);
 }

@@ -6,14 +6,12 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:37:15 by yshawn            #+#    #+#             */
-/*   Updated: 2020/03/02 19:24:48 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/03 18:07:13 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/filler.h"
 #include "../include/sdl.h"
-
-extern int mapsize; // width * height for filler field
 
 void				rect_field(t_rend *r, t_rect *rect, t_f *lst)
 {
@@ -199,13 +197,13 @@ void				rect_bar(t_rend *r, t_rect *rect, t_f *lst)
 	// PROGRESS BAR P1
 	rect->bar_center_p1.x = rect->bar_left.w + INDENT;
 	rect->bar_center_p1.y = rect->fillboard.h + (INDENT * 2);
-	rect->bar_center_p1.w = 1200 * (lst->ally_cnt * 100 / mapsize) / 100;
+	rect->bar_center_p1.w = 1200 * (lst->ally_cnt * 100 / r->event->mapsize) / 100;
 	rect->bar_center_p1.h = BAR_HEIGHT;
 	SDL_SetTextureColorMod(r->t->bar_center_p1, 194, 1, 20);
 	// PROGRESS BAR P2
-	rect->bar_center_p2.x = 1408 - (1200 * (lst->enemy_cnt * 100 / mapsize) / 100);
+	rect->bar_center_p2.x = 1408 - (1200 * (lst->enemy_cnt * 100 / r->event->mapsize) / 100);
 	rect->bar_center_p2.y = rect->fillboard.h + (INDENT * 2);
-	rect->bar_center_p2.w = 1200 * (lst->enemy_cnt * 100 / mapsize) / 100;
+	rect->bar_center_p2.w = 1200 * (lst->enemy_cnt * 100 / r->event->mapsize) / 100;
 	rect->bar_center_p2.h = BAR_HEIGHT;
 	SDL_SetTextureColorMod(r->t->bar_center_p2, 255, 220, 55);
 
@@ -241,6 +239,5 @@ void				rect_menu(t_rend *r, t_rect *rect)
 	rect->keymenu.h = rect->fillboard.h;
 	SDL_SetTextureColorMod(r->t->keymenu, 15, 25, 50);
 	SDL_SetTextureAlphaMod(r->t->keymenu, 255);
-
 	return ;
 }

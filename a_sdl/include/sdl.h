@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:57 by yshawn            #+#    #+#             */
-/*   Updated: 2020/03/02 19:47:31 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/03 19:10:57 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,12 @@ static const SDL_Color grey = {115, 115, 115};
 typedef struct			s_event
 {
 	int					run;
+	int					pause; // even or 0 - GO, odd - STOP
 	int					shift; // shift for background
 	int					delay;
 	int 				color;
+	int					mapsize; // width * height for fillboard
 	char				*str_score; // bar score for players in percent
-
 }						t_event;
 
 typedef struct			s_rect
@@ -102,7 +103,6 @@ typedef struct			s_rect
     SDL_Rect			back_forward;
     SDL_Rect			speed;
     SDL_Rect			speedrate;
-
     SDL_Rect			p1_bar;
     SDL_Rect			p2_bar;
 	SDL_Rect			p1_score;
@@ -180,15 +180,15 @@ typedef struct			s_rend
 	t_player			*player;
 }						t_rend;
 
-int					main_v(t_f *f, t_player *player);
+void				sdl_main(t_f *f, t_player *player);
 int					init_lib();
-void				init_t_rend(t_rend *r, t_textur *t, t_font *f, t_rect *rect, t_event *event, t_player *player);
+void				init_t_rend(t_rend *r, t_textur *t, t_font *f, t_rect *rect, t_event *event, t_player *player, t_f *lst);
 int					create(SDL_Window **win, t_rend *r);
 int					create_texture(t_rend *r);
-void				create_font(t_rend *r);
-int					quit(SDL_Window **win, t_rend *r);
+int					create_font(t_rend *r);
+void				quit(SDL_Window **win, t_rend *r);
 
-void				key_event(t_rend *r, t_rect *rect, t_f **lst, t_f **fst_lst);
+void				key_event(SDL_Event e, t_rend *r, t_rect *rect, t_f **lst, t_f **fst_lst);
 void				rect_menu(t_rend *r, t_rect *rect);
 void				rect_bar(t_rend *r, t_rect *rect, t_f *lst);
 void				rect_message(t_rend *r, t_rect *rect);
@@ -201,7 +201,9 @@ void				draw_map(t_rend *r, t_rect *rect, t_f *curlst);
 void				draw_figure(t_rend *r, t_rect *rect, t_f *lst);
 void				draw_map_grid(t_rend *r, t_rect *rect, t_f *lst);
 
+int					keep_stop_game(t_rend *r, t_f **lst);
+void				blendmode_swap(t_rend *r);
+int					score_recount(t_rend *r, t_f *lst);
 SDL_Texture			*load_texture(SDL_Renderer **rend, char *path);
 SDL_Texture			*load_font(SDL_Renderer **rend, char *path, int size, SDL_Color clr);
-void				get_score(t_rend *r, t_f *lst);
 #endif

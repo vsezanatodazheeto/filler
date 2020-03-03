@@ -6,28 +6,31 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 21:05:08 by yshawn            #+#    #+#             */
-/*   Updated: 2020/03/01 17:17:37 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/03 19:00:48 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/filler.h"
 #include "include/sdl.h"
 
+int tt;
+
 t_f        *reading_to_struct(t_f **lst, t_player *player, char **line)
 {
-	int			i;
 	t_p			*p;
 	t_m			*m;
 	t_pos		*pos;
+	t_f			*fst;
 	char		*tmp;
-	t_f			*fst = NULL;;
+	int			i;
 
 	i = 0;
 	tmp = NULL;
-	while (get_next_line(0, &(*line)))
+	fst = NULL;
+	while (get_next_line(tt, &(*line)))
 	{
 		if (**line == '=')
-			break;
+			break ;
 		if (**line == 'P' && ft_strinstr(*line, NAME_FIELD))
 		{
 			add_struct(lst);
@@ -37,10 +40,10 @@ t_f        *reading_to_struct(t_f **lst, t_player *player, char **line)
 		{
 			if (record_map(*lst, &(*line)) == 1)
 				break ;
-			if (!(get_next_line(0, &(*line))))
+			if (!(get_next_line(tt, &(*line))))
 				break ;
 			record_map_positions(*lst, player, &(*line));
-			if (!(get_next_line(0, &(*line))))
+			if (!(get_next_line(tt, &(*line))))
 				break ;
 		}
 		if (**line == 'P' && ft_strinstr(*line, NAME_PIECE))
@@ -48,7 +51,7 @@ t_f        *reading_to_struct(t_f **lst, t_player *player, char **line)
 			if (record_piece(*lst, &(*line)) == 1)
 				break ;
 			record_piece_positions(*lst, &(*line));
-			if (!(get_next_line(0, &(*line))))
+			if (!(get_next_line(tt, &(*line))))
 				break ;
 		}
 		if (**line == '<' && ft_strinstr(*line, NAME_GOT))
@@ -96,7 +99,7 @@ void		ft_free_lst(t_f **lst)
 	return ;
 }
 
-int			main() 
+int			main(int ac, char **av) 
 { 
     t_f			*f;
     t_f			*fst_lst;
@@ -106,17 +109,12 @@ int			main()
     f = NULL;
 	fst_lst = NULL;
     line = NULL;
+	tt = open(av[1], O_RDONLY);
+	ft_printf("%s\n", av[1]);
     init_struct_player(player);
 	check_player(player, &line);
 	fst_lst = reading_to_struct(&f, player, &line);
-	// while (fst_lst->next)
-	// {
-	// 	ft_printf("here: %d\n", fst_lst->ally_cnt);
-	// 	ft_printf("here: %d\n", fst_lst->enemy_cnt);
-	// 	ft_printf("here: %d\n", fst_lst->field_cnt);
-	// 	fst_lst = fst_lst->next;
-	// }
-    main_v(fst_lst, player);
+    sdl_main(fst_lst, player);
 	ft_free_lst(&fst_lst);
 	ft_free_player(player);
     return (0);

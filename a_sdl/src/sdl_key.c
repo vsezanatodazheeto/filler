@@ -6,23 +6,22 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 22:53:36 by yshawn            #+#    #+#             */
-/*   Updated: 2020/03/02 20:48:40 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/03 19:10:27 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/filler.h"
 #include "../include/sdl.h"
 
-extern int mapsize;
-extern int e_pause;
-extern SDL_Event e;
+// extern SDL_Event e;
 
-void		key_event(t_rend *r, t_rect *rect, t_f **lst, t_f **fst_lst)
+void		key_event(SDL_Event e, t_rend *r, t_rect *rect, t_f **lst, t_f **fst_lst)
 {
 	while (SDL_PollEvent(&e) != 0)
 	{
 		if (e.type == SDL_QUIT)
 		{
+			SDL_DestroyTexture(r->f->space);
 			r->f->cmdw = load_font(&(r->rend), CMDW, FONT_SIZE, grey);
 			r->event->run = FALSE;
 		}
@@ -31,45 +30,30 @@ void		key_event(t_rend *r, t_rect *rect, t_f **lst, t_f **fst_lst)
 			if (e.key.keysym.sym == SDLK_r) // R
 			{
 				*lst = *fst_lst;
-				r->event->str_score = ft_itoa((*lst)->ally_cnt * 100 / mapsize);
-				// r->f->p1_score = load_font(&(r->rend), r->event->str_score, FONT_SIZE, white);
-				ft_strdel(&r->event->str_score);
-				r->event->str_score = ft_itoa((*lst)->enemy_cnt * 100 / mapsize);
-				// r->f->p2_score = load_font(&(r->rend), ft_strnew_size(&r->event->str_score, 3), FONT_SIZE, white);
-				ft_strdel(&r->event->str_score);
-				e_pause++;
-				if (r->blend_p == BLEND_OFF)
+				if (score_recount(r, *lst) != 0)
 				{
-					r->blend_p = BLEND_ON;
-					r->blend_r = BLEND_OFF;
+					ft_printf("here\n");
+					break ;
 				}
-				else
-				{
-					r->blend_p = BLEND_OFF;
-					r->blend_r = BLEND_ON;
-				}
+				r->event->pause++;
+				blendmode_swap(r);
 			}
 			if (e.key.keysym.sym == SDLK_SPACE) // SPACE
 			{
 				if ((*lst)->next)
+				{
+					SDL_DestroyTexture(r->f->space);
 					r->f->space = load_font(&(r->rend), SPACE, FONT_SIZE, grey);
-				e_pause++;
-				if (r->blend_p == BLEND_OFF)
-				{
-					r->blend_p = BLEND_ON;
-					r->blend_r = BLEND_OFF;
 				}
-				else
-				{
-					r->blend_p = BLEND_OFF;
-					r->blend_r = BLEND_ON;
-				}
+				r->event->pause++;
+				blendmode_swap(r);
 			}
 			if (e.key.keysym.sym == SDLK_UP && r->event->delay > DELAY_MIN) // UP
 			{
 				r->event->color++;
 				r->event->delay -= DELAY_STEP;
 				SDL_SetTextureColorMod(r->t->cur_up, 74, 66, 55);
+				SDL_DestroyTexture(r->f->speedrate);
 				r->f->speedrate = load_font(&(r->rend), (char *)SPEEDARRAY[r->event->color], FONT_SIZE_2, COLORARRAY[r->event->color]);
 			}
 			if (e.key.keysym.sym == SDLK_DOWN && r->event->delay < DELAY_MAX) // DOWN
@@ -77,36 +61,36 @@ void		key_event(t_rend *r, t_rect *rect, t_f **lst, t_f **fst_lst)
 				r->event->color--;
 				r->event->delay += DELAY_STEP;
 				SDL_SetTextureColorMod(r->t->cur_down, 74, 66, 55);
+				SDL_DestroyTexture(r->f->speedrate);
 				r->f->speedrate = load_font(&(r->rend), (char *)SPEEDARRAY[r->event->color], FONT_SIZE_2, COLORARRAY[r->event->color]);
 			}
 			if (e.key.keysym.sym == SDLK_RIGHT) // RIGHT
-				if ((*lst)->next && e_pause % 2 != 0)
+				if ((*lst)->next && r->event->pause % 2 != 0)
 				{
 					*lst = (*lst)->next;
 					SDL_SetTextureColorMod(r->t->cur_forward, 74, 66, 55);
-					r->event->str_score = ft_itoa((*lst)->ally_cnt * 100 / mapsize);
-					// r->f->p1_score = load_font(&(r->rend), r->event->str_score, FONT_SIZE, white);
-					ft_strdel(&r->event->str_score);
-					r->event->str_score = ft_itoa((*lst)->enemy_cnt * 100 / mapsize);
-					// r->f->p2_score = load_font(&(r->rend), ft_strnew_size(&r->event->str_score, 3), FONT_SIZE, white);
-					ft_strdel(&r->event->str_score);
+					if (score_recount(r, *lst) != 0)
+					{
+						ft_printf("here\n");
+						break;
+					}
 				}
 			if (e.key.keysym.sym == SDLK_LEFT) // LEFT
-				if ((*lst)->prev && e_pause % 2 != 0)
+				if ((*lst)->prev && r->event->pause % 2 != 0)
 				{
 					*lst = (*lst)->prev;
 					SDL_SetTextureColorMod(r->t->cur_back, 74, 66, 55);
-					r->event->str_score = ft_itoa((*lst)->ally_cnt * 100 / mapsize);
-					// r->f->p1_score = load_font(&(r->rend), r->event->str_score, FONT_SIZE, white);
-					ft_strdel(&r->event->str_score);
-					r->event->str_score = ft_itoa((*lst)->enemy_cnt * 100 / mapsize);
-					// r->f->p2_score = load_font(&(r->rend), ft_strnew_size(&r->event->str_score, 3), FONT_SIZE, white);
-					ft_strdel(&r->event->str_score);
+					if (score_recount(r, *lst) != 0)
+					{
+						ft_printf("here\n");
+						break ;
+					}
 				}
 		}
 		if (e.type == SDL_KEYUP)
 		{
 			// SPACE
+			SDL_DestroyTexture(r->f->space);
 			r->f->space = load_font(&(r->rend), SPACE, FONT_SIZE, white);
 			// <----- CURSOR BACK
 			SDL_SetTextureColorMod(r->t->cur_forward, 255, 255, 255);
@@ -119,4 +103,25 @@ void		key_event(t_rend *r, t_rect *rect, t_f **lst, t_f **fst_lst)
 		}
 	}
 	return ;
+}
+
+int				keep_stop_game(t_rend *r, t_f **lst)
+{
+	if ((*lst)->next && r->event->pause % 2 == 0)
+	{
+		if ((*lst)->next)
+			*lst = (*lst)->next;
+		if (score_recount(r, *lst) != 0)
+			return (1);
+	}
+	// CHAGNING RESUME / PAUSE AT THE END OF GAME
+	if (!(*lst)->next)
+	{
+		if (r->event->pause % 2 == 0)
+		{
+			blendmode_swap(r);
+			r->event->pause++;
+		}
+	}
+	return (0);
 }
