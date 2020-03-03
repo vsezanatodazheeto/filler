@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   sdl_draw.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pcomic <pcomic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:37:15 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/25 09:14: by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/03 22:26:05 by pcomic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/filler.h"
 #include "../include/sdl.h"
 
-void			draw_map_grid(t_rend *r, t_rect *rect, t_f *lst)
+void		draw_map_grid(t_rend *r, t_rect *rect, t_f *lst)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0; // с 0, не с -1!
 	while (++i <= rect->earth.h / rect->asian.h - 1)
@@ -39,7 +39,7 @@ void			draw_map_grid(t_rend *r, t_rect *rect, t_f *lst)
 	return ;
 }
 
-void			draw_figure(t_rend *r, t_rect *rect, t_f *lst)
+void		draw_figure(t_rend *r, t_rect *rect, t_f *lst)
 {
 	int i;
 	int j;
@@ -71,7 +71,7 @@ void			draw_figure(t_rend *r, t_rect *rect, t_f *lst)
 	return ;
 }
 
-void			draw_map(t_rend *r, t_rect *rect, t_f *lst)
+void		draw_map(t_rend *r, t_rect *rect, t_f *lst)
 {
 	int i;
 	int j;
@@ -102,7 +102,7 @@ void			draw_map(t_rend *r, t_rect *rect, t_f *lst)
 	return ;
 }
 
-void			draw_playername(t_rend *r, t_rect *rect)
+void		draw_playername(t_rend *r, t_rect *rect)
 {
 	//NAME OF P1 that will play for ASIANS
 	SDL_RenderCopy(r->rend, r->f->p1_name, NULL, &(rect->p1_name));
@@ -118,8 +118,8 @@ void			draw_playername(t_rend *r, t_rect *rect)
 	SDL_RenderCopy(r->rend, r->f->p3_keymenu, NULL, &(rect->p3_keymenu));
 }
 
-void			draw_message(t_rend *r, t_rect *rect)
-{	
+void		draw_message(t_rend *r, t_rect *rect)
+{
 	// CMD + W
 	SDL_RenderCopy(r->rend, r->f->cmdw, NULL, &(rect->cmdw));
 	// QUIT
@@ -153,8 +153,8 @@ void			draw_message(t_rend *r, t_rect *rect)
 	return ;
 }
 
-void			draw_menu(t_rend *r, t_rect *rect, t_f *lst)
-{	
+void		draw_menu(t_rend *r, t_rect *rect, t_f *lst)
+{
 	// FILLBOARD
 	SDL_RenderCopy(r->rend, r->t->fillboard, NULL, &(rect->fillboard));
 	// MENU KEY
@@ -196,20 +196,21 @@ void			draw_menu(t_rend *r, t_rect *rect, t_f *lst)
 	return ;
 }
 
-void			draw_bacground(t_rend *r, t_rect *rect)
+void		draw_bacground(t_rend *r, t_rect *rect)
 {
 	int i;
 
 	i = 0;
-	while (i < SCREEN_WIDTH * SCREEN_HEIGHT + 2 * SCREEN_HEIGHT + 2 * SCREEN_WIDTH)
+	while (i < SCREEN_WIDTH * SCREEN_HEIGHT
+	+ 2 * (SCREEN_HEIGHT + SCREEN_WIDTH))
 	{
 		if (rect->bg.x >= SCREEN_WIDTH)
 			r->event->shift = 0;
 		rect->bg.x = (i % (SCREEN_WIDTH + 32) - INDENT) + r->event->shift;
-		rect->bg.y = (i / (SCREEN_WIDTH + 32)) * 32 - INDENT+ r->event->shift;
+		rect->bg.y = (i / (SCREEN_WIDTH + 32)) * 32 - INDENT + r->event->shift;
 		rect->bg.w = INDENT;
 		rect->bg.h = INDENT;
-		SDL_SetTextureColorMod( r->t->bg, 115, 115, 115);
+		SDL_SetTextureColorMod(r->t->bg, 115, 115, 115);
 		SDL_RenderCopy(r->rend, r->t->bg, NULL, &(rect->bg));
 		i = i + INDENT;
 	}

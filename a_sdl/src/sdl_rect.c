@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sdl_rect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pcomic <pcomic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:37:15 by yshawn            #+#    #+#             */
-/*   Updated: 2020/03/03 21:50:16 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/03 22:46:05 by pcomic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void				rect_message(t_rend *r, t_rect *rect)
 	rect->cur_forward.x = rect->fillboard.w + INDENT + 60;
 	rect->cur_forward.y = rect->cur_back.y;
 	rect->cur_forward.w = 60;
-	rect->cur_forward.h = 30;	
+	rect->cur_forward.h = 30;
 	SDL_QueryTexture(r->t->cur_forward, NULL, NULL, &(rect->cur_forward.w), &(rect->cur_forward.h));
 	// BACK_FORWARD
 	rect->back_forward.x = rect->cur_forward.x + rect->cur_forward.w + 42;
@@ -118,7 +118,7 @@ void				rect_message(t_rend *r, t_rect *rect)
 	rect->cur_down.h = 30;
 	SDL_QueryTexture(r->t->cur_down, NULL, NULL, &(rect->cur_down.w), &(rect->cur_down.h));
 	// SPEED
-	rect->speed.x = rect->cur_down. x + 190;
+	rect->speed.x = rect->cur_down.x + 190;
 	rect->speed.y = rect->cur_down.y + INDENT / 4;
 	rect->speed.w = 1;
 	rect->speed.h = 1;

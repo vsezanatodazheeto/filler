@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 01:17:40 by yshawn            #+#    #+#             */
-/*   Updated: 2020/03/03 20:56:53 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/03 22:34:01 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void			check_player(t_player *player, char **line)
 {
 	char		**player_name;
 	int			i;
-	int 		n;
+	int			n;
 
 	i = 0;
 	n = 0;
@@ -32,7 +32,7 @@ void			check_player(t_player *player, char **line)
 			{
 				n = 0;
 				player_name = ft_strsplit(*line, '/');
-				while(player_name[n])
+				while (player_name[n])
 					n++;
 				player->p1 = ft_strdup(player_name[n - 1]);
 				ft_arrdel((void ***)&player_name);
@@ -41,7 +41,7 @@ void			check_player(t_player *player, char **line)
 			{
 				n = 0;
 				player_name = ft_strsplit(*line, '/');
-				while(player_name[n])
+				while (player_name[n])
 					n++;
 				player->p2 = ft_strdup(player_name[n - 1]);
 				ft_arrdel((void ***)&player_name);
@@ -57,10 +57,10 @@ void			check_player(t_player *player, char **line)
 			i = 1;
 		}
 	}
-	return;
+	return ;
 }
 
-char 			*ft_namefield(int height, int width)
+char			*ft_namefield(int height, int width)
 {
 	char		*tmp;
 	int			strlen;
@@ -75,8 +75,7 @@ char 			*ft_namefield(int height, int width)
 	len1 = ft_strlen(num1);
 	len2 = ft_strlen(num2);
 	strlen = len1 + len2 + ft_strlen(FIELD) + 1 + 1;
-
-	if(!(tmp = (char *)malloc(sizeof(char) * (strlen + 1))))
+	if (!(tmp = (char *)malloc(sizeof(char) * (strlen + 1))))
 		return (NULL);
 	tmp[strlen--] = '\0';
 	while (--len1 >= 0)
@@ -103,7 +102,7 @@ char 			*ft_namefield(int height, int width)
 
 void			ft_free_lst(t_f **lst)
 {
-	t_f 		*cur_lst;
+	t_f			*cur_lst;
 
 	while ((*lst)->next)
 	{
@@ -147,11 +146,11 @@ void			init_struct_player(t_player *player)
 	return ;
 }
 
-void 			init_structs(t_f *curlst, t_p *p, t_m *m, t_pos *pos)
+void			init_structs(t_f *curlst, t_p *p, t_m *m, t_pos *pos)
 {
-    p = new_t_piece();
-    m = new_t_map();
-    pos = new_t_pos();
+	p = new_t_piece();
+	m = new_t_map();
+	pos = new_t_pos();
 	p->width = 0;
 	p->height = 0;
 	p->piece = NULL;

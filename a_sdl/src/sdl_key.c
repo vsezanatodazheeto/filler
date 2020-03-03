@@ -6,16 +6,14 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 22:53:36 by yshawn            #+#    #+#             */
-/*   Updated: 2020/03/03 21:36:31 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/03 22:43:03 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/filler.h"
 #include "../include/sdl.h"
 
-// extern SDL_Event e;
-
-void		key_event(SDL_Event e, t_rend *r, t_rect *rect, t_f **lst, t_f **fst_lst)
+void			key_event(SDL_Event e, t_rend *r, t_rect *rect, t_f **lst, t_f **fst_lst)
 {
 	while (SDL_PollEvent(&e) != 0)
 	{
@@ -74,7 +72,7 @@ void		key_event(SDL_Event e, t_rend *r, t_rect *rect, t_f **lst, t_f **fst_lst)
 					if (score_recount(r, *lst) != 0)
 					{
 						ft_printf("here\n");
-						break;
+						break ;
 					}
 				}
 			if (e.key.keysym.sym == SDLK_LEFT) // LEFT

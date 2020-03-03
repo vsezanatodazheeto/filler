@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 01:17:40 by yshawn            #+#    #+#             */
-/*   Updated: 2020/03/03 20:24:29 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/03 22:47:52 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,21 @@ int				ft_isupch_2(char str_ch_1, char str_ch_2, char ch_1, char ch_2)
 			|| (ft_toupper(str_ch_1) == ch_2 && str_ch_2 == ch_2)) ? 1 : 0);
 }
 
+int				ft_stsp(char *s)
+{
+	int		i;
+
+	i = 0;
+	while (s)
+	{
+		if (*s == ' ')
+			return (i + 1);
+		i++;
+		s++;
+	}
+	return (0);
+}
+
 int				get_size(int *height, int *width, char **line)
 {
 	char	**tmp;
@@ -51,7 +66,7 @@ int				ft_strinstr(char *str_dad, char *str_son)
 	i = -1;
 	n = 0;
 	if (!*str_dad || !*str_son)
-		return (FALSE);
+		return (0);
 	while (str_dad[++i] && n == 0)
 	{
 		n = 0;
@@ -69,5 +84,5 @@ int				ft_strinstr(char *str_dad, char *str_son)
 			}
 		}
 	}
-	return (n == 0 ? FALSE : i);
+	return (n == 0 ? 0 : i);
 }

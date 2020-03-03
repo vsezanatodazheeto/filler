@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:48 by yshawn            #+#    #+#             */
-/*   Updated: 2020/03/03 19:55:05 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/03 22:36:38 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void			record_piece_positions(t_f *f, char **line)
 }
 
 int				record_piece(t_f *f, char **line)
-{	
+{
 	int			j;
 
 	j = 0;
@@ -93,11 +93,11 @@ void			record_map_positions(t_f *f, t_player *player, char **line)
 		j = 0;
 		while (j < f->m->width)
 		{
-			if ((*line + HGT)[j] == '.')
+			if ((*line + ft_stsp(*line))[j] == '.')
 				f->m->map[i][j] = 0;
-			else if (ft_isupch((*line + HGT)[j], 'O', 'X'))
+			else if (ft_isupch((*line + ft_stsp(*line))[j], 'O', 'X'))
 			{
-				if (ft_isupch_2((*line + HGT)[j], player->ally, 'O', 'X'))
+				if (ft_isupch_2((*line + ft_stsp(*line))[j], player->ally, 'O', 'X'))
 				{
 					f->m->map[i][j] = -1;
 					f->ally_cnt++;
@@ -140,7 +140,7 @@ int				record_map(t_f *f, char **line)
 	return (0);
 }
 
-void 			record_player(t_player *player, int i)
+void			record_player(t_player *player, int i)
 {
 	if (i)
 	{

@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 22:53:36 by yshawn            #+#    #+#             */
-/*   Updated: 2020/03/03 19:44:05 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/03 22:39:55 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int					score_recount(t_rend *r, t_f *lst)
 {
 	r->event->str_score = ft_itoa(lst->ally_cnt * 100 / r->event->mapsize);
 	SDL_DestroyTexture(r->f->p1_score);
-	if (!(r->f->p1_score = load_font(&(r->rend), r->event->str_score , FONT_SIZE, white)))
+	if (!(r->f->p1_score = load_font(&(r->rend), r->event->str_score, FONT_SIZE, white)))
 	{
 		ft_memdel((void **)&r->event->str_score);
 		return (1);
@@ -52,10 +52,10 @@ void				blendmode_swap(t_rend *r)
 
 SDL_Texture			*load_texture(SDL_Renderer **rend, char *path)
 {
-	SDL_Texture *new_textur = NULL;
-	SDL_Surface *loaded_scr;
-	
-	if(!(loaded_scr = IMG_Load(path)))
+	SDL_Texture		*new_textur = NULL;
+	SDL_Surface		*loaded_scr;
+
+	if (!(loaded_scr = IMG_Load(path)))
 	{
 		ft_printf("{red}unable to load image in LOAD_TEXTURE!{eoc}\n");
 		return (NULL);
@@ -68,10 +68,10 @@ SDL_Texture			*load_texture(SDL_Renderer **rend, char *path)
 
 SDL_Texture			*load_font(SDL_Renderer **rend, char *path, int size, SDL_Color clr)
 {
-    TTF_Font		*sans = TTF_OpenFont("resources/zb.ttf", size);
-	SDL_Texture 	*new_textur = NULL;
-	SDL_Surface 	*loaded_scr;
-	if(!(loaded_scr = TTF_RenderText_Blended(sans, path, clr)))
+	TTF_Font		*sans = TTF_OpenFont("resources/zb.ttf", size);
+	SDL_Texture		*new_textur = NULL;
+	SDL_Surface		*loaded_scr;
+	if (!(loaded_scr = TTF_RenderText_Blended(sans, path, clr)))
 	{
 		ft_printf("{red}unable to load image in LOAD_FONT!{eoc}\n");
 		return (NULL);
