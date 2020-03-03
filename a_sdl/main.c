@@ -6,16 +6,16 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 21:05:08 by yshawn            #+#    #+#             */
-/*   Updated: 2020/03/03 19:00:48 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/03 19:55:15 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/filler.h"
 #include "include/sdl.h"
 
-int tt;
+int				fd;
 
-t_f        *reading_to_struct(t_f **lst, t_player *player, char **line)
+t_f				*reading_to_struct(t_f **lst, t_player *player, char **line)
 {
 	t_p			*p;
 	t_m			*m;
@@ -27,7 +27,7 @@ t_f        *reading_to_struct(t_f **lst, t_player *player, char **line)
 	i = 0;
 	tmp = NULL;
 	fst = NULL;
-	while (get_next_line(tt, &(*line)))
+	while (get_next_line(fd, &(*line)))
 	{
 		if (**line == '=')
 			break ;
@@ -40,10 +40,10 @@ t_f        *reading_to_struct(t_f **lst, t_player *player, char **line)
 		{
 			if (record_map(*lst, &(*line)) == 1)
 				break ;
-			if (!(get_next_line(tt, &(*line))))
+			if (!(get_next_line(fd, &(*line))))
 				break ;
 			record_map_positions(*lst, player, &(*line));
-			if (!(get_next_line(tt, &(*line))))
+			if (!(get_next_line(fd, &(*line))))
 				break ;
 		}
 		if (**line == 'P' && ft_strinstr(*line, NAME_PIECE))
@@ -51,7 +51,7 @@ t_f        *reading_to_struct(t_f **lst, t_player *player, char **line)
 			if (record_piece(*lst, &(*line)) == 1)
 				break ;
 			record_piece_positions(*lst, &(*line));
-			if (!(get_next_line(tt, &(*line))))
+			if (!(get_next_line(fd, &(*line))))
 				break ;
 		}
 		if (**line == '<' && ft_strinstr(*line, NAME_GOT))
@@ -64,42 +64,8 @@ t_f        *reading_to_struct(t_f **lst, t_player *player, char **line)
 	}
 	return (fst);
 }
-void		ft_free_player(t_player *player)
-{
-	ft_memdel((void **)&player->p1);
-	ft_memdel((void **)&player->p2);
-	ft_memdel((void **)&player->field);
-	return ;
-}
-void		ft_free_lst(t_f **lst)
-{
-	t_f *cur_lst;
 
-	while ((*lst)->next)
-	{
-		cur_lst = *lst;
-		// for piece
-		ft_arrdel((void ***)&cur_lst->p->piece);
-		free(cur_lst->p);
-		// for map
-		ft_arrdel((void ***)&cur_lst->m->map);
-		free(cur_lst->m);
-		// for pos
-		free(cur_lst->pos);
-		*lst = (*lst)->next;
-		free(cur_lst);
-	}
-	ft_arrdel((void ***)&(*lst)->p->piece);
-	free((*lst)->p);
-	ft_arrdel((void ***)&(*lst)->m->map);
-	free((*lst)->m);
-	free((*lst)->pos);
-	free(*lst);
-	lst = NULL;
-	return ;
-}
-
-int			main(int ac, char **av) 
+int				main() 
 { 
     t_f			*f;
     t_f			*fst_lst;
@@ -109,8 +75,6 @@ int			main(int ac, char **av)
     f = NULL;
 	fst_lst = NULL;
     line = NULL;
-	tt = open(av[1], O_RDONLY);
-	ft_printf("%s\n", av[1]);
     init_struct_player(player);
 	check_player(player, &line);
 	fst_lst = reading_to_struct(&f, player, &line);

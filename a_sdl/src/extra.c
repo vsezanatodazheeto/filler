@@ -6,14 +6,14 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 01:17:40 by yshawn            #+#    #+#             */
-/*   Updated: 2020/03/03 18:59:52 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/03 19:53:58 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/filler.h"
 #include "../include/sdl.h"
 
-extern int tt;
+extern int		fd;
 
 void			check_player(t_player *player, char **line)
 {
@@ -22,7 +22,7 @@ void			check_player(t_player *player, char **line)
 
 	i = 0;
 	player_name = NULL;
-	while (get_next_line(tt, &(*line)))
+	while (get_next_line(fd, &(*line)))
 	{
 		if (**line == 'l')
 		{
@@ -52,14 +52,14 @@ void			check_player(t_player *player, char **line)
 	return;
 }
 
-char 		*ft_namefield(int height, int width)
+char 			*ft_namefield(int height, int width)
 {
-	char	*tmp;
-	int		strlen;
-	char	*num1;
-	char	*num2;
-	int		len1;
-	int		len2;
+	char		*tmp;
+	int			strlen;
+	char		*num1;
+	char		*num2;
+	int			len1;
+	int			len2;
 
 	tmp = NULL;
 	num1 = ft_itoa(height);
@@ -93,19 +93,43 @@ char 		*ft_namefield(int height, int width)
 	return (tmp);
 }
 
-int			get_size(int *height, int *width, char **line)
+void			ft_free_lst(t_f **lst)
 {
-	char	**tmp;
+	t_f 		*cur_lst;
 
-	if (!(tmp = ft_strsplit(*line, ' ')))
-		return (1);
-	*height = ft_atoi(*(tmp + 1));
-	*width = ft_atoi(*(tmp + 2));
-	ft_arrdel((void ***)&tmp);
-	return (0);
+	while ((*lst)->next)
+	{
+		cur_lst = *lst;
+		// for piece
+		ft_arrdel((void ***)&cur_lst->p->piece);
+		free(cur_lst->p);
+		// for map
+		ft_arrdel((void ***)&cur_lst->m->map);
+		free(cur_lst->m);
+		// for pos
+		free(cur_lst->pos);
+		*lst = (*lst)->next;
+		free(cur_lst);
+	}
+	ft_arrdel((void ***)&(*lst)->p->piece);
+	free((*lst)->p);
+	ft_arrdel((void ***)&(*lst)->m->map);
+	free((*lst)->m);
+	free((*lst)->pos);
+	free(*lst);
+	lst = NULL;
+	return ;
 }
 
-void		init_struct_player(t_player *player)
+void			ft_free_player(t_player *player)
+{
+	ft_memdel((void **)&player->p1);
+	ft_memdel((void **)&player->p2);
+	ft_memdel((void **)&player->field);
+	return ;
+}
+
+void			init_struct_player(t_player *player)
 {
 	player->p1 = NULL;
 	player->p2 = NULL;
@@ -115,7 +139,7 @@ void		init_struct_player(t_player *player)
 	return ;
 }
 
-void 		init_structs(t_f *curlst, t_p *p, t_m *m, t_pos *pos)
+void 			init_structs(t_f *curlst, t_p *p, t_m *m, t_pos *pos)
 {
     p = new_t_piece();
     m = new_t_map();

@@ -6,18 +6,18 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:48 by yshawn            #+#    #+#             */
-/*   Updated: 2020/03/03 18:55:51 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/03 19:55:05 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/filler.h"
 #include "../include/sdl.h"
 
-extern int tt;
+extern int		fd;
 
 void			record_got_pos(t_f *f, char **line)
 {
-	char	**tmp;
+	char		**tmp;
 
 	if (ft_strinstr(*line, "O"))
 		f->pos->turn = 'O';
@@ -32,12 +32,12 @@ void			record_got_pos(t_f *f, char **line)
 
 void			record_piece_positions(t_f *f, char **line)
 {
-	int		i;
-	int		j;
+	int			i;
+	int			j;
 
 	i = 0;
 	j = 0;
-	while (i < f->p->height && get_next_line(tt, &(*line)))
+	while (i < f->p->height && get_next_line(fd, &(*line)))
 	{
 		j = 0;
 		while (j < f->p->width)
@@ -53,9 +53,9 @@ void			record_piece_positions(t_f *f, char **line)
 	return ;
 }
 
-int			record_piece(t_f *f, char **line)
+int				record_piece(t_f *f, char **line)
 {	
-	int		j;
+	int			j;
 
 	j = 0;
 	if (get_size(&f->p->height, &f->p->width, &(*line)) == 1)
@@ -79,16 +79,16 @@ int			record_piece(t_f *f, char **line)
 	return (0);
 }
 
-void		record_map_positions(t_f *f, t_player *player, char **line)
+void			record_map_positions(t_f *f, t_player *player, char **line)
 {
-	int		i;
-	int		j;
+	int			i;
+	int			j;
 
 	i = 0;
 	j = 0;
 	if (!player->field)
 		player->field = ft_namefield(f->m->height, f->m->width);
-	while (i < f->m->height && get_next_line(tt, &(*line)))
+	while (i < f->m->height && get_next_line(fd, &(*line)))
 	{
 		j = 0;
 		while (j < f->m->width)
@@ -116,9 +116,9 @@ void		record_map_positions(t_f *f, t_player *player, char **line)
 	return ;
 }
 
-int			record_map(t_f *f, char **line)
+int				record_map(t_f *f, char **line)
 {
-	int		j;
+	int			j;
 
 	j = 0;
 	if (get_size(&f->m->height, &f->m->width, &(*line)) == 1)
