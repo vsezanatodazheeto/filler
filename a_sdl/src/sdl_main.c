@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:37:06 by yshawn            #+#    #+#             */
-/*   Updated: 2020/03/04 00:05:46 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/04 14:51:31 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ void				sdl_main(t_f *lst, t_player *player)
 	win = NULL;
 	fst_lst = lst;
 	if (init_lib() != 0)
+	{
+		ft_printf("{red}unable to load library in INIT_LIB!{eoc}\n");
 		return ;
+	}
 	init_t_rend(r, t, f, rect, event, player, lst);
-	init_music(music);
-	if (create(&win, r) != 0)
+	if (create(&win, r, music) != 0)
 		return ;
-	// MUSIC
-    Mix_PlayMusic(music->normal, 10);
 	// RECT
 	rect_menu(r, rect);
 	rect_bar(r, rect, lst);
@@ -44,7 +44,8 @@ void				sdl_main(t_f *lst, t_player *player)
 	{
 		SDL_RenderClear(r->rend);
 		// KEY EVENTS
-		key_event(e, r, rect, &lst, &fst_lst);
+		if (key_event(e, r, rect, &lst, &fst_lst, music) != 0)
+			break;
 		// KEEP/STOP GAME
 		if (keep_stop_game(r, &lst) != 0)
 			break ;
@@ -60,6 +61,5 @@ void				sdl_main(t_f *lst, t_player *player)
 		SDL_Delay(r->event->delay);
 		SDL_RenderPresent(r->rend);
 	}
-	Mix_FreeMusic(music->normal);
-	return (quit(&win, r));
+	return (quit(&win, r, music));
 }

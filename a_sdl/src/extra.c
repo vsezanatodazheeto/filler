@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 01:17:40 by yshawn            #+#    #+#             */
-/*   Updated: 2020/03/03 22:34:01 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/04 15:36:25 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 extern int		fd;
 
-void			check_player(t_player *player, char **line)
+int				check_player(t_player *player, char **line)
 {
 	char		**player_name;
 	int			i;
@@ -45,19 +45,24 @@ void			check_player(t_player *player, char **line)
 					n++;
 				player->p2 = ft_strdup(player_name[n - 1]);
 				ft_arrdel((void ***)&player_name);
-				break ;
+				return (0);
 			}
 		}
-		if (**line == '$' && !player->ally && i != 1)
+		if (**line == '$' && !player->ally)
 		{
 			if (ft_strinstr(*line, "p1"))
 				record_player(player, TRUE);
 			else
 				record_player(player, FALSE);
-			i = 1;
+		}
+		if (**line == 'P' && ft_strinstr(*line, NAME_FIELD))
+		{
+			ft_printf("{neon}oh, you tried to load it with one player? wily you!{eoc}\n");
+			ft_printf("{neon}something wrong with FILLER_VM, GG!{eoc}\n");
+			break ;
 		}
 	}
-	return ;
+	return (1);
 }
 
 char			*ft_namefield(int height, int width)

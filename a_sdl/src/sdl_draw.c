@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sdl_draw.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcomic <pcomic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:37:15 by yshawn            #+#    #+#             */
-/*   Updated: 2020/03/03 22:26:05 by pcomic           ###   ########.fr       */
+/*   Updated: 2020/03/04 14:59:20 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ void		draw_playername(t_rend *r, t_rect *rect)
 	SDL_RenderCopy(r->rend, r->f->p2_keymenu, NULL, &(rect->p2_keymenu));
 	// EARTH:
 	SDL_RenderCopy(r->rend, r->f->p3_keymenu, NULL, &(rect->p3_keymenu));
+	return ;
 }
 
 void		draw_message(t_rend *r, t_rect *rect)

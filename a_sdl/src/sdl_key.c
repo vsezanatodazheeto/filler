@@ -6,14 +6,14 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 22:53:36 by yshawn            #+#    #+#             */
-/*   Updated: 2020/03/03 22:43:03 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/04 14:55:17 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/filler.h"
 #include "../include/sdl.h"
 
-void			key_event(SDL_Event e, t_rend *r, t_rect *rect, t_f **lst, t_f **fst_lst)
+int				key_event(SDL_Event e, t_rend *r, t_rect *rect, t_f **lst, t_f **fst_lst, t_music *music)
 {
 	while (SDL_PollEvent(&e) != 0)
 	{
@@ -27,23 +27,34 @@ void			key_event(SDL_Event e, t_rend *r, t_rect *rect, t_f **lst, t_f **fst_lst)
 		{
 			if (e.key.keysym.sym == SDLK_r) // R
 			{
+				// MUSIC
+				if (r->event->pause == 1)
+				{
+					Mix_PlayMusic(music->fastest, 10);
+					Mix_VolumeMusic(MIX_MAX_VOLUME);
+				}
 				*lst = *fst_lst;
 				SDL_DestroyTexture(r->f->re);
-				r->f->re = load_font(&(r->rend), R, FONT_SIZE, grey);
+				if (!(r->f->re = load_font(&(r->rend), R, FONT_SIZE, grey)))
+					return (1);
 				if (score_recount(r, *lst) != 0)
-				{
-					ft_printf("here\n");
-					break ;
-				}
+					return (1);
 				r->event->pause++;
 				blendmode_swap(r);
 			}
 			if (e.key.keysym.sym == SDLK_SPACE) // SPACE
 			{
+				// MUSIC
+				if (r->event->pause == 1)
+				{
+					Mix_PlayMusic(music->fastest, 10);
+					Mix_VolumeMusic(MIX_MAX_VOLUME);
+				}
 				if ((*lst)->next)
 				{
 					SDL_DestroyTexture(r->f->space);
-					r->f->space = load_font(&(r->rend), SPACE, FONT_SIZE, grey);
+					if (!(r->f->space = load_font(&(r->rend), SPACE, FONT_SIZE, grey)))
+						return (1);
 				}
 				r->event->pause++;
 				blendmode_swap(r);
@@ -54,7 +65,8 @@ void			key_event(SDL_Event e, t_rend *r, t_rect *rect, t_f **lst, t_f **fst_lst)
 				r->event->delay -= DELAY_STEP;
 				SDL_SetTextureColorMod(r->t->cur_up, 74, 66, 55);
 				SDL_DestroyTexture(r->f->speedrate);
-				r->f->speedrate = load_font(&(r->rend), (char *)SPEEDARRAY[r->event->color], FONT_SIZE_2, COLORARRAY[r->event->color]);
+				if (!(r->f->speedrate = load_font(&(r->rend), (char *)SPEEDARRAY[r->event->color], FONT_SIZE_2, COLORARRAY[r->event->color])))
+					return (1);
 			}
 			if (e.key.keysym.sym == SDLK_DOWN && r->event->delay < DELAY_MAX) // DOWN
 			{
@@ -62,7 +74,8 @@ void			key_event(SDL_Event e, t_rend *r, t_rect *rect, t_f **lst, t_f **fst_lst)
 				r->event->delay += DELAY_STEP;
 				SDL_SetTextureColorMod(r->t->cur_down, 74, 66, 55);
 				SDL_DestroyTexture(r->f->speedrate);
-				r->f->speedrate = load_font(&(r->rend), (char *)SPEEDARRAY[r->event->color], FONT_SIZE_2, COLORARRAY[r->event->color]);
+				if (!(r->f->speedrate = load_font(&(r->rend), (char *)SPEEDARRAY[r->event->color], FONT_SIZE_2, COLORARRAY[r->event->color])))
+					return (1);
 			}
 			if (e.key.keysym.sym == SDLK_RIGHT) // RIGHT
 				if ((*lst)->next && r->event->pause % 2 != 0)
@@ -70,10 +83,7 @@ void			key_event(SDL_Event e, t_rend *r, t_rect *rect, t_f **lst, t_f **fst_lst)
 					*lst = (*lst)->next;
 					SDL_SetTextureColorMod(r->t->cur_forward, 74, 66, 55);
 					if (score_recount(r, *lst) != 0)
-					{
-						ft_printf("here\n");
-						break ;
-					}
+						return (1);
 				}
 			if (e.key.keysym.sym == SDLK_LEFT) // LEFT
 				if ((*lst)->prev && r->event->pause % 2 != 0)
@@ -81,20 +91,21 @@ void			key_event(SDL_Event e, t_rend *r, t_rect *rect, t_f **lst, t_f **fst_lst)
 					*lst = (*lst)->prev;
 					SDL_SetTextureColorMod(r->t->cur_back, 74, 66, 55);
 					if (score_recount(r, *lst) != 0)
-					{
-						ft_printf("here\n");
-						break ;
-					}
+						return (1);
 				}
+			if (e.key.keysym.sym == SDLK_n) // N
+				(Mix_VolumeMusic(MIX_MAX_VOLUME) == MIX_MAX_VOLUME) ? Mix_VolumeMusic(0) : Mix_VolumeMusic(MIX_MAX_VOLUME);
 		}
 		if (e.type == SDL_KEYUP)
 		{
 			// R
 			SDL_DestroyTexture(r->f->re);
-			r->f->re = load_font(&(r->rend), R, FONT_SIZE, white);
+			if (!(r->f->re = load_font(&(r->rend), R, FONT_SIZE, white)))
+				return (1);
 			// SPACE
 			SDL_DestroyTexture(r->f->space);
-			r->f->space = load_font(&(r->rend), SPACE, FONT_SIZE, white);
+			if (!(r->f->space = load_font(&(r->rend), SPACE, FONT_SIZE, white)))
+				return (1);
 			// <----- CURSOR BACK
 			SDL_SetTextureColorMod(r->t->cur_forward, 255, 255, 255);
 			// -----> CURSOR FORWARD
@@ -105,7 +116,7 @@ void			key_event(SDL_Event e, t_rend *r, t_rect *rect, t_f **lst, t_f **fst_lst)
 			SDL_SetTextureColorMod(r->t->cur_down, 255, 255, 255);
 		}
 	}
-	return ;
+	return (0);
 }
 
 int				keep_stop_game(t_rend *r, t_f **lst)

@@ -6,66 +6,114 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 16:37:15 by yshawn            #+#    #+#             */
-/*   Updated: 2020/03/03 23:59:46 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/04 14:47:51 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/filler.h"
 #include "../include/sdl.h"
 
-void			quit(SDL_Window **win, t_rend *r)
+void			quit(SDL_Window **win, t_rend *r, t_music *music)
 {
 	// TEXTURES
 	SDL_DestroyTexture(r->t->bg);
+	r->t->bg = NULL;
 	SDL_DestroyTexture(r->t->fillboard);
+	r->t->fillboard = NULL;
 	SDL_DestroyTexture(r->t->keymenu);
+	r->t->keymenu = NULL;
 	SDL_DestroyTexture(r->t->bar_left);
+	r->t->bar_left = NULL;
 	SDL_DestroyTexture(r->t->bar_right);
+	r->t->bar_right = NULL;
 	SDL_DestroyTexture(r->t->bar_center);
+	r->t->bar_center = NULL;
 	SDL_DestroyTexture(r->t->bar_center_p1);
+	r->t->bar_center_p1 = NULL;
 	SDL_DestroyTexture(r->t->bar_center_p2);
+	r->t->bar_center_p2 = NULL;
 	SDL_DestroyTexture(r->t->bar_delimiter);
-	//
+	r->t->bar_delimiter = NULL;
 	SDL_DestroyTexture(r->t->cur_forward);
+	r->t->cur_forward = NULL;
 	SDL_DestroyTexture(r->t->cur_back);
+	r->t->cur_back = NULL;
 	SDL_DestroyTexture(r->t->cur_up);
+	r->t->cur_up = NULL;
 	SDL_DestroyTexture(r->t->cur_down);
-	//
+	r->t->cur_down = NULL;
 	SDL_DestroyTexture(r->t->asian);
+	r->t->asian = NULL;
 	SDL_DestroyTexture(r->t->cv19);
+	r->t->cv19 = NULL;
 	SDL_DestroyTexture(r->t->figure);
+	r->t->figure = NULL;
 	SDL_DestroyTexture(r->t->earth);
+	r->t->earth = NULL;
 	SDL_DestroyTexture(r->t->earth_grid);
+	r->t->earth_grid = NULL;
 	// FONTS
 	SDL_DestroyTexture(r->f->cmdw);
+	r->f->cmdw = NULL;
 	SDL_DestroyTexture(r->f->quit);
+	r->f->quit = NULL;
 	SDL_DestroyTexture(r->f->space);
+	r->f->space = NULL;
 	SDL_DestroyTexture(r->f->pause);
+	r->f->pause = NULL;
 	SDL_DestroyTexture(r->f->resume);
+	r->f->resume = NULL;
 	SDL_DestroyTexture(r->f->re);
+	r->f->re = NULL;
 	SDL_DestroyTexture(r->f->replay);
+	r->f->replay = NULL;
 	SDL_DestroyTexture(r->f->back_forward);
+	r->f->back_forward = NULL;
 	SDL_DestroyTexture(r->f->speed);
+	r->f->speed = NULL;
 	SDL_DestroyTexture(r->f->speedrate);
+	r->f->speedrate = NULL;
 	SDL_DestroyTexture(r->f->p1_bar);
+	r->f->p1_bar = NULL;
 	SDL_DestroyTexture(r->f->p2_bar);
+	r->f->p2_bar = NULL;
 	SDL_DestroyTexture(r->f->p1_score);
+	r->f->p1_score = NULL;
 	SDL_DestroyTexture(r->f->p2_score);
+	r->f->p2_score = NULL;
 	SDL_DestroyTexture(r->f->p1_keymenu);
+	r->f->p1_keymenu = NULL;
 	SDL_DestroyTexture(r->f->p2_keymenu);
+	r->f->p2_keymenu = NULL;
 	SDL_DestroyTexture(r->f->p3_keymenu);
+	r->f->p3_keymenu = NULL;
 	SDL_DestroyTexture(r->f->p1_name);
+	r->f->p1_name = NULL;
 	SDL_DestroyTexture(r->f->p2_name);
+	r->f->p2_name = NULL;
 	SDL_DestroyTexture(r->f->p3_name);
+	r->f->p3_name = NULL;
+	// MUSIC
+    Mix_FreeMusic(music->fastest);
+    music->fastest = NULL;
 	// RENDER
 	SDL_DestroyRenderer(r->rend);
+	r->rend = NULL;
 	// WINDOW
 	SDL_DestroyWindow(*win);
 	*win = NULL;
 	TTF_Quit();
 	SDL_Quit();
 	IMG_Quit();
+	Mix_Quit();
 	return ;
+}
+
+int			create_music(t_music *music)
+{
+	if(!(music->fastest = Mix_LoadMUS("/Users/yshawn/yshawn/filler/a_sdl/datasrc/fluk_dat.mp3")))
+		return (1);
+	return (0);
 }
 
 int				create_font(t_rend *r)
@@ -115,81 +163,87 @@ int				create_font(t_rend *r)
 
 int				create_texture(t_rend *r)
 {
-	if (!(r->t->bg = load_texture(&(r->rend), "resources/checker.png")))
+	if (!(r->t->bg = load_texture(&(r->rend), "/Users/yshawn/yshawn/filler/a_sdl/datasrc/checker.png")))
 		return (1);
-	if (!(r->t->fillboard = load_texture(&(r->rend), "resources/bg.png")))
+	if (!(r->t->fillboard = load_texture(&(r->rend), "/Users/yshawn/yshawn/filler/a_sdl/datasrc/bg.png")))
 		return (1);
-	if (!(r->t->keymenu = load_texture(&(r->rend), "resources/bg.png")))
+	if (!(r->t->keymenu = load_texture(&(r->rend), "/Users/yshawn/yshawn/filler/a_sdl/datasrc/bg.png")))
 		return (1);
-	if (!(r->t->bar_left = load_texture(&(r->rend), "resources/bg.png")))
+	if (!(r->t->bar_left = load_texture(&(r->rend), "/Users/yshawn/yshawn/filler/a_sdl/datasrc/bg.png")))
 		return (1);
-	if (!(r->t->bar_right = load_texture(&(r->rend), "resources/bg.png")))
+	if (!(r->t->bar_right = load_texture(&(r->rend), "/Users/yshawn/yshawn/filler/a_sdl/datasrc/bg.png")))
 		return (1);
-	if (!(r->t->bar_center = load_texture(&(r->rend), "resources/bg.png")))
+	if (!(r->t->bar_center = load_texture(&(r->rend), "/Users/yshawn/yshawn/filler/a_sdl/datasrc/bg.png")))
 		return (1);
-	if (!(r->t->bar_center_p1 = load_texture(&(r->rend), "resources/bg.png")))
+	if (!(r->t->bar_center_p1 = load_texture(&(r->rend), "/Users/yshawn/yshawn/filler/a_sdl/datasrc/bg.png")))
 		return (1);
-	if (!(r->t->bar_center_p2 = load_texture(&(r->rend), "resources/bg.png")))
+	if (!(r->t->bar_center_p2 = load_texture(&(r->rend), "/Users/yshawn/yshawn/filler/a_sdl/datasrc/bg.png")))
 		return (1);
-	if (!(r->t->bar_delimiter = load_texture(&(r->rend), "resources/bg.png")))
+	if (!(r->t->bar_delimiter = load_texture(&(r->rend), "/Users/yshawn/yshawn/filler/a_sdl/datasrc/bg.png")))
 		return (1);
-	if (!(r->t->cur_forward = load_texture(&(r->rend), "resources/cur.png")))
+	if (!(r->t->cur_forward = load_texture(&(r->rend), "/Users/yshawn/yshawn/filler/a_sdl/datasrc/cur.png")))
 		return (1);
-	if (!(r->t->cur_back = load_texture(&(r->rend), "resources/cur.png")))
+	if (!(r->t->cur_back = load_texture(&(r->rend), "/Users/yshawn/yshawn/filler/a_sdl/datasrc/cur.png")))
 		return (1);
-	if (!(r->t->cur_up = load_texture(&(r->rend), "resources/cur.png")))
+	if (!(r->t->cur_up = load_texture(&(r->rend), "/Users/yshawn/yshawn/filler/a_sdl/datasrc/cur.png")))
 		return (1);
-	if (!(r->t->cur_down = load_texture(&(r->rend), "resources/cur.png")))
+	if (!(r->t->cur_down = load_texture(&(r->rend), "/Users/yshawn/yshawn/filler/a_sdl/datasrc/cur.png")))
 		return (1);
-	if (!(r->t->asian = load_texture(&(r->rend), "resources/bg.png")))
+	if (!(r->t->asian = load_texture(&(r->rend), "/Users/yshawn/yshawn/filler/a_sdl/datasrc/bg.png")))
 		return (1);
-	if (!(r->t->cv19 = load_texture(&(r->rend), "resources/bg.png")))
+	if (!(r->t->cv19 = load_texture(&(r->rend), "/Users/yshawn/yshawn/filler/a_sdl/datasrc/bg.png")))
 		return (1);
-	if (!(r->t->figure = load_texture(&r->rend, "resources/bg.png")))
+	if (!(r->t->figure = load_texture(&r->rend, "/Users/yshawn/yshawn/filler/a_sdl/datasrc/bg.png")))
 		return (1);
-	if (!(r->t->earth = load_texture(&r->rend, "resources/bg.png")))
+	if (!(r->t->earth = load_texture(&r->rend, "/Users/yshawn/yshawn/filler/a_sdl/datasrc/bg.png")))
 		return (1);
-	if (!(r->t->earth_grid = load_texture(&r->rend, "resources/bg.png")))
+	if (!(r->t->earth_grid = load_texture(&r->rend, "/Users/yshawn/yshawn/filler/a_sdl/datasrc/bg.png")))
 		return (1);
 	return (0);
 }
 
-int				create(SDL_Window **win, t_rend *r)
+int				create(SDL_Window **win, t_rend *r, t_music *music)
 {
-	Uint32 render_flags;
+	Uint32 flags_render;
 
-	render_flags = SDL_RENDERER_ACCELERATED;
-	if (!(*win = SDL_CreateWindow("Huiler2.0",
-								SDL_WINDOWPOS_UNDEFINED,
-								SDL_WINDOWPOS_UNDEFINED,
-								SCREEN_WIDTH, SCREEN_HEIGHT,
-								SDL_WINDOW_SHOWN))) // SDL_WINDOW_RESIZABLE | SDL_WINDOW_SHOWN
+	flags_render = SDL_RENDERER_ACCELERATED;
+	// CREATE WINDOW
+	if (!(*win = SDL_CreateWindow("Huiler 2.0",
+								  SDL_WINDOWPOS_UNDEFINED,
+								  SDL_WINDOWPOS_UNDEFINED,
+								  SCREEN_WIDTH, SCREEN_HEIGHT,
+								  SDL_WINDOW_SHOWN)))
+	{
+		ft_printf("{red} unable to create window in CREATE{eoc}\n");
 		return (1);
-	if (!(r->rend = SDL_CreateRenderer(*win, -1, render_flags)))
+	}
+	// CREATE RENDERER IN WINDOW
+	if (!(r->rend = SDL_CreateRenderer(*win, -1, flags_render)))
+	{
+		ft_printf("{red} unable to create renderer in CREATE{eoc}\n");
 		return (1);
+	}
 	else
 		SDL_SetRenderDrawColor(r->rend, 255, 255, 255, 255);
-	// CREATE RENDER DATA
+	// CREATE RENDERER DATA
 	if (create_font(r) != 0)
+	{
+		ft_printf("{red} unable to load fonts in CREATE_FONT{eoc}\n");
 		return (1);
+	}
 	if (create_texture(r) != 0)
+	{
+		ft_printf("{red} unable to load textures in CREATE_TEXTURE{eoc}\n");
 		return (1);
+	}
+	if (create_music(music) != 0)
+		ft_printf("{blue} unable to load music in CREATE_MUSIC{eoc}\n");
 	return (0);
-}
-
-void			init_music(t_music *music)
-{
-    music->slowlest = Mix_LoadMUS("resources/025.mp3");
-    music->slow = Mix_LoadMUS("resources/05.mp3");
-    music->normal = Mix_LoadMUS("resources/1.mp3");
-    music->fast = Mix_LoadMUS("resources/125.mp3");
-    music->fastest = Mix_LoadMUS("resources/15.mp3");
-	return ;
 }
 
 void			init_t_rend(t_rend *r, t_textur *t, t_font *f, t_rect *rect, t_event *event, t_player *player, t_f *lst)
 {
-	// init TEXTURES
+	// TEXTURES
 	t->bg = NULL;
 	t->fillboard = NULL;
 	t->keymenu = NULL;
@@ -208,7 +262,7 @@ void			init_t_rend(t_rend *r, t_textur *t, t_font *f, t_rect *rect, t_event *eve
 	t->figure = NULL;
 	t->earth = NULL;
 	t->earth_grid = NULL;
-	// init FONTS
+	// FONTS
 	f->cmdw = NULL;
 	f->quit = NULL;
 	f->space = NULL;
@@ -218,6 +272,7 @@ void			init_t_rend(t_rend *r, t_textur *t, t_font *f, t_rect *rect, t_event *eve
 	f->replay = NULL;
 	f->back_forward = NULL;
 	f->speed = NULL;
+	f->speedrate = NULL;
 	f->p1_bar = NULL;
 	f->p2_bar = NULL;
 	f->p1_score = NULL;
@@ -236,7 +291,7 @@ void			init_t_rend(t_rend *r, t_textur *t, t_font *f, t_rect *rect, t_event *eve
 	event->color = 2;
 	event->mapsize = lst->m->height * lst->m->width;
 	event->str_score = NULL;
-	// init RENDERER
+	// MAIN STRUCT R
 	r->flip_hor = SDL_FLIP_HORIZONTAL;
 	r->flip_non = SDL_FLIP_NONE;
 	r->blend_p = BLEND_ON;
@@ -251,22 +306,21 @@ void			init_t_rend(t_rend *r, t_textur *t, t_font *f, t_rect *rect, t_event *eve
 
 int				init_lib(void)
 {
-	// Initialize PNG loading
-	int flags;
+	int flags_img;
 	int flags_mix ;
 
-	flags = IMG_INIT_PNG;
+	flags_img = IMG_INIT_PNG;
 	flags_mix = MIX_INIT_MP3;
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0)
 		return (1);
-	if (!(IMG_Init(flags) & flags))
+	if (!(IMG_Init(flags_img) & flags_img))
 		return (1);
 	if (TTF_Init() != 0)
 		return (1);
-	if (!Mix_Init(flags_mix))
+	if (!(Mix_Init(flags_mix) & flags_mix))
 		return (1);
-	else
-		Mix_OpenAudio(48000, AUDIO_S32SYS, 2, 640);
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+		return (1);
 	// Set texture filtering to linear
 	if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
 		return (1);

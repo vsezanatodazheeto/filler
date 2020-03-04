@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 21:05:08 by yshawn            #+#    #+#             */
-/*   Updated: 2020/03/03 22:17:16 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/04 16:07:22 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,13 @@ int				main(int ac, char **av)
 	char 		*line;
 
 	// fd = open(av[1], O_RDONLY);
+	fd = 0;
     f = NULL;
 	fst_lst = NULL;
     line = NULL;
     init_struct_player(player);
-	check_player(player, &line);
+	if (check_player(player, &line) != 0)
+		return (1);
 	if (!(fst_lst = reading_to_struct(&f, player, &line)))
 		return (1);
 	else
@@ -87,7 +89,4 @@ int				main(int ac, char **av)
 		ft_free_player(player);
 	}
     return (0);
-} 
-
-// переписать got_pos
-// переписать check_player
+}

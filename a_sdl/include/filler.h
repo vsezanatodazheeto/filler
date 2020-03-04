@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:57 by yshawn            #+#    #+#             */
-/*   Updated: 2020/03/03 22:21:34 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/04 15:32:08 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ typedef struct			s_f
 /*
 ** основные функции filler'a
 */
-void					check_player(t_player *player, char **line);
+int						check_player(t_player *player, char **line);
 void					init_struct_player(t_player *player);
 void					init_structs(t_f *f, t_p *p, t_m *m, t_pos *pos);
 t_f						*reading_to_struct(t_f **lst, t_player *player, char **line);

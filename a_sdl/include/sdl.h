@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:57 by yshawn            #+#    #+#             */
-/*   Updated: 2020/03/03 23:55:39 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/04 14:53:22 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,6 @@ static const SDL_Color grey = {115, 115, 115};
 
 typedef struct			s_music
 {
-	Mix_Music *slowlest;
-	Mix_Music *slow;
-	Mix_Music *normal;
-	Mix_Music *fast;
 	Mix_Music *fastest;
 }						t_music;
 
@@ -190,13 +186,13 @@ typedef struct			s_rend
 void					sdl_main(t_f *f, t_player *player);
 int						init_lib();
 void					init_t_rend(t_rend *r, t_textur *t, t_font *f, t_rect *rect, t_event *event, t_player *player, t_f *lst);
-void					init_music(t_music *music);
-int						create(SDL_Window **win, t_rend *r);
+int						create(SDL_Window **win, t_rend *r, t_music *music);
 int						create_texture(t_rend *r);
 int						create_font(t_rend *r);
-void					quit(SDL_Window **win, t_rend *r);
+int						create_music(t_music *music);
+void					quit(SDL_Window **win, t_rend *r, t_music *music);
 
-void					key_event(SDL_Event e, t_rend *r, t_rect *rect, t_f **lst, t_f **fst_lst);
+int						key_event(SDL_Event e, t_rend *r, t_rect *rect, t_f **lst, t_f **fst_lst, t_music *music);
 void					rect_menu(t_rend *r, t_rect *rect);
 void					rect_bar(t_rend *r, t_rect *rect, t_f *lst);
 void					rect_message(t_rend *r, t_rect *rect);

@@ -6,7 +6,7 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 22:53:36 by yshawn            #+#    #+#             */
-/*   Updated: 2020/03/03 22:39:55 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/03/04 14:14:38 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,15 @@ SDL_Texture			*load_texture(SDL_Renderer **rend, char *path)
 
 SDL_Texture			*load_font(SDL_Renderer **rend, char *path, int size, SDL_Color clr)
 {
-	TTF_Font		*sans = TTF_OpenFont("resources/zb.ttf", size);
+	TTF_Font		*sans = TTF_OpenFont("/Users/yshawn/yshawn/filler/a_sdl/datasrc/zb.ttf", size);
 	SDL_Texture		*new_textur = NULL;
 	SDL_Surface		*loaded_scr;
+
+	if (!sans)
+	{
+		ft_printf("{red}unable to load font in LOAD_FONT!{eoc}\n");
+		return (NULL);
+	}
 	if (!(loaded_scr = TTF_RenderText_Blended(sans, path, clr)))
 	{
 		ft_printf("{red}unable to load image in LOAD_FONT!{eoc}\n");
