@@ -13,9 +13,10 @@
 #ifndef FILLER_H
 # define FILLER_H
 
+# include "../lib/include/libft.h"
+# include "../lib/include/ft_printf.h"
+# include "../lib/include/get_next_line.h"
 # include <unistd.h>
-# include "../a_libft/libft.h"
-# include "../a_gnl/get_next_line.h"
 
 # define NAME_ALLY "a.out"
 # define NAME_FIELD "Plateau"
