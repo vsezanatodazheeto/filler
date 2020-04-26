@@ -17,8 +17,12 @@ is not met, the game stops."
 
 ![](https://github.com/vsezanatodazheeto/img/blob/master/filler/ex_1.png)
 
+## bonuses
+there is a visualization written using with [SDL2](https://www.libsdl.org/index.php)
+![](https://github.com/vsezanatodazheeto/img/blob/a26005a1755ff43f31a7e8c9aeed635ad745ab9f/filler/ex_2.png)
+
 ## installation
->	works for linux and mac.
+>	works for linux and mac
 
 run the following commands:
 * download
@@ -34,9 +38,13 @@ run the following commands:
 ## usage
 
 run the following commands:
-  - `cd resources/`
+  ```
+  cd resources/
+  ```
   > don't forget to give executable files permissions
   
-  > when you compile my files will be copied to this directory
-  - ./filler_vm `-f` path/to/map `-p1` ./path/to/player_1 -`p2` ./path/to/player_2 
+  > when you compile my files will be automatically copied to this directory
+  ```
+  ./filler_vm -f path/to/map -p1 ./path/to/player_1 -p2 ./path/to/player_2
+  ```
 
