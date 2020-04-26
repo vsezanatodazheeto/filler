@@ -18,10 +18,9 @@
 # include "../lib/include/get_next_line.h"
 # include <unistd.h>
 
-# define NAME_ALLY "a.out"
 # define NAME_FIELD "Plateau"
 # define NAME_PIECE "Piece"
-# define INTMAX 0x7FFFFFFF
+# define NAME_ALLY "yshawn.filler"
 # define TRUE 1
 # define FALSE 0
 
@@ -57,13 +56,7 @@ typedef struct	s_f
 }				t_f;
 
 /*
-** вспомогательные функции из библиотеки
-*/
-int				ft_printf(const char *str, ...);
-int				get_next_line(int fd, char **line);
-
-/*
-** основные функции f'a
+** основные функции filler'a
 */
 void			init_structs(t_f *f, t_p *p, t_m *m, t_pos *pos);
 int				check_player(t_f *f, char **line);
@@ -80,7 +73,7 @@ int				count_summ(t_f *f, int x, int y, int count);
 void			free_data(t_f *f, char **line);
 
 /*
-** вспомогательные функции для f'а
+** extra
 */
 int				manhattan_formula(int x, int y, int i, int j);
 int				ft_isupch(char ch_1, char ch_2, char ch_3);

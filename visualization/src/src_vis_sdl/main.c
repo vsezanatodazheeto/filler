@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/filler.h"
-#include "../include/sdl.h"
+#include "../../include/vis_filler.h"
+#include "../../include/vis_sdl.h"
 
 void				sdl_main(t_f *lst, t_player *player)
 {
@@ -44,7 +44,7 @@ void				sdl_main(t_f *lst, t_player *player)
 	{
 		SDL_RenderClear(r->rend);
 		// KEY EVENTS
-		if (key_event(e, r, rect, &lst, &fst_lst, music) != 0)
+		if (key_event(e, r, &lst, &fst_lst, music) != 0)
 			break;
 		// KEEP/STOP GAME
 		if (keep_stop_game(r, &lst) != 0)
@@ -56,7 +56,7 @@ void				sdl_main(t_f *lst, t_player *player)
 		draw_playername(r, rect);
 		draw_map(r, rect, lst);
 		draw_figure(r, rect, lst);
-		draw_map_grid(r, rect, lst);
+		draw_map_grid(r, rect);
 		// DELAY
 		SDL_Delay(r->event->delay);
 		SDL_RenderPresent(r->rend);

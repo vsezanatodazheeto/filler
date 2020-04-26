@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/filler.h"
-#include "../include/sdl.h"
+#include "../../include/vis_filler.h"
+#include "../../include/vis_sdl.h"
 
 extern int		fd;
 

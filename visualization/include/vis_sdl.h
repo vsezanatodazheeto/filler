@@ -13,21 +13,49 @@
 #ifndef SDL_H
 # define SDL_H
 
-// #include <SDL2/SDL.h> //for linux
-// #include <SDL2/SDL_image.h> // for linux
-// #include <SDL2/SDL_ttf.h> // for linux
-# include "../frameworks/SDL2.framework/Headers/SDL.h"
-# include "../frameworks/SDL2_ttf.framework/Headers/SDL_ttf.h"
-# include "../frameworks/SDL2_image.framework/Headers/SDL_image.h"
-# include "../frameworks/SDL2_mixer.framework/Headers/SDL_mixer.h"
+# include "vis_filler.h"
 
+/*
+** for linux
+*/
+# include <SDL2/SDL.h>
+# include <SDL2/SDL_image.h>
+# include <SDL2/SDL_ttf.h>
+# include <SDL2/SDL_mixer.h>
+
+/*
+** for mac
+*/
+// # include "../frameworks/SDL2.framework/Headers/SDL.h"
+// # include "../frameworks/SDL2_ttf.framework/Headers/SDL_ttf.h"
+// # include "../frameworks/SDL2_image.framework/Headers/SDL_image.h"
+// # include "../frameworks/SDL2_mixer.framework/Headers/SDL_mixer.h"
+
+/*
+** path to pics, music, fonts
+*/
+# define PATH "data/"
+# define PATH_TTF PATH "zb.ttf"
+# define PATH_TEXTURE_1 PATH "checker.png"
+# define PATH_TEXTURE_2 PATH "bg.png"
+# define PATH_TEXTURE_3 PATH "cur.png"
+
+/*
+** size of window, window elements, fonts
+*/
+// # define SCREEN_WIDTH 1600
+// # define SCREEN_HEIGHT 1120
 # define SCREEN_WIDTH 1600
-# define SCREEN_HEIGHT 1120
+# define SCREEN_HEIGHT 920
 # define INDENT 32
 # define BAR_HEIGHT INDENT * 2
 # define FONT_SIZE 50
 # define FONT_SIZE_2 42
-# define CMDW "CMD + W"
+
+/*
+** titles
+*/
+# define CMDW "ESC"
 # define QUIT "quit"
 # define SPACE "SPACE"
 # define PAUSE "pause"
@@ -36,33 +64,40 @@
 # define REPLAY "replay"
 # define BACK_FORWARD "back/forward"
 # define SPEED "speed:"
-# define SPEEDRATE0 "0.25"
-# define SPEEDRATE1 " 0.5"
-# define SPEEDRATE2 "   1"
-# define SPEEDRATE3 "1.25"
-# define SPEEDRATE4 " 1.5"
-# define SPEEDARRAY (const char[5][5]) {SPEEDRATE0, SPEEDRATE1, SPEEDRATE2, SPEEDRATE3, SPEEDRATE4}
-# define P1_BAR "ASIANS"
+# define P1_BAR "PEOPLE"
 # define P2_BAR "COVID19"
-# define K_P1_NAME_ "ASIANS:"
+# define K_P1_NAME_ "PEOPLE:"
 # define K_P2_NAME_ "COVID19:"
 # define K_P3_NAME_ "EARTH:"
+
+/*
+** events (keystroke)
+*/
+# define SPEEDRATE0 " 0.5"
+# define SPEEDRATE1 "0.75"
+# define SPEEDRATE2 "   1"
+# define SPEEDRATE3 "1.25"
+# define SPEEDRATE4 "  69"
+# define SPEEDARRAY (const char[5][5]) {SPEEDRATE0, SPEEDRATE1, SPEEDRATE2, SPEEDRATE3, SPEEDRATE4}
 # define BLEND_ON SDL_BLENDMODE_MOD
 # define BLEND_OFF SDL_BLENDMODE_BLEND
 # define DELAY_MIN 0
 # define DELAY_MAX 80
 # define DELAY_STEP 20
 
-static const SDL_Color white = {255, 255, 255};
-static const SDL_Color red = {194, 1, 20};
-static const SDL_Color yellow = {255, 220, 55};
-static const SDL_Color grey = {115, 115, 115};
+/*
+** colors
+*/
+static const SDL_Color white = {255, 255, 255, 255};
+static const SDL_Color red = {194, 1, 20, 255};
+static const SDL_Color yellow = {255, 220, 55, 255};
+static const SDL_Color grey = {115, 115, 115, 255};
 
-# define COLORARRAY (SDL_Color [5]) {{221, 115, 115},\
-									 {244, 166, 152},\
-									 {255, 255, 255},\
-									 {198, 216, 195},\
-									 {160, 192, 132}}
+# define COLORARRAY (SDL_Color [5]) {{221, 115, 115, 255},\
+									 {244, 166, 152, 255},\
+									 {255, 255, 255, 255},\
+									 {198, 216, 195, 255},\
+									 {160, 192, 132, 255}}
 
 typedef struct			s_music
 {
@@ -192,7 +227,7 @@ int						create_font(t_rend *r);
 int						create_music(t_music *music);
 void					quit(SDL_Window **win, t_rend *r, t_music *music);
 
-int						key_event(SDL_Event e, t_rend *r, t_rect *rect, t_f **lst, t_f **fst_lst, t_music *music);
+int						key_event(SDL_Event e, t_rend *r, t_f **lst, t_f **fst_lst, t_music *music);
 void					rect_menu(t_rend *r, t_rect *rect);
 void					rect_bar(t_rend *r, t_rect *rect, t_f *lst);
 void					rect_message(t_rend *r, t_rect *rect);
@@ -203,7 +238,7 @@ void					draw_message(t_rend *r, t_rect *rect);
 void					draw_playername(t_rend *r, t_rect *rect);
 void					draw_map(t_rend *r, t_rect *rect, t_f *curlst);
 void					draw_figure(t_rend *r, t_rect *rect, t_f *lst);
-void					draw_map_grid(t_rend *r, t_rect *rect, t_f *lst);
+void					draw_map_grid(t_rend *r, t_rect *rect);
 
 int						keep_stop_game(t_rend *r, t_f **lst);
 void					blendmode_swap(t_rend *r);

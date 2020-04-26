@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/filler.h"
-#include "../include/sdl.h"
+#include "../../include/vis_filler.h"
+#include "../../include/vis_sdl.h"
 
 int					score_recount(t_rend *r, t_f *lst)
 {
@@ -68,7 +68,7 @@ SDL_Texture			*load_texture(SDL_Renderer **rend, char *path)
 
 SDL_Texture			*load_font(SDL_Renderer **rend, char *path, int size, SDL_Color clr)
 {
-	TTF_Font		*sans = TTF_OpenFont("/Users/yshawn/yshawn/filler/a_sdl/datasrc/zb.ttf", size);
+	TTF_Font		*sans = TTF_OpenFont(PATH_TTF, size);
 	SDL_Texture		*new_textur = NULL;
 	SDL_Surface		*loaded_scr;
 

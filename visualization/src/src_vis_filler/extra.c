@@ -10,18 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/filler.h"
-#include "../include/sdl.h"
+#include "../../include/vis_filler.h"
+#include "../../include/vis_sdl.h"
 
 extern int		fd;
 
 int				check_player(t_player *player, char **line)
 {
 	char		**player_name;
-	int			i;
 	int			n;
 
-	i = 0;
 	n = 0;
 	player_name = NULL;
 	while (get_next_line(fd, &(*line)))

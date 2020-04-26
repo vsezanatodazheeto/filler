@@ -10,10 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/filler.h"
-#include "../include/sdl.h"
+#include "../../include/vis_filler.h"
+#include "../../include/vis_sdl.h"
 
-int				key_event(SDL_Event e, t_rend *r, t_rect *rect, t_f **lst, t_f **fst_lst, t_music *music)
+int				key_event(SDL_Event e, t_rend *r, t_f **lst, t_f **fst_lst, t_music *music)
 {
 	while (SDL_PollEvent(&e) != 0)
 	{
@@ -25,6 +25,12 @@ int				key_event(SDL_Event e, t_rend *r, t_rect *rect, t_f **lst, t_f **fst_lst,
 		}
 		if (e.type == SDL_KEYDOWN)
 		{
+			if (e.key.keysym.sym == SDLK_ESCAPE) // ESC
+			{
+				SDL_DestroyTexture(r->f->space);
+				r->f->cmdw = load_font(&(r->rend), CMDW, FONT_SIZE, grey);
+				r->event->run = FALSE;
+			}
 			if (e.key.keysym.sym == SDLK_r) // R
 			{
 				// MUSIC

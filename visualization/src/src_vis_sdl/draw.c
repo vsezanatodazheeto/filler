@@ -10,10 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/filler.h"
-#include "../include/sdl.h"
+#include "../../include/vis_filler.h"
+#include "../../include/vis_sdl.h"
 
-void		draw_map_grid(t_rend *r, t_rect *rect, t_f *lst)
+void		draw_map_grid(t_rend *r, t_rect *rect)
 {
 	int	i;
 	int	j;

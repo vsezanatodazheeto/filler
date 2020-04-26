@@ -5,7 +5,7 @@
 # -------------------------------------------- #
 launched players/superjeannot.filler
 $$$ exec p1 : [players/superjeannot.filler]
-launched ../a.out
+launched ../yshawn.filler
 $$$ exec p2 : [../a.out]
 Plateau 50 49:
     0123456789012345678901234567890123456789012345678

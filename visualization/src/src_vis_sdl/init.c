@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/filler.h"
-#include "../include/sdl.h"
+#include "../../include/vis_filler.h"
+#include "../../include/vis_sdl.h"
 
 void			quit(SDL_Window **win, t_rend *r, t_music *music)
 {
@@ -111,7 +111,7 @@ void			quit(SDL_Window **win, t_rend *r, t_music *music)
 
 int			create_music(t_music *music)
 {
-	if(!(music->fastest = Mix_LoadMUS("/Users/yshawn/yshawn/filler/a_sdl/datasrc/fluk_dat.mp3")))
+	if(!(music->fastest = Mix_LoadMUS("datasrc/fluk_dat.mp3")))
 		return (1);
 	return (0);
 }
@@ -163,41 +163,41 @@ int				create_font(t_rend *r)
 
 int				create_texture(t_rend *r)
 {
-	if (!(r->t->bg = load_texture(&(r->rend), "/Users/yshawn/yshawn/filler/a_sdl/datasrc/checker.png")))
+	if (!(r->t->bg = load_texture(&(r->rend), PATH_TEXTURE_1)))
 		return (1);
-	if (!(r->t->fillboard = load_texture(&(r->rend), "/Users/yshawn/yshawn/filler/a_sdl/datasrc/bg.png")))
+	if (!(r->t->fillboard = load_texture(&(r->rend), PATH_TEXTURE_2)))
 		return (1);
-	if (!(r->t->keymenu = load_texture(&(r->rend), "/Users/yshawn/yshawn/filler/a_sdl/datasrc/bg.png")))
+	if (!(r->t->keymenu = load_texture(&(r->rend), PATH_TEXTURE_2)))
 		return (1);
-	if (!(r->t->bar_left = load_texture(&(r->rend), "/Users/yshawn/yshawn/filler/a_sdl/datasrc/bg.png")))
+	if (!(r->t->bar_left = load_texture(&(r->rend), PATH_TEXTURE_2)))
 		return (1);
-	if (!(r->t->bar_right = load_texture(&(r->rend), "/Users/yshawn/yshawn/filler/a_sdl/datasrc/bg.png")))
+	if (!(r->t->bar_right = load_texture(&(r->rend), PATH_TEXTURE_2)))
 		return (1);
-	if (!(r->t->bar_center = load_texture(&(r->rend), "/Users/yshawn/yshawn/filler/a_sdl/datasrc/bg.png")))
+	if (!(r->t->bar_center = load_texture(&(r->rend), PATH_TEXTURE_2)))
 		return (1);
-	if (!(r->t->bar_center_p1 = load_texture(&(r->rend), "/Users/yshawn/yshawn/filler/a_sdl/datasrc/bg.png")))
+	if (!(r->t->bar_center_p1 = load_texture(&(r->rend), PATH_TEXTURE_2)))
 		return (1);
-	if (!(r->t->bar_center_p2 = load_texture(&(r->rend), "/Users/yshawn/yshawn/filler/a_sdl/datasrc/bg.png")))
+	if (!(r->t->bar_center_p2 = load_texture(&(r->rend), PATH_TEXTURE_2)))
 		return (1);
-	if (!(r->t->bar_delimiter = load_texture(&(r->rend), "/Users/yshawn/yshawn/filler/a_sdl/datasrc/bg.png")))
+	if (!(r->t->bar_delimiter = load_texture(&(r->rend), PATH_TEXTURE_2)))
 		return (1);
-	if (!(r->t->cur_forward = load_texture(&(r->rend), "/Users/yshawn/yshawn/filler/a_sdl/datasrc/cur.png")))
+	if (!(r->t->cur_forward = load_texture(&(r->rend), PATH_TEXTURE_3)))
 		return (1);
-	if (!(r->t->cur_back = load_texture(&(r->rend), "/Users/yshawn/yshawn/filler/a_sdl/datasrc/cur.png")))
+	if (!(r->t->cur_back = load_texture(&(r->rend), PATH_TEXTURE_3)))
 		return (1);
-	if (!(r->t->cur_up = load_texture(&(r->rend), "/Users/yshawn/yshawn/filler/a_sdl/datasrc/cur.png")))
+	if (!(r->t->cur_up = load_texture(&(r->rend), PATH_TEXTURE_3)))
 		return (1);
-	if (!(r->t->cur_down = load_texture(&(r->rend), "/Users/yshawn/yshawn/filler/a_sdl/datasrc/cur.png")))
+	if (!(r->t->cur_down = load_texture(&(r->rend), PATH_TEXTURE_3)))
 		return (1);
-	if (!(r->t->asian = load_texture(&(r->rend), "/Users/yshawn/yshawn/filler/a_sdl/datasrc/bg.png")))
+	if (!(r->t->asian = load_texture(&(r->rend), PATH_TEXTURE_2)))
 		return (1);
-	if (!(r->t->cv19 = load_texture(&(r->rend), "/Users/yshawn/yshawn/filler/a_sdl/datasrc/bg.png")))
+	if (!(r->t->cv19 = load_texture(&(r->rend), PATH_TEXTURE_2)))
 		return (1);
-	if (!(r->t->figure = load_texture(&r->rend, "/Users/yshawn/yshawn/filler/a_sdl/datasrc/bg.png")))
+	if (!(r->t->figure = load_texture(&r->rend, PATH_TEXTURE_2)))
 		return (1);
-	if (!(r->t->earth = load_texture(&r->rend, "/Users/yshawn/yshawn/filler/a_sdl/datasrc/bg.png")))
+	if (!(r->t->earth = load_texture(&r->rend, PATH_TEXTURE_2)))
 		return (1);
-	if (!(r->t->earth_grid = load_texture(&r->rend, "/Users/yshawn/yshawn/filler/a_sdl/datasrc/bg.png")))
+	if (!(r->t->earth_grid = load_texture(&r->rend, PATH_TEXTURE_2)))
 		return (1);
 	return (0);
 }
@@ -208,7 +208,7 @@ int				create(SDL_Window **win, t_rend *r, t_music *music)
 
 	flags_render = SDL_RENDERER_ACCELERATED;
 	// CREATE WINDOW
-	if (!(*win = SDL_CreateWindow("Huiler 2.0",
+	if (!(*win = SDL_CreateWindow("FILLER 6.9",
 								  SDL_WINDOWPOS_UNDEFINED,
 								  SDL_WINDOWPOS_UNDEFINED,
 								  SCREEN_WIDTH, SCREEN_HEIGHT,
@@ -320,7 +320,7 @@ int				init_lib(void)
 	if (!(Mix_Init(flags_mix) & flags_mix))
 		return (1);
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
-		return (1);
+		ft_printf("{blue} unable to open audio in INIT_LIB{eoc}\n");
 	// Set texture filtering to linear
 	if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
 		return (1);

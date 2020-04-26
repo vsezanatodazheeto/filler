@@ -14,9 +14,9 @@
 # define FILLER_H
 
 # include <unistd.h>
-# include "../../a_printf/header.h"
-# include "../../a_libft/libft.h"
-# include "../../a_gnl/get_next_line.h"
+# include "../../lib/include/libft.h"
+# include "../../lib/include/ft_printf.h"
+# include "../../lib/include/get_next_line.h"
 
 # define NAME_FIELD "Plateau"
 # define NAME_PIECE "Piece"

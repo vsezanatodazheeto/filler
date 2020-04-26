@@ -21,10 +21,9 @@ all: $(NAME)
 $(NAME): $(SRCS_1) $(H)
 	@make -C $(DIR_LIB)
 	@$(CC) $(FLAGS) $(SRCS_1) $(SRCS_2) -o $(NAME)
-else ifeq ($(NAME), $(MAC))
+else ifeq ($(OS), Darwin)
 all:
 	@echo "don't forget to add instructions here"
-	# @$(CC) $(FLAGS) $(SRCS_1) $(SRCS_2) $(SRCS_3) $(SRCS_4) $(SRCS_5) -I $(HEADER) -o $(NAME)
 endif
 clean:
 	@make clean -C $(DIR_LIB)

@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/filler.h"
-#include "../include/sdl.h"
+#include "../../include/vis_filler.h"
+#include "../../include/vis_sdl.h"
 
 void				rect_field(t_rend *r, t_rect *rect, t_f *lst)
 {
@@ -48,7 +48,7 @@ void				rect_message(t_rend *r, t_rect *rect)
 	rect->cmdw.h = 1;
 	SDL_QueryTexture(r->f->cmdw, NULL, NULL, &(rect->cmdw.w), &(rect->cmdw.h));
 	// QUIT
-	rect->quit.x = rect->cmdw.x + rect->cmdw.w + 185;
+	rect->quit.x = rect->cmdw.x + rect->cmdw.w + 274;
 	rect->quit.y = rect->cmdw.y;
 	rect->quit.w = 1;
 	rect->quit.h = 1;
