@@ -34,5 +34,9 @@ run the following commands:
 ## usage
 
 run the following commands:
-  - `cd resources`
-  - ./filler_vm `-f` path/to/map `-p1` ./path/to/player_1 -`p2` ./path/to/player_2 > don't forget give executable files permissions
+  - `cd resources/`
+  > don't forget to give executable files permissions
+  
+  > when you compile my files will be copied to this directory
+  - ./filler_vm `-f` path/to/map `-p1` ./path/to/player_1 -`p2` ./path/to/player_2 
+
