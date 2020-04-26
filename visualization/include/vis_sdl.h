@@ -34,7 +34,7 @@
 /*
 ** path to pics, music, fonts
 */
-# define PATH "data/"
+# define PATH "../visualization/data/"
 # define PATH_TTF PATH "zb.ttf"
 # define PATH_TEXTURE_1 PATH "checker.png"
 # define PATH_TEXTURE_2 PATH "bg.png"
