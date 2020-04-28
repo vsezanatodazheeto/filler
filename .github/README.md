@@ -57,6 +57,12 @@ run the following commands:
   for debian/ubuntu: `libsdl2-dev libsdl2-image-2.0-0 libsdl2-mixer-2.0-0 libsdl2-ttf-2.0-0`
   > yshawn.visualization has relative path to data files, so if you want to run the programm from another place, you need   to change path in vis_sdl.h and re-compile it again
   ```
+  cd resources/
+  ```
+  ```
+  ./filler_vm -f path/to/map -p1 ./path/to/player_1 -p2 ./path/to/player_2 | ./yshawn.visualization
+  ```
+  ```
   control:
   ESC                 exit
   SPACE               resume/pause
@@ -64,12 +70,6 @@ run the following commands:
   left/right button   back/forward (works only from pause)
   top/bottom button   change speed
   N                   mute music 
-  ```
-  ```
-  cd resources/
-  ```
-  ```
-  ./filler_vm -f path/to/map -p1 ./path/to/player_1 -p2 ./path/to/player_2 | ./yshawn.visualization
   ```
   for example: 
   
