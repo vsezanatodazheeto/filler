@@ -41,17 +41,29 @@ run the following commands:
 run the following commands:
   > don't forget to give executable files permissions
   
-  > when you compile my files will be automatically copied to resources directory (yshawn.filler, yshawn.visualization)
+  > when you compile files will be automatically copied to resources directory (yshawn.filler, yshawn.visualization)
   ```
   cd resources/
   ```
   ```
   ./filler_vm -f path/to/map -p1 ./path/to/player_1 -p2 ./path/to/player_2
   ```
-  for example: `./filler_vm -p1 ./players_linux/superjeannot.filler -p2 ./yshawn.filler -f maps/map02`
+  for example:
+  
+  `./filler_vm -p1 ./players_linux/superjeannot.filler -p2 ./yshawn.filler -f maps/map00`
 ## how to run visualization
   if you are using linux, you have to install sdl2 packages
   
   for debian/ubuntu: `libsdl2-dev libsdl2-image-2.0-0 libsdl2-mixer-2.0-0 libsdl2-ttf-2.0-0`
+  > yshawn.visualization has relative path to data files, so if you want to to run the programm from another place, you need   to change path in vis_sdl.h and re-compile it again
+  ```
+  cd resources/
+  ```
+  ```
+  ./filler_vm -f path/to/map -p1 ./path/to/player_1 -p2 ./path/to/player_2 | ./yshawn.visualization
+  ```
+  for example: 
+  
+  `./filler_vm -f maps/map01 -p1 ./players_linux/abanlin.filler -p2 ./yshawn.filler | ./yshawn.visualization`
 
 
