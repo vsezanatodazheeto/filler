@@ -45,7 +45,7 @@ FRAMEWORKS  := 	-F./frameworks \
 all: $(NAME)
 $(NAME): $(SRCS_1) $(SRCS_2) $(H)
 	@make -C $(DIR_LIB)
-	@$(CC) $(FLAGS) $(SRCS_1) $(SRCS_2) -I $(HEADER) $(SDL_INCS) $(FRAMEWORKS) -o $(NAME)
+	@$(CC) $(FLAGS) $(SRCS_1) $(SRCS_2) -I $(H) $(SDL_INCS) $(FRAMEWORKS) -o $(NAME)
 
 endif
 
