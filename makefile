@@ -27,8 +27,8 @@ $(NAME): $(SRCS_1) $(H)
 	@make -C $(DIR_LIB)
 	@$(CC) $(FLAGS) $(SRCS_1) $(SRCS_2) -o $(NAME)
 	@make -C $(DIR_VIS)
-	@cp $(DIR_VIS)/$(NAME_VIS) $(DIR_RES)/$(NAME_VIS)
-	@cp $(NAME) $(DIR_RES)/$(NAME)
+	@mv $(DIR_VIS)/$(NAME_VIS) $(DIR_RES)/$(NAME_VIS)
+	@mv $(NAME) $(DIR_RES)/$(NAME)
 
 else ifeq ($(OS), Darwin)
 
@@ -37,8 +37,8 @@ $(NAME): $(SRCS_1) $(H)
 	@make -C $(DIR_LIB)
 	@$(CC) $(FLAGS) $(SRCS_1) $(SRCS_2) -o $(NAME)
 	@make -C $(DIR_VIS)
-	@cp $(DIR_VIS)/$(NAME_VIS) $(DIR_RES)/$(NAME_VIS)
-	@cp $(NAME) $(DIR_RES)/$(NAME)
+	@mv $(DIR_VIS)/$(NAME_VIS) $(DIR_RES)/$(NAME_VIS)
+	@mv $(NAME) $(DIR_RES)/$(NAME)
 
 endif
 
