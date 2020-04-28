@@ -21,6 +21,7 @@ SRCS_1 = $(addprefix $(DIR_SRC)/,$(SRC))
 SRCS_2 = $(addprefix $(DIR_LIB)/,$(LIB))
 
 ifeq ($(OS), Linux)
+
 all: $(NAME)
 $(NAME): $(SRCS_1) $(H)
 	@make -C $(DIR_LIB)
@@ -28,10 +29,19 @@ $(NAME): $(SRCS_1) $(H)
 	@make -C $(DIR_VIS)
 	@cp $(DIR_VIS)/$(NAME_VIS) $(DIR_RES)/$(NAME_VIS)
 	@cp $(NAME) $(DIR_RES)/$(NAME)
+
 else ifeq ($(OS), Darwin)
+
 all:
-	@echo "don't forget to add instructions here"
+$(NAME): $(SRCS_1) $(H)
+	@make -C $(DIR_LIB)
+	@$(CC) $(FLAGS) $(SRCS_1) $(SRCS_2) -o $(NAME)
+	@make -C $(DIR_VIS)
+	@cp $(DIR_VIS)/$(NAME_VIS) $(DIR_RES)/$(NAME_VIS)
+	@cp $(NAME) $(DIR_RES)/$(NAME)
+
 endif
+
 vis:
 	@make -C $(DIR_VIS)
 	@cp $(DIR_VIS)/$(NAME_VIS) $(DIR_RES)/$(NAME_VIS)

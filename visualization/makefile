@@ -41,10 +41,14 @@ FRAMEWORKS  := 	-F./frameworks \
 				-rpath ./frameworks \
 				-framework SDL2 -framework SDL2_ttf -framework SDL2_image -framework SDL2_mixer
 	@echo "MAC INSTRUCTIONS"
+
 all: $(NAME)
-	@echo "don't forget to add instructions here in makefile"
-	# @$(CC) $(SRCS_1) $(SRCS_2) $(SRCS_3) -I $(HEADER) $(SDL_INCS) $(FRAMEWORKS) -o $(NAME)
+$(NAME): $(SRCS_1) $(SRCS_2) $(H)
+	@make -C $(DIR_LIB)
+	@$(CC) $(FLAGS) $(SRCS_1) $(SRCS_2) -I $(HEADER) $(SDL_INCS) $(FRAMEWORKS) -o $(NAME)
+
 endif
+
 clean:
 	@make clean -C $(DIR_LIB)
 fclean: clean
