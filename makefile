@@ -47,9 +47,11 @@ vis:
 	@cp $(DIR_VIS)/$(NAME_VIS) $(DIR_RES)/$(NAME_VIS)
 clean:
 	@make clean -C $(DIR_LIB)
+	@make clean -C $(DIR_VIS)
 	@rm -f $(DIR_RES)/filler.trace
 fclean: clean
 	@make fclean -C $(DIR_LIB)
+	@make fclean -C $(DIR_VIS)
 	@rm -f $(DIR_RES)/$(NAME_VIS)
 	@rm -f $(DIR_RES)/$(NAME)
 	@rm -f $(NAME)
