@@ -57,6 +57,15 @@ run the following commands:
   for debian/ubuntu: `libsdl2-dev libsdl2-image-2.0-0 libsdl2-mixer-2.0-0 libsdl2-ttf-2.0-0`
   > yshawn.visualization has relative path to data files, so if you want to run the programm from another place, you need   to change path in vis_sdl.h and re-compile it again
   ```
+  control:
+  ESC                 exit
+  SPACE               resume/pause
+  R                   replay
+  left/right button   back/forward (works only from pause)
+  top/bottom button   change speed
+  N                   mute music 
+  ```
+  ```
   cd resources/
   ```
   ```
@@ -65,5 +74,3 @@ run the following commands:
   for example: 
   
   `./filler_vm -f maps/map01 -p1 ./players_linux/abanlin.filler -p2 ./yshawn.filler | ./yshawn.visualization`
-
-
