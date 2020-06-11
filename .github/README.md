@@ -55,7 +55,8 @@ run the following commands:
   if you are using linux, you have to install sdl2 packages
   
   for debian 10: `libsdl2-dev libsdl2-image-2.0-0 libsdl2-mixer-2.0-0 libsdl2-ttf-2.0-0`
-  for ubuntu: `libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev`
+  
+  for ubuntu 20.04: `libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev`
   > yshawn.visualization has relative path to data files, so if you want to run the programm from another place, you need   to change path in vis_sdl.h and re-compile it again
   ```
   cd resources/
