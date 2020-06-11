@@ -33,12 +33,12 @@ int				check_player(t_player *player, char **line)
 				while (player_name[n])
 					n++;
 				player->p1 = ft_strdup(player_name[n - 1]);
-				ft_arrdel((void ***)&player_name);
 			}
 			else
 			{
-				n = 0;
+				ft_arrdel((void ***)&player_name);
 				player_name = ft_strsplit(*line, '/');
+				n = 0;
 				while (player_name[n])
 					n++;
 				player->p2 = ft_strdup(player_name[n - 1]);

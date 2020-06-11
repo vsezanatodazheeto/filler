@@ -47,7 +47,7 @@ void		find_best_pos(t_f *f)
 	int		s;
 	int		min;
 
-	min = INTMAX;
+	min = INT_MAX;
 	f->pos->i = 0;
 	f->pos->j = 0;
 	s = 0;
