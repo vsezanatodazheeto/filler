@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sdl.h                                              :+:      :+:    :+:   */
+/*   vis_sdl.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 02:21:57 by yshawn            #+#    #+#             */
-/*   Updated: 2020/03/04 14:53:22 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/06/15 00:55:17 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,17 @@
 
 # include "vis_filler.h"
 
-/*
-** for linux
-*/
-# include <SDL2/SDL.h>
-# include <SDL2/SDL_image.h>
-# include <SDL2/SDL_ttf.h>
-# include <SDL2/SDL_mixer.h>
-
-/*
-** for mac
-*/
-// # include "../frameworks/SDL2.framework/Headers/SDL.h"
-// # include "../frameworks/SDL2_ttf.framework/Headers/SDL_ttf.h"
-// # include "../frameworks/SDL2_image.framework/Headers/SDL_image.h"
-// # include "../frameworks/SDL2_mixer.framework/Headers/SDL_mixer.h"
+#if defined(__linux__) // Debian, Ubuntu, Gentoo, Fedora, openSUSE, RedHat, Centos and other
+	# include <SDL2/SDL.h>
+	# include <SDL2/SDL_image.h>
+	# include <SDL2/SDL_ttf.h>
+	# include <SDL2/SDL_mixer.h>
+#elif defined(__APPLE__) // Apple OSX and iOS (Darwin)
+	# include "../frameworks/SDL2.framework/Headers/SDL.h"
+	# include "../frameworks/SDL2_ttf.framework/Headers/SDL_ttf.h"
+	# include "../frameworks/SDL2_image.framework/Headers/SDL_image.h"
+	# include "../frameworks/SDL2_mixer.framework/Headers/SDL_mixer.h"
+#endif
 
 /*
 ** path to pics, music, fonts
