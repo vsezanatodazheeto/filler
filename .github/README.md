@@ -57,7 +57,7 @@ run the following commands:
   for debian 10: `libsdl2-dev libsdl2-image-2.0-0 libsdl2-mixer-2.0-0 libsdl2-ttf-2.0-0`
   
   for ubuntu 20.04: `libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev`
-  > 'vis' has relative path to data files, so if you want to run the programm from another place, you need   to change path in vis_sdl.h and re-compile it again
+ 
   ```
   cd resources/
   ```
@@ -75,4 +75,10 @@ run the following commands:
   ```
   for example: 
   
+  linux:
+  
   `./filler_vm -f maps/map01 -p1 ./players_linux/superjeannot.filler -p2 ./yshawn.filler | ./vis
+  
+  mac:
+  
+  `./filler_vm -f maps/map01 -p1 ./players_mac/superjeannot.filler -p2 ./yshawn.filler | ./vis
