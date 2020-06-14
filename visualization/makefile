@@ -76,7 +76,7 @@ $(NAME): $(SRCS_FILLER) $(SRCS_SDL) $(H)
 ifeq ($(OS), Linux)
 	@$(CC) $(CFLAGS) $(SRCS_FILLER) $(SRCS_SDL) $(LIBS) -I, $(H) $(SDL_INCS) $(FRAMEWORKS) -o $(NAME)
 else ifeq ($(OS), Darwin)
-	@$(CC) $(CFLAGS) $(SRCS_FILLER) $(SRCS_SDL) $(LIBS) -I $(H) $(SDL_INCS) $(FRAMEWORKS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(SRCS_FILLER) $(SRCS_SDL) $(LIBS) $(SDL_INCS) $(FRAMEWORKS) -o $(NAME)
 endif
 	@echo $(BLUE)"VIS COMPILED"$(EOC)
 	cp $(NAME) $(DIR_RES)/$(NAME)
