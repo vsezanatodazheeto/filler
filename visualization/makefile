@@ -59,7 +59,7 @@ else ifeq ($(OS), Darwin)
 		-I./frameworks/SDL2_mixer.framework/Versions/A/Headers
 	FRAMEWORKS := \
 		-F./frameworks \
-		-rpath ./frameworks \
+		-rpath ../visualization/frameworks \
 		-framework SDL2 \
 		-framework SDL2_ttf \
 		-framework SDL2_image \
