@@ -6,26 +6,11 @@
 /*   By: yshawn <yshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 18:40:59 by yshawn            #+#    #+#             */
-/*   Updated: 2020/02/23 21:01:05 by yshawn           ###   ########.fr       */
+/*   Updated: 2020/06/15 00:02:15 by yshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/filler.h"
-
-void		ft_arrdel(void ***arr)
-{
-	void	**first;
-
-	first = *arr;
-	while (**arr)
-	{
-		free(**arr);
-		(*arr)++;
-	}
-	free(first);
-	first = NULL;
-	return ;
-}
 
 int			ft_isupch(char ch_1, char ch_2, char ch_3)
 {

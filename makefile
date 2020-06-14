@@ -1,58 +1,74 @@
-.PHONY: all clean fclean re
+# SHELL
+OS = $(shell uname -s)
 
-OS := $(shell uname -s)
-CC := gcc
-FLAGS := -Wall -Wextra -Werror
-NAME := yshawn.filler
+# COLORS
+BLUE = "\e[38;5;69m"
+GREEN = "\e[38;5;48m"
+EOC = "\e[0m"
 
-DIR_VIS := visualization
-DIR_RES := resources
-NAME_VIS := yshawn.visualization
+# COMPILER
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror -Wunused
 
-H := include/filler.h
-DIR_SRC := src
-SRC := main solver record_data extra extra_2
+# FILLER
+NAME = yshawn.filler
+
+# VISUALISATION
+DIR_VIS = visualization
+
+NAME_VIS = vis
+VIS_RULE = $(addsuffix .vis, $(DIR_VIS)/)
+
+# DESTINATION DIRECTORY
+DIR_RES = resources
+
+# HEADER
+H = include/filler.h
+
+# SOURCES
+DIR_SRC = src
+
+SRC = main solver record_data extra extra_2
 SRC := $(addsuffix .c, $(SRC))
 
-DIR_LIB := lib
-LIB := libft.a
+# LIB (LIBFT, GET_NEXT_LINE, PRINTF)
+DIR_LIB = lib
+LIB = lib.a
+LIB_RULE = $(addsuffix .lib, $(DIR_LIB)/)
 
-SRCS_1 = $(addprefix $(DIR_SRC)/,$(SRC))
-SRCS_2 = $(addprefix $(DIR_LIB)/,$(LIB))
+# FILE PATH TO LIB, FILLER SRC/OBJ FILES
+SRCS = $(addprefix $(DIR_SRC)/, $(SRC))
+LIBS = $(addprefix $(DIR_LIB)/, $(LIB))
 
+all: $(LIB_RULE) $(VIS_RULE) $(NAME)
+
+%.lib:
+	@$(MAKE) -sC $(DIR_LIB)
+
+%.vis:
+	@$(MAKE) -sC $(DIR_VIS)
+
+$(NAME): $(SRCS) $(H)
 ifeq ($(OS), Linux)
-
-all: $(NAME)
-$(NAME): $(SRCS_1) $(H)
-	@make -C $(DIR_LIB)
-	@$(CC) $(FLAGS) $(SRCS_1) $(SRCS_2) -o $(NAME)
-	@make -C $(DIR_VIS)
-	@mv $(DIR_VIS)/$(NAME_VIS) $(DIR_RES)/$(NAME_VIS)
-	@mv $(NAME) $(DIR_RES)/$(NAME)
-
+	@$(CC) $(CFLAGS) $(SRCS) -I, $(H) $(LIBS) -o $(NAME)
 else ifeq ($(OS), Darwin)
-
-all:
-$(NAME): $(SRCS_1) $(H)
-	@make -C $(DIR_LIB)
-	@$(CC) $(FLAGS) $(SRCS_1) $(SRCS_2) -o $(NAME)
-	@make -C $(DIR_VIS)
-	@mv $(DIR_VIS)/$(NAME_VIS) $(DIR_RES)/$(NAME_VIS)
-	@mv $(NAME) $(DIR_RES)/$(NAME)
-
+	@$(CC) $(CFLAGS) $(SRCS) -I $(H) $(LIBS) -o $(NAME)
 endif
+	@echo $(BLUE)"YSHAWN.FILLER COMPILED"$(EOC)
+	@cp $(NAME) $(DIR_RES)/$(NAME)
+	@echo $(GREEN)"YSHAWN.FILLER COPIED TO RESOURCES DIRECTORY"$(EOC)
 
-vis:
-	@make -C $(DIR_VIS)
-	@cp $(DIR_VIS)/$(NAME_VIS) $(DIR_RES)/$(NAME_VIS)
 clean:
-	@make clean -C $(DIR_LIB)
-	@make clean -C $(DIR_VIS)
+	@$(MAKE) -sC $(DIR_LIB) clean
+	@$(MAKE) -sC $(DIR_VIS) clean
 	@rm -f $(DIR_RES)/filler.trace
+
 fclean: clean
-	@make fclean -C $(DIR_LIB)
-	@make fclean -C $(DIR_VIS)
-	@rm -f $(DIR_RES)/$(NAME_VIS)
+	@$(MAKE) -sC $(DIR_LIB) fclean
+	@$(MAKE) -sC $(DIR_VIS) fclean
 	@rm -f $(DIR_RES)/$(NAME)
 	@rm -f $(NAME)
+
 re: fclean all
+
+.PHONY: all clean fclean re
