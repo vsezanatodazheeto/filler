@@ -35,7 +35,7 @@ run the following commands:
 run the following commands:
   > don't forget to give executable files permissions
   
-  > when you compile files will be automatically moved to resources directory (yshawn.filler, yshawn.visualization)
+  > when you compile files will be automatically copied to resources directory (yshawn.filler, vis)
   ```
   cd resources/
   ```
