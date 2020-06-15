@@ -30,6 +30,8 @@ run the following commands:
   - clone with `--recursive` flag (there is submodule)
 * compile
   - `make`
+* compile visualization
+  - `make vis`
   
 ## usage
 run the following commands:
