@@ -17,7 +17,6 @@ NAME = yshawn.filler
 DIR_VIS = visualization
 
 NAME_VIS = vis
-VIS_RULE = $(addsuffix .vis, $(DIR_VIS)/)
 
 # DESTINATION DIRECTORY
 DIR_RES = resources
@@ -40,12 +39,12 @@ LIB_RULE = $(addsuffix .lib, $(DIR_LIB)/)
 SRCS = $(addprefix $(DIR_SRC)/, $(SRC))
 LIBS = $(addprefix $(DIR_LIB)/, $(LIB))
 
-all: $(LIB_RULE) $(VIS_RULE) $(NAME)
+all: $(LIB_RULE) $(NAME)
 
 %.lib:
 	@$(MAKE) -sC $(DIR_LIB)
 
-%.vis:
+vis:
 	@$(MAKE) -sC $(DIR_VIS)
 
 $(NAME): $(SRCS) $(H)
