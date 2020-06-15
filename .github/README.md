@@ -30,12 +30,6 @@ run the following commands:
   - clone with `--recursive` flag (there is submodule)
 * compile
   - `make`
-* remove objects:
-  - `make clean`
-* remove objects and library
-  - `make fclean`
-* re-compile:
-  - `make re`
   
 ## usage
 run the following commands:
@@ -77,8 +71,8 @@ run the following commands:
   
   linux:
   
-  `./filler_vm -f maps/map01 -p1 ./players_linux/superjeannot.filler -p2 ./yshawn.filler | ./vis
+  `./filler_vm -f maps/map01 -p1 ./players_linux/superjeannot.filler -p2 ./yshawn.filler | ./vis`
   
   mac:
   
-  `./filler_vm -f maps/map01 -p1 ./players_mac/superjeannot.filler -p2 ./yshawn.filler | ./vis
+  `./filler_vm -f maps/map01 -p1 ./players_mac/superjeannot.filler -p2 ./yshawn.filler | ./vis`
