@@ -1,9 +1,9 @@
-# filler
-an algorithmic game
+# Filler
+An algorithmic game.
 
-the algorithm is written using [taxicab geometry](https://en.wikipedia.org/wiki/Taxicab_geometry)
+The algorithm is written using [taxicab geometry](https://en.wikipedia.org/wiki/Taxicab_geometry).
 
-## short description
+## Short description
 "Filler is an algorithmic game which consists in filling a grid of a known size in advance
 with pieces of random size and shapes, without the pieces being stacked more than one
 square above each other and without them exceeding the grid. If one of these conditions
@@ -17,15 +17,15 @@ is not met, the game stops."
 
 ![](https://github.com/vsezanatodazheeto/img/blob/master/filler/ex_1.png)
 
-## bonuses
-there is a visualization written using with [SDL2](https://www.libsdl.org/index.php)
+## Bonuses
+There is a visualization written using with [SDL2](https://www.libsdl.org/index.php).
 
 ![](https://github.com/vsezanatodazheeto/img/blob/a26005a1755ff43f31a7e8c9aeed635ad745ab9f/filler/ex_2.png)
 
-## installation
->	works for linux and mac
+## Installation
+>	Works for Linux and Mac OS.
 
-run the following commands:
+Run the following commands:
 * download
   - clone with `--recursive` flag (there is submodule)
 * compile
@@ -33,26 +33,26 @@ run the following commands:
 * compile visualization
   - `make vis`
   
-## usage
-run the following commands:
-  > don't forget to give executable files permissions
+## Usage
+Run the following commands:
+  > Don't forget to give executable files permissions.
   
-  > when you compile files will be automatically copied to resources directory (yshawn.filler, vis)
+  > When you compile files will be automatically copied to resources directory (yshawn.filler, vis).
   ```
   cd resources/
   ```
   ```
   ./filler_vm -f path/to/map -p1 ./path/to/player_1 -p2 ./path/to/player_2
   ```
-  for example:
+  For example:
   
   `./filler_vm -p1 ./players_linux/superjeannot.filler -p2 ./yshawn.filler -f maps/map00`
-## how to run visualization
-  if you are using linux, you have to install sdl2 packages
+## How to run visualization
+  If you are using Linux, you have to install sdl2 packages.
   
-  for debian 10: `libsdl2-dev libsdl2-image-2.0-0 libsdl2-mixer-2.0-0 libsdl2-ttf-2.0-0`
+  For debian 10: `libsdl2-dev libsdl2-image-2.0-0 libsdl2-mixer-2.0-0 libsdl2-ttf-2.0-0`
   
-  for ubuntu 20.04: `libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev`
+  For ubuntu 20.04: `libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev`
  
   ```
   cd resources/
@@ -69,12 +69,12 @@ run the following commands:
   top/bottom button   change speed
   N                   mute music 
   ```
-  for example: 
+  For example: 
   
-  linux:
+  Linux:
   
   `./filler_vm -f maps/map01 -p1 ./players_linux/superjeannot.filler -p2 ./yshawn.filler | ./vis`
   
-  mac:
+  Mac OS:
   
   `./filler_vm -f maps/map01 -p1 ./players_mac/superjeannot.filler -p2 ./yshawn.filler | ./vis`
